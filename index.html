@@ -1,0 +1,2126 @@
+<!doctype html><html lang="ro"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body>
+<title>Română cu Luca</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{
+  --bg:#F4F6FB; --paper:#FFFFFF; --ink:#16203A; --muted:#58627E; --line:#DCE1EE; --rule:#E4E9F5; --margin:#F2A7A0;
+  --gram:#2B47D1; --gram-soft:#E6EAFC; --lit:#B03A74; --lit-soft:#F8E6EF;
+  --xp:#F5B400; --xp-soft:#FFF4CC; --ok:#16935B; --ok-soft:#E1F5EA; --bad:#CF3B2E; --bad-soft:#FBE6E3; --warn:#C97A00;
+  --shadow:0 1px 2px rgba(22,32,58,.06),0 6px 20px rgba(22,32,58,.06);
+  --f-display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;
+  --f-body:"Source Sans 3","Segoe UI",system-ui,-apple-system,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0E1322; --paper:#171E33; --ink:#E7EBF7; --muted:#9AA4C2; --line:#2A3452; --rule:#222B45; --margin:#7A3B3B;
+    --gram:#8A9DFF; --gram-soft:#1E2750; --lit:#F07DB5; --lit-soft:#3A1D2D;
+    --xp:#FFCB3D; --xp-soft:#3A3013; --ok:#4CCB8A; --ok-soft:#143325; --bad:#FF7A6B; --bad-soft:#3D1C19; --warn:#FFB547;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0E1322; --paper:#171E33; --ink:#E7EBF7; --muted:#9AA4C2; --line:#2A3452; --rule:#222B45; --margin:#7A3B3B;
+  --gram:#8A9DFF; --gram-soft:#1E2750; --lit:#F07DB5; --lit-soft:#3A1D2D;
+  --xp:#FFCB3D; --xp-soft:#3A3013; --ok:#4CCB8A; --ok-soft:#143325; --bad:#FF7A6B; --bad-soft:#3D1C19; --warn:#FFB547;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.55;margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--gram);outline-offset:2px;border-radius:6px}
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.15;text-wrap:balance;margin:0}
+.wrap{max-width:1160px;margin:0 auto;padding-inline:16px}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* top bar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar-in{display:flex;align-items:center;gap:12px;padding-block:10px;flex-wrap:wrap}
+.brand{display:flex;align-items:baseline;gap:8px;font-family:var(--f-display);font-weight:800;font-size:21px;letter-spacing:-.01em;white-space:nowrap}
+.brand .dot{width:10px;height:10px;border-radius:3px;background:var(--gram);display:inline-block;transform:translateY(-1px);box-shadow:12px 0 0 var(--xp),24px 0 0 var(--lit);margin-right:28px}
+.nav{display:flex;gap:4px;flex:0 1 auto;min-width:0;overflow-x:auto;scrollbar-width:none}
+.nav a{padding:7px 12px;border-radius:999px;text-decoration:none;color:var(--muted);font-weight:600;white-space:nowrap;font-size:15.5px}
+.nav a:hover{color:var(--ink);background:var(--paper)}
+.nav a.on{color:var(--paper);background:var(--ink)}
+.chip-lvl{display:flex;align-items:center;gap:10px;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:4px 12px 4px 4px;text-decoration:none;color:var(--ink)}
+.chip-lvl .lv{width:32px;height:32px;border-radius:50%;background:var(--xp);color:#1b1400;display:grid;place-items:center;font-family:var(--f-mono);font-weight:700;font-size:14px}
+.chip-lvl .meta{display:flex;flex-direction:column;line-height:1.1;min-width:120px}
+.chip-lvl .meta b{font-size:13px}
+.chip-lvl .meta small{font-size:11.5px;color:var(--muted)}
+.xpbar{height:5px;background:var(--rule);border-radius:9px;margin-top:4px;overflow:hidden}
+.xpbar i{display:block;height:100%;background:var(--xp);border-radius:9px;transition:width .5s}
+.icon-btn{border:1px solid var(--line);background:var(--paper);border-radius:10px;width:38px;height:38px;display:grid;place-items:center}
+.sync{margin-left:auto;font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.sync i{width:8px;height:8px;border-radius:50%;background:var(--muted)}
+.sync.on i{background:var(--ok)}
+
+main{padding-block:24px 64px}
+.page-h{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+.page-h h1{font-size:clamp(28px,4vw,40px);font-weight:800;letter-spacing:-.02em}
+.page-h p{margin:.3em 0 0;color:var(--muted);max-width:60ch}
+.eyebrow{font-size:12.5px;letter-spacing:.09em;text-transform:uppercase;font-weight:700;color:var(--muted)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:8px;border:0;border-radius:12px;padding:11px 18px;font-weight:700;background:var(--ink);color:var(--paper);text-decoration:none;transition:transform .12s, box-shadow .12s}
+.btn:hover{transform:translateY(-1px)}
+.btn:active{transform:translateY(1px)}
+.btn[disabled]{opacity:.4;cursor:not-allowed;transform:none}
+.btn.gram{background:var(--gram);color:#fff}
+.btn.lit{background:var(--lit);color:#fff}
+.btn.xp{background:var(--xp);color:#1b1400}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+.btn.sm{padding:7px 12px;font-size:14.5px;border-radius:10px}
+:root[data-theme="dark"] .btn.gram,:root[data-theme="dark"] .btn.lit{color:#0E1322}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn.gram,:root:not([data-theme="light"]) .btn.lit{color:#0E1322}}
+
+/* theory */
+.theory{display:grid;grid-template-columns:280px minmax(0,1fr);gap:28px;align-items:start}
+.toc{position:sticky;top:84px;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:14px;max-height:calc(100vh - 110px);overflow:auto}
+.toc-prog{padding:4px 6px 12px;border-bottom:1px solid var(--line);margin-bottom:8px}
+.toc-prog .row{display:flex;justify-content:space-between;font-size:14px;font-weight:600}
+.pbar{height:8px;border-radius:9px;background:var(--rule);overflow:hidden;margin-top:6px}
+.pbar i{display:block;height:100%;border-radius:9px;background:var(--accent,var(--gram));transition:width .4s}
+.toc a{display:flex;gap:10px;align-items:flex-start;padding:8px;border-radius:10px;text-decoration:none;color:var(--ink);font-size:15px;line-height:1.3}
+.toc a:hover{background:var(--bg)}
+.toc a.on{background:var(--accent-soft,var(--gram-soft));font-weight:700}
+.toc .ck{flex:none;width:20px;height:20px;border-radius:6px;border:2px solid var(--line);display:grid;place-items:center;margin-top:1px}
+.toc .ck.done{background:var(--ok);border-color:var(--ok)}
+.toc .ck.done::after{content:"";width:9px;height:5px;border:solid #fff;border-width:0 0 2.5px 2.5px;transform:rotate(-45deg) translate(1px,-1px)}
+.cls{font-family:var(--f-mono);font-size:11px;font-weight:700;padding:2px 7px;border-radius:6px;background:var(--bg);color:var(--muted);white-space:nowrap;border:1px solid var(--line)}
+.lesson{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:clamp(18px,3vw,36px);box-shadow:var(--shadow)}
+.lesson-h{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+.lesson h2{font-size:clamp(26px,3.4vw,34px);font-weight:800;letter-spacing:-.015em;margin-bottom:12px}
+.lesson h4{font-size:19px;margin:26px 0 10px;color:var(--accent,var(--gram))}
+.lesson p,.lesson li{max-width:70ch}
+.lesson .lead{font-size:19px}
+.lesson ul,.lesson ol{padding-left:22px}
+.lesson li{margin:4px 0}
+.tbl-w{overflow-x:auto;margin:10px 0}
+.tbl{border-collapse:collapse;width:100%;font-size:15.5px;min-width:460px}
+.tbl th{text-align:left;font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:8px 10px;border-bottom:2px solid var(--line)}
+.tbl td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+.tbl tr:last-child td{border-bottom:0}
+.def,.trap,.tip{border-radius:12px;padding:12px 16px;margin:12px 0}
+.def{background:var(--accent-soft,var(--gram-soft))}
+.trap{background:var(--bad-soft);border-left:4px solid var(--bad)}
+.tip{background:var(--xp-soft);border-left:4px solid var(--xp)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.grid2 .def{margin:0}
+.lesson-foot{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;border-top:1px dashed var(--line);margin-top:28px;padding-top:18px}
+.lesson-nav{display:flex;gap:8px}
+.gram-page{--accent:var(--gram);--accent-soft:var(--gram-soft)}
+.lit-page{--accent:var(--lit);--accent-soft:var(--lit-soft)}
+.toc-mobile{display:none}
+
+/* tests page */
+.plan{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:28px}
+.tcard{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:10px;position:relative}
+.tcard .num{font-family:var(--f-display);font-weight:800;font-size:44px;line-height:1;color:var(--gram);letter-spacing:-.03em}
+.tcard.done .num{color:var(--ok)}
+.tcard h3{font-size:20px}
+.tcard .day{font-size:13px;font-weight:700;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.tcard ul{margin:0;padding-left:18px;font-size:14.5px;color:var(--muted)}
+.tcard .foot{margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;padding-top:8px}
+.nota{font-family:var(--f-mono);font-weight:700;padding:3px 9px;border-radius:8px;font-size:14px}
+.nota.hi{background:var(--ok-soft);color:var(--ok)}
+.nota.mid{background:var(--xp-soft);color:var(--warn)}
+.nota.lo{background:var(--bad-soft);color:var(--bad)}
+.nota.none{background:var(--bg);color:var(--muted)}
+.drills{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.drill{background:var(--ink);color:var(--paper);border-radius:18px;padding:20px;display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.drill h3{font-size:22px}
+.drill p{margin:.2em 0 0;opacity:.75;font-size:15px}
+.drill.alt{background:var(--paper);color:var(--ink);border:1px solid var(--line)}
+.resume{background:var(--xp-soft);border:1px solid var(--xp);border-radius:14px;padding:12px 16px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:18px}
+.section-t{font-size:22px;font-weight:800;margin:30px 0 12px}
+
+/* runner */
+.run-top{position:sticky;top:env(safe-area-inset-top,0px);z-index:25;background:var(--paper);border-bottom:1px solid var(--line)}
+.run-top-in{display:flex;align-items:center;gap:14px;padding-block:10px;flex-wrap:wrap}
+.run-title{font-family:var(--f-display);font-weight:800;font-size:18px;flex:1;min-width:160px}
+.run-title small{display:block;font-family:var(--f-body);font-weight:600;font-size:13px;color:var(--muted)}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;background:var(--bg);font-weight:700;font-size:14.5px;border:1px solid var(--line)}
+.pill.timer{font-family:var(--f-mono)}
+.pill.timer.low{background:var(--xp-soft);color:var(--warn);border-color:var(--xp)}
+.pill.timer.crit{background:var(--bad-soft);color:var(--bad);border-color:var(--bad)}
+.pill.xp{background:var(--xp-soft);border-color:var(--xp)}
+.pill.streak{background:var(--bad-soft);color:var(--bad);border-color:transparent}
+.pill.streak.off{background:var(--bg);color:var(--muted)}
+.dots{display:flex;gap:3px;padding-bottom:10px}
+.dots i{flex:1;height:6px;border-radius:4px;background:var(--rule)}
+.dots i.cur{background:var(--ink)}
+.dots i.ok{background:var(--ok)}
+.dots i.bad{background:var(--bad)}
+.dots i.part{background:var(--xp)}
+.run-body{display:grid;grid-template-columns:minmax(0,1fr);gap:22px;padding-block:22px 60px}
+.run-body.has-text{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)}
+.textpane{position:sticky;top:130px;align-self:start;max-height:calc(100vh - 150px);overflow:auto;border-radius:16px;border:1px solid var(--line);background:var(--paper)}
+.tp-tabs{display:flex;gap:6px;padding:10px 12px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--paper);z-index:1}
+.tp-tabs button{border:1px solid var(--line);background:var(--bg);border-radius:9px;padding:5px 11px;font-weight:700;font-size:14px}
+.tp-tabs button.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.notebook{padding:18px 22px 22px 58px;background-image:linear-gradient(to right,transparent 42px,var(--margin) 42px,var(--margin) 44px,transparent 44px),repeating-linear-gradient(to bottom,transparent 0,transparent 29px,var(--rule) 29px,var(--rule) 30px);line-height:30px;font-size:17.5px}
+.notebook h3{font-size:18px;line-height:30px;margin-bottom:0}
+.notebook p{margin:0 0 0}
+.notebook .poem p{margin-bottom:30px}
+.notebook .src{font-size:13px;color:var(--muted);font-style:italic}
+.didas{font-style:italic;color:var(--muted)}
+.drama-list{font-size:15.5px}
+.poster{border:2px dashed var(--lit);border-radius:12px;padding:16px;text-align:center;line-height:1.35;margin:8px 0 14px;background:var(--paper)}
+.poster-k{font-size:14px;color:var(--muted)}
+.poster-t{font-family:var(--f-display);font-weight:800;font-size:26px;color:var(--lit);margin:6px 0}
+.poster-d{font-weight:700}
+.poster-s{margin-top:8px;font-weight:700;color:var(--ok)}
+.poster-f{margin-top:6px;font-size:14px;color:var(--muted)}
+.qcard{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:clamp(18px,2.6vw,28px);box-shadow:var(--shadow)}
+.q-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:10px;font-size:13.5px;color:var(--muted);font-weight:600}
+.tag{padding:2px 9px;border-radius:999px;font-weight:700;font-size:12.5px}
+.tag.g{background:var(--gram-soft);color:var(--gram)}
+.tag.l{background:var(--lit-soft);color:var(--lit)}
+.q-prompt{font-size:20px;font-weight:600;line-height:1.4;margin:0 0 16px}
+.opts{display:grid;gap:10px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--paper);transition:border-color .12s, background .12s}
+.opt:hover:not([disabled]){border-color:var(--gram)}
+.opt .k{flex:none;width:28px;height:28px;border-radius:8px;background:var(--bg);display:grid;place-items:center;font-family:var(--f-mono);font-weight:700;font-size:14px}
+.opt.sel{border-color:var(--gram);background:var(--gram-soft)}
+.opt.sel .k{background:var(--gram);color:#fff}
+.opt.right{border-color:var(--ok);background:var(--ok-soft)}
+.opt.right .k{background:var(--ok);color:#fff}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.opt.wrong .k{background:var(--bad);color:#fff}
+.opt[disabled]{cursor:default}
+.tf{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tf .opt{justify-content:center;font-weight:700;font-size:18px}
+.fill{width:100%;font:inherit;font-size:19px;padding:12px 14px;border-radius:12px;border:2px solid var(--line);background:var(--paper);color:var(--ink)}
+.fill:focus{border-color:var(--gram);outline:0}
+.fill.right{border-color:var(--ok);background:var(--ok-soft)}
+.fill.wrong{border-color:var(--bad);background:var(--bad-soft)}
+textarea.fill{min-height:180px;resize:vertical;font-size:17px;line-height:1.5}
+.wc{font-size:13px;color:var(--muted);margin-top:6px;font-family:var(--f-mono)}
+.q-actions{display:flex;gap:10px;justify-content:space-between;align-items:center;margin-top:18px;flex-wrap:wrap}
+.fb{margin-top:18px;border-radius:14px;padding:14px 16px;animation:pop .28s ease-out}
+.fb.ok{background:var(--ok-soft)}
+.fb.bad{background:var(--bad-soft)}
+.fb.part{background:var(--xp-soft)}
+.fb-h{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-family:var(--f-display);font-weight:800;font-size:20px}
+.fb.ok .fb-h{color:var(--ok)}
+.fb.bad .fb-h{color:var(--bad)}
+.fb.part .fb-h{color:var(--warn)}
+.fb p{margin:6px 0 0}
+.fb-theory{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:12px;padding-top:10px;border-top:1px dashed color-mix(in srgb,var(--ink) 20%,transparent);font-size:15px}
+.gain{font-family:var(--f-mono);font-size:14px;background:var(--xp);color:#1b1400;border-radius:8px;padding:2px 8px}
+.model{background:var(--bg);border-radius:12px;padding:14px 16px;margin-top:14px;white-space:pre-line;font-size:16px;border-left:4px solid var(--ok)}
+.rubric{display:grid;gap:8px;margin-top:14px}
+.rubric label{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:10px;border:1.5px solid var(--line);cursor:pointer}
+.rubric input{width:20px;height:20px;margin-top:2px;accent-color:var(--ok);flex:none}
+.rubric .p{margin-left:auto;font-family:var(--f-mono);font-size:13px;color:var(--muted);white-space:nowrap}
+.read-note{font-size:14px;color:var(--lit);font-weight:700;margin-bottom:8px}
+.show-text{display:none}
+@keyframes pop{from{transform:translateY(6px);opacity:.3}to{transform:none;opacity:1}}
+.floatxp{position:fixed;z-index:60;font-family:var(--f-mono);font-weight:700;color:#1b1400;background:var(--xp);padding:4px 10px;border-radius:999px;pointer-events:none;animation:floatup 1.1s ease-out forwards}
+@keyframes floatup{from{transform:translate(-50%,0);opacity:1}to{transform:translate(-50%,-70px);opacity:0}}
+.confirm{background:var(--xp-soft);border:1px solid var(--xp);border-radius:12px;padding:10px 14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px}
+
+/* results */
+.res{display:grid;grid-template-columns:320px minmax(0,1fr);gap:22px;align-items:start}
+.res-card{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:22px}
+.grade{width:190px;height:190px;border-radius:50%;margin:6px auto 12px;display:grid;place-items:center;text-align:center;background:conic-gradient(var(--c) calc(var(--p)*1%),var(--rule) 0)}
+.grade>div{width:156px;height:156px;border-radius:50%;background:var(--paper);display:grid;place-items:center;align-content:center}
+.grade b{font-family:var(--f-display);font-size:54px;font-weight:800;line-height:1}
+.grade small{color:var(--muted);font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+.kv{display:grid;grid-template-columns:1fr auto;gap:6px 12px;font-size:15.5px}
+.kv span:nth-child(2n){font-family:var(--f-mono);font-weight:700;text-align:right}
+.topics{display:grid;gap:10px}
+.trow{display:grid;grid-template-columns:170px minmax(0,1fr) 54px;gap:10px;align-items:center;font-size:15px}
+.trow .bar-t{height:10px;border-radius:9px;background:var(--rule);overflow:hidden}
+.trow .bar-t i{display:block;height:100%;border-radius:9px}
+.trow .pct{font-family:var(--f-mono);font-size:13.5px;text-align:right}
+.miss{border-top:1px solid var(--line);padding:12px 0;display:flex;gap:12px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap}
+.miss p{margin:0;max-width:62ch}
+.miss small{color:var(--muted)}
+
+/* badges */
+.badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.badge{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:14px;text-align:center;display:grid;gap:6px;justify-items:center}
+.badge .medal{width:62px;height:62px}
+.badge b{font-size:15px;line-height:1.2}
+.badge small{font-size:12.5px;color:var(--muted);line-height:1.3}
+.badge.locked{opacity:.5}
+.badge.locked .medal{filter:grayscale(1)}
+.newb{display:flex;gap:10px;flex-wrap:wrap}
+.newb .badge{min-width:150px;animation:pop .4s ease-out}
+
+/* history */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:22px}
+.stat{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.stat b{display:block;font-family:var(--f-display);font-size:32px;font-weight:800;line-height:1.1}
+.stat span{font-size:13.5px;color:var(--muted);font-weight:600}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:18px 20px;margin-bottom:22px}
+.panel h3{font-size:20px;margin-bottom:12px}
+.hgrid{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:22px}
+.att{border-top:1px solid var(--line)}
+.att:first-of-type{border-top:0}
+.att summary{list-style:none;display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:12px 4px;cursor:pointer}
+.att summary::-webkit-details-marker{display:none}
+.att .when{font-family:var(--f-mono);font-size:13px;color:var(--muted);white-space:nowrap}
+.att .ttl{font-weight:700}
+.att .ttl small{display:block;font-weight:400;color:var(--muted);font-size:13.5px}
+.rev{padding:4px 4px 16px;display:grid;gap:8px}
+.rev-q{border-radius:10px;padding:10px 12px;background:var(--bg);font-size:15px}
+.rev-q .st{font-family:var(--f-mono);font-size:12.5px;font-weight:700}
+.rev-q.ok .st{color:var(--ok)} .rev-q.bad .st{color:var(--bad)} .rev-q.part .st{color:var(--warn)}
+.rev-q .ans{color:var(--muted);font-size:14px;margin-top:4px;white-space:pre-line}
+.chart svg{width:100%;height:auto;display:block}
+.empty{text-align:center;padding:30px 10px;color:var(--muted)}
+
+/* modal */
+.modal{position:fixed;inset:0;z-index:80;background:rgba(10,14,28,.5);display:grid;place-items:center;padding:16px}
+.modal-in{background:var(--paper);border-radius:20px;max-width:820px;width:100%;max-height:88vh;overflow:auto;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.modal-h{position:sticky;top:0;background:var(--paper);display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 20px;border-bottom:1px solid var(--line);z-index:1}
+.modal .lesson{border:0;box-shadow:none;border-radius:0}
+#fx{position:fixed;inset:0;pointer-events:none;z-index:90;width:100%;height:100%}
+
+@media (max-width:1100px){.nav{order:3;flex-basis:100%}}
+@media (max-width:1360px){.sync span{display:none}.chip-lvl .meta small{display:none}.chip-lvl .meta{min-width:0}}
+@media (max-width:980px){
+  .plan{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .run-body.has-text{grid-template-columns:minmax(0,1fr)}
+  .textpane{position:static;max-height:none;display:none}
+  .textpane.open{display:block}
+  .show-text{display:inline-flex}
+  .res,.hgrid{grid-template-columns:minmax(0,1fr)}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:820px){
+  .theory{grid-template-columns:minmax(0,1fr)}
+  .toc{display:none}
+  .toc-mobile{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;scrollbar-width:thin}
+  .toc-mobile a{flex:none;padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:var(--paper);text-decoration:none;color:var(--ink);font-size:14px;font-weight:600;white-space:nowrap}
+  .toc-mobile a.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .toc-mobile a.done::before{content:"✓ ";color:var(--ok)}
+  .toc-mobile a.on.done::before{color:#fff}
+  .drills{grid-template-columns:minmax(0,1fr)}
+  .chip-lvl .meta{min-width:0}
+  .chip-lvl .meta small{display:none}
+}
+@media (max-width:560px){
+  body{font-size:16px}
+  .plan{grid-template-columns:minmax(0,1fr)}
+  .brand{font-size:18px}
+  .bar-in{gap:8px}
+  .sync span{display:none}
+  .chip-lvl .meta{display:none}
+  .chip-lvl{padding:4px}
+  .brand{flex:1}
+  .q-prompt{font-size:18px}
+  .trow{grid-template-columns:110px minmax(0,1fr) 46px;font-size:14px}
+  .att summary{grid-template-columns:minmax(0,1fr) auto}
+  .att .when{grid-column:1/-1;order:-1}
+  .notebook{padding-left:46px;background-image:linear-gradient(to right,transparent 32px,var(--margin) 32px,var(--margin) 34px,transparent 34px),repeating-linear-gradient(to bottom,transparent 0,transparent 29px,var(--rule) 29px,var(--rule) 30px)}
+}
+/* search */
+.search-btn{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 10px 0 12px;border-radius:10px;border:1px solid var(--line);background:var(--paper);color:var(--muted);font-weight:600;font-size:15px}
+.search-btn:hover{color:var(--ink);border-color:var(--gram)}
+.search-btn kbd,.s-foot kbd{font-family:var(--f-mono);font-size:11.5px;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:0 5px;color:var(--muted);background:var(--bg)}
+.modal.top{place-items:start center;padding-top:max(8vh,16px)}
+.s-box{background:var(--paper);border-radius:18px;max-width:720px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.35);display:flex;flex-direction:column;max-height:82vh;overflow:hidden}
+.s-in{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.s-in svg{flex:none;color:var(--gram)}
+.s-in input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:var(--ink);font:inherit;font-size:19px;padding:6px 0}
+.s-list{overflow:auto;padding:8px}
+.s-item{display:block;width:100%;text-align:left;border:0;background:transparent;border-radius:12px;padding:10px 12px}
+.s-item.on,.s-item:hover{background:var(--bg)}
+.s-item .s-t{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-weight:700;font-size:16px}
+.s-item .s-t .sec{font-weight:600;color:var(--muted)}
+.s-item .s-x{font-size:14.5px;color:var(--muted);margin-top:3px;line-height:1.45}
+.s-item mark{background:var(--xp-soft);color:var(--ink);border-radius:3px;padding:0 2px;font-weight:700}
+.s-hint{padding:12px 14px;color:var(--muted);font-size:15px}
+.s-sugg{display:flex;flex-wrap:wrap;gap:8px;padding:0 14px 14px}
+.s-sugg button{border:1px solid var(--line);background:var(--bg);border-radius:999px;padding:5px 12px;font-size:14.5px;font-weight:600}
+.s-sugg button:hover{border-color:var(--gram);color:var(--gram)}
+.s-foot{display:flex;gap:14px;flex-wrap:wrap;padding:8px 16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+.flash{animation:flash 2.2s ease-out}
+@keyframes flash{0%,40%{background:var(--xp-soft);box-shadow:0 0 0 8px var(--xp-soft)}100%{background:transparent;box-shadow:0 0 0 8px transparent}}
+@media (max-width:980px){.search-btn span,.search-btn kbd{display:none}.search-btn{padding:0;width:38px;justify-content:center}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<header class="bar"><div class="wrap bar-in">
+  <div class="brand"><span class="dot" aria-hidden="true"></span>Română cu Luca</div>
+  <nav class="nav" id="nav">
+    <a href="#gramatica" data-r="gramatica">Gramatică</a>
+    <a href="#literatura" data-r="literatura">Literatură</a>
+    <a href="#teste" data-r="teste">Teste EN</a>
+    <a href="#istoric" data-r="istoric">Istoric</a>
+  </nav>
+  <span class="sync" id="sync" title="Starea salvării"><i></i><span>local</span></span>
+  <button class="search-btn" id="searchbtn" data-act="search" title="Caută în teorie (tasta /)" aria-label="Caută în teorie"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.2-4.2"/></svg><span>Caută</span><kbd>/</kbd></button>
+  <button class="icon-btn" id="theme" title="Fundal: luminos / întunecat / automat" aria-label="Schimbă fundalul"></button>
+  <button class="icon-btn" id="sound" title="Sunet pornit / oprit" aria-label="Sunet"></button>
+  <a class="chip-lvl" href="#istoric" id="lvlchip"></a>
+</div></header>
+<main id="view" class="wrap"></main>
+<div id="modal" class="modal" hidden></div>
+<canvas id="fx" aria-hidden="true"></canvas>
+
+<script>
+const GRAMMAR = [
+{
+id: "g-fonetica", cls: "V", title: "Fonetica: sunete, silabe, accent", topic: "fonetica",
+body: `
+<p class="lead">Fonetica studiază <b>sunetele</b> limbii. Sunetul se aude, litera se scrie.</p>
+<div class="def"><b>Sunetul</b> = cea mai mică unitate a limbii vorbite. <b>Litera</b> = semnul grafic al sunetului.</div>
+<h4>Sunete care nu corespund literelor</h4>
+<ul>
+<li><b>x</b> = două sunete: [cs] (<i>taxi</i>) sau [gz] (<i>examen</i>).</li>
+<li><b>ch, gh</b> (înainte de <i>e, i</i>) = un singur sunet: <i>chem, ghete</i>.</li>
+<li><b>ce, ci, ge, gi</b>: dacă după ele urmează altă vocală în aceeași silabă, <i>e</i> și <i>i</i> nu sunt sunete, sunt doar litere: <i>ceas</i> are 4 litere, dar 3 sunete; <i>ghindă</i> are 6 litere, 5 sunete.</li>
+<li><b>i final</b> „șoptit” (<i>pomi, lupi</i>) nu formează silabă singur.</li>
+</ul>
+<h4>Vocale, consoane, semivocale</h4>
+<table class="tbl"><tr><th>Categorie</th><th>Ce sunt</th><th>Exemple</th></tr>
+<tr><td>Vocale (7)</td><td>pot forma singure o silabă</td><td>a, ă, â/î, e, i, o, u</td></tr>
+<tr><td>Semivocale (4)</td><td>seamănă cu vocalele, dar nu pot forma silabă singure</td><td>e, i, o, u în <i>seară, iarnă, oaie, beau</i></td></tr>
+<tr><td>Consoane (22)</td><td>se rostesc doar împreună cu o vocală</td><td>b, c, d, f, g, h, j, k, l, m, n, p, r, s, ș, t, ț, v, x, z...</td></tr></table>
+<h4>Diftong, triftong, hiat</h4>
+<div class="grid2">
+<div class="def"><b>Diftong</b> = vocală + semivocală (sau invers) în <u>aceeași silabă</u>.<br><i>sea-ră (ea), cuib (ui), ploa-ie (oa, ie), ca-iet (ie)</i></div>
+<div class="def"><b>Triftong</b> = vocală + două semivocale în <u>aceeași silabă</u>.<br><i>le-oai-că (oai), cre-ioa-ne (ioa), beau (eau), iei (iei)</i></div>
+</div>
+<div class="def"><b>Hiat</b> = două vocale alăturate care fac parte din <u>silabe diferite</u>.<br><i>po-e-zi-e (o-e, i-e), a-er, i-de-e, al-co-ol, ve-ni-a</i></div>
+<div class="trap"><b>Capcană!</b> <i>idee</i> are hiat (i-de-e), nu diftong. <i>poezie</i> are două hiaturi. Verifică întotdeauna despărțind în silabe!</div>
+<h4>Despărțirea în silabe – reguli</h4>
+<table class="tbl"><tr><th>Situația</th><th>Regula</th><th>Exemplu</th></tr>
+<tr><td>V – V</td><td>vocalele se despart (hiat)</td><td>a-er, po-e-zi-e</td></tr>
+<tr><td>V C V</td><td>consoana trece la silaba următoare</td><td>a-ră, ca-să</td></tr>
+<tr><td>V C C V</td><td>prima consoană rămâne, a doua trece</td><td>dul-ce, ar-bo-re</td></tr>
+<tr><td>excepție</td><td>b, c, d, f, g, h, p, t, v + <b>l</b> sau <b>r</b> trec împreună</td><td>co-bră, bi-ci-cle-tă, a-fla</td></tr>
+<tr><td>V C C C V</td><td>prima consoană rămâne, celelalte trec</td><td>as-tru, mon-stru</td></tr>
+<tr><td>excepții</td><td>lpt, mpt, mpț, nct, ncț, ncș, ndv, rct, rtf, stm: primele două rămân</td><td>sculp-tor, punc-tu-al, arc-tic</td></tr></table>
+<h4>Accentul</h4>
+<p>Accentul = rostirea mai apăsată a unei silabe. Unele cuvinte își schimbă sensul după accent: <i>ácele</i> (de cusut) / <i>acéle</i> (acelea); <i>cópii</i> (reproduceri) / <i>copíi</i> (băieți și fete).</p>
+<div class="tip"><b>La EN:</b> vei primi cerințe ca „Precizează numărul de litere și de sunete” sau „Scrie un cuvânt cu diftong / triftong / hiat din text”.</div>
+`},
+{
+id: "g-vocabular", cls: "V–VI", title: "Vocabularul: sensuri și relații", topic: "vocabular",
+body: `
+<p class="lead">Vocabularul = totalitatea cuvintelor unei limbi. Un cuvânt are formă (sunete) și sens (înțeles).</p>
+<h4>Sensul cuvintelor</h4>
+<div class="grid2">
+<div class="def"><b>Sens propriu</b> (de bază): primul înțeles, cel din dicționar.<br><i>Pisica prinde șoarecele.</i></div>
+<div class="def"><b>Sens figurat</b>: sens nou, neobișnuit, apare în context, de obicei în literatură.<br><i>Lucrurile vechi prind viață. Are o inimă de aur.</i></div>
+</div>
+<h4>Relații între cuvinte</h4>
+<table class="tbl"><tr><th>Termen</th><th>Ce înseamnă</th><th>Exemple</th></tr>
+<tr><td><b>Sinonime</b></td><td>formă diferită, sens asemănător</td><td>limpede = clar; a zice = a spune</td></tr>
+<tr><td><b>Antonime</b></td><td>sens opus</td><td>vechi ≠ nou; harnic ≠ leneș; a urca ≠ a coborî</td></tr>
+<tr><td><b>Omonime</b></td><td>aceeași formă, sensuri total diferite</td><td>broască (animal) / broască (de ușă); lac (apă) / lac (de unghii)</td></tr>
+<tr><td><b>Paronime</b></td><td>formă aproape la fel, sens diferit – se confundă ușor!</td><td>original / originar; eminent / iminent; a enerva / a inerva; familiar / familial</td></tr>
+<tr><td><b>Cuvinte polisemantice</b></td><td>un cuvânt cu mai multe sensuri înrudite</td><td>cap (al omului, al listei, capul străzii)</td></tr></table>
+<div class="trap"><b>Capcană!</b> Omonimele au sensuri <u>fără legătură</u>; cuvântul polisemantic are sensuri <u>înrudite</u>.</div>
+<h4>Pleonasmul (greșeală de exprimare)</h4>
+<p>Pleonasmul = repetarea inutilă a aceleiași idei: <s>a urca sus</s>, <s>a coborî jos</s>, <s>a reveni din nou</s>, <s>mai mult ca sigur</s> → corect: <i>a urca, a coborî, a reveni, sigur</i>.</p>
+<h4>Familia lexicală și câmpul lexical</h4>
+<div class="grid2">
+<div class="def"><b>Familia lexicală</b> = cuvântul de bază + toate cuvintele formate din el.<br><i>floare → floricică, florar, înflori, înflorit, florărie</i></div>
+<div class="def"><b>Câmpul lexical</b> = cuvinte din aceeași temă (nu neapărat înrudite).<br><i>școala: elev, tablă, catalog, profesor, bancă</i></div>
+</div>
+<h4>Formarea cuvintelor</h4>
+<table class="tbl"><tr><th>Mijloc</th><th>Cum</th><th>Exemple</th></tr>
+<tr><td><b>Derivarea cu sufixe</b></td><td>se adaugă la sfârșit</td><td>bicicletă → biciclet<b>ist</b>; carte → cărț<b>ulie</b>; pom → pom<b>ișor</b> (diminutiv)</td></tr>
+<tr><td><b>Derivarea cu prefixe</b></td><td>se adaugă la început</td><td><b>re</b>scrie, <b>ne</b>atent, <b>în</b>flori, <b>des</b>face</td></tr>
+<tr><td><b>Compunerea</b></td><td>se unesc două sau mai multe cuvinte</td><td>floarea-soarelui, untdelemn, bunăvoință, Câmpulung</td></tr>
+<tr><td><b>Conversiunea</b></td><td>cuvântul trece la altă parte de vorbire</td><td><i>Binele</i> învinge. (adverb → substantiv)</td></tr></table>
+<div class="tip"><b>La EN:</b> „Scrie un sinonim / antonim potrivit contextului”, „Construiește un enunț în care cuvântul să aibă sens figurat”, „Scrie un cuvânt format prin derivare”.</div>
+`},
+{
+id: "g-verb-ind", cls: "V", title: "Verbul I: indicativul și timpurile", topic: "verb",
+body: `
+<p class="lead">Verbul = partea de vorbire flexibilă care arată <b>acțiunea</b> (a alerga), <b>starea</b> (a sta, a dormi) sau <b>existența</b> (a fi, a exista).</p>
+<h4>Categorii gramaticale</h4>
+<ul><li><b>Persoana</b>: I (eu, noi), a II-a (tu, voi), a III-a (el, ea, ei, ele).</li>
+<li><b>Numărul</b>: singular / plural.</li>
+<li><b>Modul</b> și <b>timpul</b>.</li></ul>
+<h4>Verbe predicative și nepredicative</h4>
+<table class="tbl"><tr><th>Tip</th><th>Explicație</th><th>Exemplu</th></tr>
+<tr><td><b>Predicativ</b></td><td>are sens de sine stătător, formează singur predicatul verbal</td><td>Luca <u>citește</u>. <u>Am</u> o bicicletă.</td></tr>
+<tr><td><b>Auxiliar</b></td><td>ajută la formarea unor timpuri/moduri: <b>a avea, a fi, a vrea</b></td><td><u>am</u> citit, <u>voi</u> citi, <u>aș</u> citi, să <u>fi</u> citit</td></tr>
+<tr><td><b>Copulativ</b></td><td>leagă subiectul de numele predicativ (cl. a VI-a): <b>a fi</b>, a deveni</td><td>Cerul <u>este</u> senin.</td></tr></table>
+<div class="trap"><b>Capcană!</b> <i>„Am o carte”</i> – <b>am</b> = predicativ (= a poseda). <i>„Am citit o carte”</i> – <b>am</b> = auxiliar. Același verb poate avea roluri diferite!</div>
+<h4>Modul indicativ – timpurile (exemplu: a cânta)</h4>
+<table class="tbl"><tr><th>Timp</th><th>Ce arată</th><th>Pers. I sg.</th><th>Pers. a III-a sg.</th></tr>
+<tr><td><b>Prezent</b></td><td>acum</td><td>cânt</td><td>cântă</td></tr>
+<tr><td><b>Imperfect</b></td><td>trecut neterminat, de durată</td><td>cântam</td><td>cânta</td></tr>
+<tr><td><b>Perfect compus</b></td><td>trecut încheiat (auxiliar a avea + participiu)</td><td>am cântat</td><td>a cântat</td></tr>
+<tr><td><b>Perfect simplu</b></td><td>trecut foarte apropiat, frecvent în povești</td><td>cântai</td><td>cântă</td></tr>
+<tr><td><b>Mai-mult-ca-perfectul</b></td><td>acțiune încheiată înaintea altei acțiuni trecute</td><td>cântasem</td><td>cântase</td></tr>
+<tr><td><b>Viitor</b></td><td>după momentul vorbirii</td><td>voi cânta / o să cânt</td><td>va cânta</td></tr></table>
+<div class="tip"><b>Truc de recunoaștere:</b> <i>-sem, -seși, -se, -serăm</i> = mai-mult-ca-perfect; <i>-am, -ai, -a, -au</i> fără auxiliar = imperfect (râdea, mergeam); <i>zise, râse, plecă</i> = perfect simplu.</div>
+<div class="trap"><b>Atenție la persoana a III-a:</b> „el <b>cântă</b>” poate fi prezent sau perfect simplu. Contextul decide: „Ieri cântă frumos” → perfect simplu.</div>
+`},
+{
+id: "g-verb-moduri", cls: "VI", title: "Verbul II: celelalte moduri", topic: "verb",
+body: `
+<p class="lead">Modurile arată <b>cum</b> privește vorbitorul acțiunea: reală, posibilă, dorită, poruncită.</p>
+<h4>Moduri personale (au persoană, pot fi predicat)</h4>
+<table class="tbl"><tr><th>Mod</th><th>Ce exprimă</th><th>Formare</th><th>Exemple</th></tr>
+<tr><td><b>Indicativ</b></td><td>acțiune reală, sigură</td><td>vezi capitolul anterior</td><td>cânt, am cântat</td></tr>
+<tr><td><b>Conjunctiv</b></td><td>acțiune posibilă, dorită</td><td><b>să</b> + verb</td><td>prezent: <i>să cânt, să râdă</i>; perfect: <i>să fi cântat</i></td></tr>
+<tr><td><b>Condițional-optativ</b></td><td>acțiune dorită sau condiționată</td><td><b>aș, ai, ar, am, ați, ar</b> + infinitiv</td><td>prezent: <i>aș cânta</i>; perfect: <i>aș fi cântat</i></td></tr>
+<tr><td><b>Imperativ</b></td><td>poruncă, rugăminte, îndemn (doar pers. a II-a)</td><td>afirmativ / negativ</td><td><i>Cântă! Adu-l! Veniți!</i> / <i>Nu cânta! Nu aduce!</i></td></tr></table>
+<div class="trap"><b>Imperativul negativ</b> la singular = <b>nu + infinitivul fără „a”</b>: <i>nu fugi, nu scrie, nu lua</i>. La imperativ, verbul e urmat de semnul exclamării sau de virgulă.</div>
+<h4>Moduri nepersonale (NU au persoană)</h4>
+<table class="tbl"><tr><th>Mod</th><th>Mărci</th><th>Exemple</th></tr>
+<tr><td><b>Infinitiv</b></td><td>„a” + verb</td><td>a cânta, a merge, a fi</td></tr>
+<tr><td><b>Gerunziu</b></td><td>-ând, -ind</td><td>cântând, șoptind, zâmbind</td></tr>
+<tr><td><b>Participiu</b></td><td>-t, -s (ca un adjectiv)</td><td>cântat, decorat, scris, ars</td></tr>
+<tr><td><b>Supin</b></td><td>de, la, pentru + participiu</td><td>de cântat, de citit, la scris, pentru alergat</td></tr></table>
+<div class="trap"><b>Participiu sau supin?</b> „tortul <u>decorat</u>” → participiu (arată o însușire). „Am de <u>decorat</u> tortul” → supin (are prepoziție înainte și arată acțiunea).</div>
+<div class="tip"><b>Rețeta de identificare:</b> caută mai întâi mărcile: <b>să</b> → conjunctiv; <b>aș/ar</b> → condițional; <b>!</b> fără persoană exprimată → imperativ; <b>a</b> → infinitiv; <b>-ând/-ind</b> → gerunziu.</div>
+`},
+{
+id: "g-substantiv", cls: "V–VI", title: "Substantivul și cazurile", topic: "substantiv",
+body: `
+<p class="lead">Substantivul = partea de vorbire flexibilă care denumește <b>ființe, lucruri, fenomene, însușiri, acțiuni</b>.</p>
+<h4>Felul</h4>
+<ul><li><b>Comune</b>: denumesc obiecte de același fel: <i>copil, oraș, râu</i>.</li>
+<li><b>Proprii</b>: denumesc un singur obiect, se scriu cu majusculă: <i>Luca, București, Dunărea, Marea Neagră</i>.</li></ul>
+<h4>Genul – testul „un / două”</h4>
+<table class="tbl"><tr><th>Gen</th><th>Test</th><th>Exemple</th></tr>
+<tr><td>Masculin</td><td>un ... / doi ...</td><td>un munte – doi munți</td></tr>
+<tr><td>Feminin</td><td>o ... / două ...</td><td>o frunză – două frunze</td></tr>
+<tr><td>Neutru</td><td>un ... / două ...</td><td>un acoperiș – două acoperișuri; un scaun – două scaune</td></tr></table>
+<h4>Numărul</h4>
+<p>Singular / plural. Unele au doar singular (<i>aur, miere, curaj</i>), altele doar plural (<i>ochelari, tăiței, câlți</i>).</p>
+<h4>Cazurile (cl. a V-a: N, Ac; cl. a VI-a: G, D, V)</h4>
+<table class="tbl"><tr><th>Caz</th><th>Întrebări</th><th>Funcții sintactice</th><th>Exemplu</th></tr>
+<tr><td><b>Nominativ</b></td><td>cine? ce?</td><td>subiect, nume predicativ</td><td><u>Toamna</u> trece. Ea este <u>profesoară</u>.</td></tr>
+<tr><td><b>Acuzativ</b></td><td>pe cine? ce? cu cine? unde? (+ prepoziții: <i>cu, de, la, în, pe, prin, pentru, despre, sub</i>)</td><td>complement direct, indirect, circumstanțial, atribut prepozițional</td><td>Citesc o <u>carte</u>. Trec prin <u>livadă</u>.</td></tr>
+<tr><td><b>Genitiv</b></td><td>al cui? a cui? ai cui? ale cui?</td><td>atribut substantival genitival</td><td>culoarea <u>frunzelor</u>, fântâna <u>zmeului</u></td></tr>
+<tr><td><b>Dativ</b></td><td>cui?</td><td>complement indirect</td><td>Toamna le dăruiește <u>copiilor</u> mere.</td></tr>
+<tr><td><b>Vocativ</b></td><td>– (adresare)</td><td>nu are funcție sintactică; se desparte prin virgulă sau !</td><td><u>Toamnă</u>, rămâi! Încet, <u>copii</u>!</td></tr></table>
+<div class="trap"><b>Capcană G/D:</b> formele sunt identice (<i>copilului, livezii</i>). Pune întrebarea: „al cui?” → Genitiv; „cui?” → Dativ. <i>Cartea <u>copilului</u></i> (G) / <i>I-am dat <u>copilului</u> o carte</i> (D).</div>
+<div class="tip"><b>Genitivul singular articulat</b> pentru feminine: <i>livadă → livezii, frunză → frunzei, carte → cărții, mamă → mamei</i>.</div>
+`},
+{
+id: "g-articol", cls: "V–VI", title: "Articolul", topic: "substantiv",
+body: `
+<p class="lead">Articolul = partea de vorbire flexibilă care însoțește substantivul și arată cât de cunoscut este obiectul.</p>
+<table class="tbl"><tr><th>Tip</th><th>Forme</th><th>Exemple</th></tr>
+<tr><td><b>Hotărât</b> (lipit la sfârșit)</td><td>-l, -le, -ul, -a, -i, -le, -lui, -ei, -lor</td><td>băiat<b>ul</b>, mere<b>le</b>, toamn<b>a</b>, copii<b>lor</b></td></tr>
+<tr><td><b>Nehotărât</b> (în fața substantivului)</td><td>un, o, niște, unui, unei, unor</td><td><b>un</b> măr, <b>o</b> mantie, <b>niște</b> frunze</td></tr>
+<tr><td><b>Posesiv (genitival)</b> – cl. a VI-a</td><td>al, a, ai, ale</td><td>o frunză <b>a</b> copacului, niște cărți <b>ale</b> bunicului</td></tr>
+<tr><td><b>Demonstrativ (adjectival)</b> – cl. a VI-a</td><td>cel, cea, cei, cele</td><td>Ștefan <b>cel</b> Mare, mărul <b>cel</b> roșu, apa <b>cea</b> vie</td></tr></table>
+<div class="trap"><b>Capcană!</b> <i>„un”</i> poate fi articol (<i>un măr</i> = oarecare) sau numeral (<i>un măr, nu două</i>). <i>„a”</i> poate fi articol posesiv (<i>o carte a Anei</i>), marcă a infinitivului (<i>a citi</i>), verb auxiliar (<i>a citit</i>) sau prepoziție (<i>miroase a flori</i>).</div>
+`},
+{
+id: "g-pronume", cls: "V–VI", title: "Pronumele", topic: "pronume",
+body: `
+<p class="lead">Pronumele = partea de vorbire flexibilă care <b>ține locul unui substantiv</b>.</p>
+<h4>Pronumele personal</h4>
+<table class="tbl"><tr><th>Persoana</th><th>Singular</th><th>Plural</th><th>Forme neaccentuate</th></tr>
+<tr><td>I</td><td>eu</td><td>noi</td><td>mă, m-, mi, îmi, ne, ni</td></tr>
+<tr><td>a II-a</td><td>tu</td><td>voi</td><td>te, îți, ți, vă, vi</td></tr>
+<tr><td>a III-a</td><td>el, ea</td><td>ei, ele</td><td>îl, l-, o, îi, i-, le, li</td></tr></table>
+<p><i>Mihai <u>îi</u> spune Anei. Adu-<u>l</u>!</i> – <b>îi</b> și <b>-l</b> sunt pronume personale.</p>
+<h4>Pronumele de politețe</h4>
+<p><i>dumneata, dumneavoastră, dânsul, dânsa, dânșii, Domnia Sa, Domnia Voastră, Maiestatea Sa</i> – arată respect față de persoana despre care se vorbește sau căreia i se vorbește.</p>
+<h4>Pronumele reflexiv (cl. a VI-a)</h4>
+<p>Arată că acțiunea se răsfrânge asupra celui care o face: <b>se, își, sie, sine</b> (pers. a III-a); pentru pers. I și a II-a formele sunt ca la personal (<i>mă spăl, te pieptăni</i>). <i>Melcul nu <u>se</u> supără. Radu <u>și</u>-a luat bicicleta.</i></p>
+<h4>Pronumele posesiv (cl. a VI-a)</h4>
+<p>Arată cui aparține obiectul și ține locul și posesorului, și obiectului: <b>al meu, a ta, ai săi, ale noastre, al vostru</b>. <i>Drumul meu e lung, <u>al tău</u> e scurt.</i></p>
+<h4>Pronumele demonstrativ (cl. a VI-a)</h4>
+<p>Arată apropierea sau depărtarea: <b>acesta, aceasta, aceștia, acestea</b> (apropiere); <b>acela, aceea, aceia, acelea</b> (depărtare); <b>același, aceeași</b> (identitate); <b>celălalt, cealaltă</b> (diferențiere). <i><u>Acesta</u> e melcul.</i></p>
+<div class="trap"><b>Pronume sau adjectiv pronominal?</b> Dacă stă <u>singur</u> în locul substantivului → pronume (<i>Acesta e al meu</i>). Dacă <u>însoțește</u> un substantiv → adjectiv pronominal (<i>băiatul acesta, cartea mea</i>).</div>
+`},
+{
+id: "g-adjectiv", cls: "V–VI", title: "Adjectivul și gradele de comparație", topic: "adjectiv",
+body: `
+<p class="lead">Adjectivul = partea de vorbire flexibilă care arată <b>însușirea</b> unui obiect. Se acordă în gen, număr și caz cu substantivul.</p>
+<p><i>frunz<b>e</b> aurat<b>e</b>, mantie mătăs<b>oasă</b>, cal năzdrăvan</i> – funcție sintactică: <b>atribut adjectival</b> (sau <b>nume predicativ</b> după „a fi”: <i>Calul era <u>năzdrăvan</u></i>).</p>
+<h4>Gradele de comparație</h4>
+<table class="tbl"><tr><th>Grad</th><th>Formare</th><th>Exemplu</th></tr>
+<tr><td>Pozitiv</td><td>forma de bază</td><td>frumos</td></tr>
+<tr><td>Comparativ de superioritate</td><td>mai + adj.</td><td>mai frumos</td></tr>
+<tr><td>Comparativ de egalitate</td><td>la fel de / tot atât de + adj.</td><td>la fel de frumos</td></tr>
+<tr><td>Comparativ de inferioritate</td><td>mai puțin + adj.</td><td>mai puțin frumos</td></tr>
+<tr><td>Superlativ relativ</td><td>cel mai / cel mai puțin + adj.</td><td>cel mai frumos (din clasă)</td></tr>
+<tr><td>Superlativ absolut</td><td>foarte, extrem de, tare, nemaipomenit de + adj.</td><td>foarte frumos, extrem de roșu</td></tr></table>
+<div class="trap"><b>Adjective fără grade de comparație:</b> <i>unic, perfect, veșnic, principal, maxim, minim, desăvârșit, complet, mort, viu</i>. Nu spunem „<s>cel mai unic</s>”.</div>
+`},
+{
+id: "g-numeral", cls: "V–VI", title: "Numeralul", topic: "numeral",
+body: `
+<p class="lead">Numeralul = partea de vorbire care exprimă un <b>număr</b>, <b>ordinea</b> sau o <b>determinare numerică</b>.</p>
+<table class="tbl"><tr><th>Tip</th><th>Ce arată</th><th>Exemple</th></tr>
+<tr><td><b>Cardinal</b></td><td>numărul</td><td>unu, doi, trei, zece, douăzeci</td></tr>
+<tr><td><b>Ordinal</b></td><td>ordinea</td><td>primul, întâiul, al doilea, a doua, al treilea</td></tr>
+<tr><td><b>Colectiv</b></td><td>un grup</td><td>amândoi, ambii, ambele, tustrei, toți trei</td></tr>
+<tr><td><b>Multiplicativ</b></td><td>de câte ori crește</td><td>dublu, triplu, îndoit, întreit, înzecit</td></tr>
+<tr><td><b>Fracționar</b></td><td>o parte dintr-un întreg</td><td>o doime, o treime, jumătate, sfert, trei pătrimi</td></tr>
+<tr><td><b>Distributiv</b></td><td>repartizarea</td><td>câte unul, câte doi</td></tr>
+<tr><td><b>Adverbial</b></td><td>de câte ori se face o acțiune</td><td>o dată, de două ori, a treia oară</td></tr></table>
+<div class="trap"><b>odată</b> (adverb = cândva: <i>A fost odată</i>) ≠ <b>o dată</b> (numeral adverbial = o singură dată: <i>Am citit-o o dată</i>).</div>
+<div class="tip">Scriere: <b>al doilea, a doua</b> (nu „<s>a doilea</s>”); <b>doisprezece</b> (m.) / <b>douăsprezece</b> (f.); <b>paisprezece, șaisprezece</b>.</div>
+`},
+{
+id: "g-neflexibile", cls: "V–VI", title: "Adverbul, prepoziția, conjuncția, interjecția", topic: "neflexibile",
+body: `
+<p class="lead">Aceste părți de vorbire sunt <b>neflexibile</b>: nu își schimbă forma.</p>
+<h4>Adverbul</h4>
+<p>Arată <b>locul, timpul sau modul</b> unei acțiuni; determină un verb (uneori un adjectiv).</p>
+<table class="tbl"><tr><th>Fel</th><th>Întrebare</th><th>Exemple</th></tr>
+<tr><td>de loc</td><td>unde?</td><td>aici, acolo, sus, jos, departe</td></tr>
+<tr><td>de timp</td><td>când?</td><td>azi, mâine, acum, seara, mereu, încă</td></tr>
+<tr><td>de mod</td><td>cum?</td><td>bine, repede, încet, astfel, limpede</td></tr></table>
+<p>Adverbele de mod au grade de comparație: <i>repede – mai repede – cel mai repede – foarte repede</i>. Funcție: complement circumstanțial.</p>
+<h4>Prepoziția</h4>
+<p>Leagă un cuvânt de altul; nu are funcție sintactică singură.</p>
+<ul><li>Simple: <i>de, la, în, cu, pe, prin, pentru, despre, fără, sub, lângă</i></li>
+<li>Compuse: <i>de la, de pe, pe la, de lângă, de sub, dinspre, până la</i></li>
+<li>Locuțiuni: <i>în fața, de-a lungul, în loc de, din cauza</i></li></ul>
+<table class="tbl"><tr><th>Cer cazul</th><th>Prepoziții</th></tr>
+<tr><td>Acuzativ</td><td>cele mai multe: cu, de, la, în, pe, prin, pentru, despre</td></tr>
+<tr><td>Genitiv</td><td>asupra, contra, împotriva, deasupra, înaintea, în fața, din cauza</td></tr>
+<tr><td>Dativ</td><td>datorită, mulțumită, grație, conform, potrivit, contrar, aidoma</td></tr></table>
+<h4>Conjuncția</h4>
+<p>Leagă două cuvinte sau două propoziții.</p>
+<ul><li><b>Coordonatoare</b>: <i>și, nici, iar, dar, însă, ci, sau, ori</i> – leagă elemente egale.</li>
+<li><b>Subordonatoare</b>: <i>că, să, dacă, ca...să, deși, încât</i> – leagă o propoziție secundară de regentă.</li></ul>
+<div class="trap"><b>Virgula</b> se pune înainte de <i>dar, iar, însă, ci</i>, dar <u>nu</u> înainte de <i>și</i> (cu excepții).</div>
+<h4>Interjecția</h4>
+<p>Exprimă <b>stări sufletești</b> (<i>vai, of, ah, oh, bravo</i>), <b>îndemnuri</b> (<i>hai, na, iată</i>) sau <b>imită sunete</b> – onomatopee (<i>cucu, miau, poc, trosc, pleosc</i>). Se desparte prin virgulă sau semnul exclamării: <i>Vai, ce încet mergi!</i></p>
+`},
+{
+id: "g-sintaxa", cls: "V–VI", title: "Sintaxa propoziției", topic: "sintaxa",
+body: `
+<p class="lead">Propoziția = comunicare cu <b>un singur predicat</b>. <b>Simplă</b>: doar subiect + predicat (<i>Ilie pleacă.</i>). <b>Dezvoltată</b>: are și părți secundare (<i>Ilie pleacă repede la drum.</i>).</p>
+<h4>Părțile principale</h4>
+<table class="tbl"><tr><th>Parte</th><th>Întrebare</th><th>Tipuri și exemple</th></tr>
+<tr><td><b>Predicatul verbal</b></td><td>ce face? ce se întâmplă?</td><td>verb predicativ la mod personal: <i>Mezinul <u>a pornit</u> la drum.</i></td></tr>
+<tr><td><b>Predicatul nominal</b> (cl. VI)</td><td>ce este? cum este?</td><td>verb copulativ + nume predicativ: <i>Calul <u>era năzdrăvan</u>. Cerul <u>este senin</u>.</i></td></tr>
+<tr><td><b>Subiectul</b></td><td>cine? ce? (pus înaintea predicatului)</td><td>exprimat: <i><u>Ilie</u> pleacă.</i> / multiplu: <i><u>Ilie și calul</u> au ajuns.</i></td></tr></table>
+<h4>Subiectul neexprimat</h4>
+<div class="grid2">
+<div class="def"><b>Inclus</b>: se înțelege din terminația verbului (pers. I și a II-a).<br><i>Plec mâine.</i> → (eu). <i>Citești?</i> → (tu)</div>
+<div class="def"><b>Subînțeles</b>: se deduce din propoziția anterioară (pers. a III-a).<br><i>Feciorii au păzit. <u>Au adormit</u>.</i> → (feciorii)</div>
+</div>
+<h4>Părțile secundare</h4>
+<table class="tbl"><tr><th>Parte</th><th>Determină</th><th>Exemple</th></tr>
+<tr><td><b>Atribut adjectival</b></td><td>un substantiv</td><td>cal <u>năzdrăvan</u>, frunze <u>aurate</u>, <u>trei</u> feciori</td></tr>
+<tr><td><b>Atribut substantival</b></td><td>un substantiv</td><td>genitival: fântâna <u>zmeului</u>; prepozițional: casa <u>de lemn</u></td></tr>
+<tr><td><b>Atribut pronominal</b></td><td>un substantiv</td><td>prietenul <u>lui</u>, cartea <u>ei</u></td></tr>
+<tr><td><b>Complement direct</b></td><td>un verb; pe cine? ce?</td><td>Citesc <u>o carte</u>. L-a învins <u>pe zmeu</u>.</td></tr>
+<tr><td><b>Complement indirect</b></td><td>un verb; cui? despre cine? cu cine?</td><td>I-a dat <u>calului</u> apă. Vorbește <u>despre basm</u>.</td></tr>
+<tr><td><b>C. circumstanțial de loc</b></td><td>unde? de unde? până unde?</td><td>A ajuns <u>la fântână</u>.</td></tr>
+<tr><td><b>C. circumstanțial de timp</b></td><td>când? de când? cât timp?</td><td><u>După trei zile</u> a ajuns. Vine <u>mâine</u>.</td></tr>
+<tr><td><b>C. circumstanțial de mod</b></td><td>cum?</td><td>A alergat <u>repede</u>.</td></tr></table>
+<div class="trap"><b>Nu pune niciodată virgulă între subiect și predicat!</b> <s>Ilie, a plecat.</s> → <i>Ilie a plecat.</i> Excepție: când între ele stă o construcție incidentă sau o apoziție.</div>
+`},
+{
+id: "g-fraza", cls: "V–VI", title: "Fraza, ortografia și punctuația", topic: "fraza",
+body: `
+<p class="lead">Fraza = comunicare cu <b>două sau mai multe predicate</b>. <b>Câte predicate, atâtea propoziții.</b></p>
+<h4>Cum analizezi o frază</h4>
+<ol><li>Subliniază toate verbele la moduri personale (predicatele).</li>
+<li>Numără-le → numărul de propoziții.</li>
+<li>Delimitează propozițiile (de obicei la conjuncții sau virgule).</li></ol>
+<h4>Relațiile dintre propoziții</h4>
+<div class="grid2">
+<div class="def"><b>Coordonare</b>: propoziții egale ca importanță, legate prin <i>și, dar, iar, sau, ci, însă</i> sau prin virgulă (juxtapunere).<br><i>Au plecat pe rând, / dar s-au întors cu mâinile goale.</i></div>
+<div class="def"><b>Subordonare</b>: o propoziție (secundară) depinde de alta (regentă), legată prin <i>că, să, dacă, care, când, unde, cum</i>.<br><i>Împăratul știa / că numai apa vie îl putea vindeca.</i></div>
+</div>
+<p><b>Propoziția principală</b> are sens de sine stătător; <b>propoziția secundară</b> depinde de alta.</p>
+<h4>Ortograme (scrieri cu și fără cratimă)</h4>
+<table class="tbl"><tr><th>Cu cratimă</th><th>Fără cratimă</th></tr>
+<tr><td><b>s-a</b> (se + a): <i>Radu s-a oprit.</i></td><td><b>sa</b> (a lui): <i>cartea sa</i></td></tr>
+<tr><td><b>s-au</b> (se + au): <i>S-au jucat.</i></td><td><b>sau</b> (conjuncție = ori): <i>tu sau eu</i></td></tr>
+<tr><td><b>i-a</b> (îi + a): <i>Bunicul i-a dat...</i></td><td><b>ia</b> (verbul a lua): <i>Ia cartea!</i></td></tr>
+<tr><td><b>l-a</b> (îl + a): <i>L-a învins.</i></td><td><b>la</b> (prepoziție): <i>la fântână</i></td></tr>
+<tr><td><b>ne-am</b> (ne + am): <i>Ne-am întâlnit.</i></td><td><b>neam</b> (familie): <i>un neam vechi</i></td></tr>
+<tr><td><b>v-a</b> (vă + a): <i>V-a chemat.</i></td><td><b>va</b> (viitor): <i>va veni</i></td></tr>
+<tr><td><b>mi-a</b> (îmi + a): <i>Mi-a spus.</i></td><td><b>mia</b> (numeral): <i>a mia oară</i></td></tr>
+<tr><td><b>nu-i</b> (nu + este / îi): <i>Nu-i greu.</i></td><td><b>n-ai</b> / <b>nai</b> (instrument)</td></tr></table>
+<div class="tip"><b>Truc:</b> înlocuiește cu alt timp. <i>„Bunicul i-a dat”</i> → <i>„Bunicul îi dă”</i> (merge → scrii cu cratimă). <i>„S-a dus”</i> → <i>„se duce”</i>.</div>
+<h4>Semne de punctuație importante</h4>
+<ul><li><b>Virgula</b>: în enumerare (<i>a frecat, a uns și a strâns</i>), după vocativ (<i>Copii, veniți!</i>), după interjecții, înainte de <i>dar, iar, însă, ci</i>.</li>
+<li><b>Linia de dialog</b> (—): marchează începutul replicii unui personaj.</li>
+<li><b>Două puncte</b> (:): înaintea unei enumerări sau a vorbirii directe.</li>
+<li><b>Ghilimelele</b> („ ”): citate, titluri, vorbire directă în text.</li>
+<li><b>Punctele de suspensie</b> (...): o idee neterminată, emoție, ezitare.</li></ul>
+`}
+];
+
+const LITERATURE = [
+{
+id: "l-texte", cls: "V", title: "Textul literar și textul nonliterar", topic: "nonliterar",
+body: `
+<p class="lead">Orice text transmite un mesaj. Diferența este <b>scopul</b>: să informeze sau să emoționeze.</p>
+<table class="tbl"><tr><th></th><th>Text literar</th><th>Text nonliterar</th></tr>
+<tr><td>Scop</td><td>să emoționeze, să creeze o lume imaginară</td><td>să informeze, să explice, să convingă</td></tr>
+<tr><td>Limbaj</td><td>sens figurat, figuri de stil</td><td>sens propriu, clar, exact</td></tr>
+<tr><td>Lumea</td><td>ficțiune (imaginară)</td><td>realitate</td></tr>
+<tr><td>Exemple</td><td>basm, poezie, fabulă, povestire, piesă de teatru</td><td>afiș, reclamă, articol de ziar, rețetă, orar, anunț, dicționar</td></tr></table>
+<h4>Textul nonliterar – ce cauți în el</h4>
+<ul><li><b>Afișul</b>: titlul evenimentului, data, ora, locul, organizatorul, condițiile (intrare liberă, înscriere). Scop: să informeze și să convingă publicul să participe.</li>
+<li><b>Reclama</b>: slogan, imagine, produs; scop: să convingă să cumperi.</li>
+<li><b>Articolul</b>: titlu, autor, informații reale, răspunde la: cine? ce? unde? când? de ce?</li></ul>
+<div class="def"><b>Textul multimodal</b> = combină cuvinte cu imagini, grafice, tabele sau simboluri (afiș, benzi desenate, infografic).</div>
+<div class="tip"><b>La EN:</b> un subiect cere des „Precizează două informații din textul B” sau „Menționează scopul textului”. Citește atent și copiază datele exact (ore, date, locuri)!</div>
+`},
+{
+id: "l-narativ", cls: "V", title: "Textul narativ: narator, acțiune, momente", topic: "narativ",
+body: `
+<p class="lead">Textul narativ <b>povestește</b> o întâmplare (acțiune) petrecută într-un anumit timp și spațiu, cu personaje.</p>
+<h4>Naratorul</h4>
+<table class="tbl"><tr><th>Tip</th><th>Persoana</th><th>Cum îl recunoști</th></tr>
+<tr><td><b>Narator-personaj</b> (implicat)</td><td>persoana I</td><td>„<i>am urcat pe șa</i>”, „<i>mi-a spus</i>”, participă la întâmplări</td></tr>
+<tr><td><b>Narator obiectiv</b> (neimplicat)</td><td>persoana a III-a</td><td>„<i>Ilie a pornit</i>”, doar povestește, nu participă</td></tr></table>
+<div class="trap"><b>Nu confunda</b> naratorul cu autorul! Autorul este persoana reală care a scris textul. Naratorul este „vocea” care povestește în text.</div>
+<h4>Timpul și spațiul</h4>
+<p>Indicii de <b>timp</b>: <i>în vara aceea, a patra zi, seara, odată</i>. Indicii de <b>spațiu</b>: <i>în șopron, pe ulița satului, la fântână</i>.</p>
+<h4>Momentele subiectului</h4>
+<table class="tbl"><tr><th>#</th><th>Moment</th><th>Ce se întâmplă</th></tr>
+<tr><td>1</td><td><b>Expozițiunea</b></td><td>prezintă timpul, locul și personajele</td></tr>
+<tr><td>2</td><td><b>Intriga</b></td><td>întâmplarea care declanșează acțiunea</td></tr>
+<tr><td>3</td><td><b>Desfășurarea acțiunii</b></td><td>șirul de întâmplări</td></tr>
+<tr><td>4</td><td><b>Punctul culminant</b></td><td>momentul de maximă tensiune</td></tr>
+<tr><td>5</td><td><b>Deznodământul</b></td><td>finalul, rezolvarea</td></tr></table>
+<div class="tip"><b>Truc:</b> punctul culminant e momentul în care te întrebi „Oare reușește?”. Deznodământul răspunde la întrebare.</div>
+<h4>Povestirea</h4>
+<p>Specie a genului epic în proză, de mică întindere, cu puține personaje și o singură întâmplare, adesea relatată de un narator-martor sau narator-personaj.</p>
+`},
+{
+id: "l-personaj", cls: "V–VI", title: "Personajul și caracterizarea", topic: "narativ",
+body: `
+<p class="lead">Personajul = ființa (om, animal, obiect personificat, ființă fabuloasă) care participă la acțiune.</p>
+<h4>Clasificare</h4>
+<ul><li>după importanță: <b>principal</b> (participă la toată acțiunea), <b>secundar</b> (îl ajută sau i se opune), <b>episodic</b> (apare o dată);</li>
+<li>după trăsături: <b>pozitiv</b> / <b>negativ</b>;</li>
+<li>după natură: <b>real</b> / <b>fabulos</b> (zmeu, zână, cal năzdrăvan).</li></ul>
+<h4>Caracterizarea personajului</h4>
+<div class="grid2">
+<div class="def"><b>Directă</b>: trăsăturile sunt spuse clar<br>– de narator: <i>„Era un copil harnic.”</i><br>– de alte personaje: <i>„Bravo, meștere!”</i><br>– de personajul însuși (autocaracterizare).</div>
+<div class="def"><b>Indirectă</b>: deduci trăsăturile din<br>– fapte (a reparat bicicleta 3 zile → perseverent);<br>– vorbe, gesturi, atitudini;<br>– nume, mediu, relațiile cu alții.</div>
+</div>
+<div class="def"><b>Portretul</b>: <b>fizic</b> (cum arată) și <b>moral</b> (cum este ca om: trăsături de caracter).</div>
+<div class="tip"><b>Rețetă EN (30–50 cuvinte):</b> 1) numește trăsătura („<i>Naratorul este perseverent</i>”); 2) dă secvența din text („<i>trei zile la rând am frecat, am uns...</i>”); 3) explică legătura („<i>deși Radu râdea de el, nu a renunțat</i>”).</div>
+`},
+{
+id: "l-expunere", cls: "V–VI", title: "Modurile de expunere", topic: "narativ",
+body: `
+<table class="tbl"><tr><th>Mod</th><th>Ce face</th><th>Mărci</th></tr>
+<tr><td><b>Narațiunea</b></td><td>povestește întâmplări</td><td>multe verbe de acțiune, succesiune de fapte</td></tr>
+<tr><td><b>Descrierea</b></td><td>prezintă cum arată un peisaj (<b>tablou</b>) sau un om (<b>portret</b>)</td><td>multe adjective, epitete, imagini artistice, verbe la imperfect/prezent</td></tr>
+<tr><td><b>Dialogul</b></td><td>conversația dintre personaje</td><td>linia de dialog (—), verbe de declarație: <i>a spune, a răspunde, a striga, a întreba</i></td></tr>
+<tr><td><b>Monologul</b></td><td>personajul vorbește cu sine sau lung, fără să fie întrerupt</td><td>persoana I, întrebări retorice</td></tr></table>
+<div class="tip">În dialog, <b>verbele de declarație</b> (<i>a zis, a strigat, a șoptit</i>) arată cine vorbește și cum. Replicile sunt introduse de <b>linia de dialog</b>, iar în text pot apărea și între <b>ghilimele</b>.</div>
+`},
+{
+id: "l-figuri", cls: "V–VI", title: "Figurile de stil și imaginile artistice", topic: "figuri",
+body: `
+<p class="lead">Figurile de stil sunt „trucuri” ale scriitorului care fac textul mai expresiv. Imaginile artistice ne fac să „vedem, auzim, simțim” ce descrie textul.</p>
+<table class="tbl"><tr><th>Figura</th><th>Definiție</th><th>Exemplu</th></tr>
+<tr><td><b>Epitetul</b></td><td>cuvânt (adjectiv, de obicei) care arată o însușire deosebită</td><td>clopoțel <u>ruginit</u>, frunze <u>aurate</u>, zâna <u>bună</u></td></tr>
+<tr><td><b>Comparația</b></td><td>apropierea a doi termeni prin <i>ca, precum, cât, asemenea</i></td><td>mere roșii <u>ca focul</u>; mâinile <u>ca ale unui fierar</u></td></tr>
+<tr><td><b>Personificarea</b></td><td>atribuirea de însușiri omenești lucrurilor, animalelor, fenomenelor</td><td>merele <u>râd</u>; vântul <u>își caută</u> locul</td></tr>
+<tr><td><b>Enumerația</b></td><td>înșiruirea mai multor termeni de același fel</td><td>am frecat, am uns și am strâns șuruburi</td></tr>
+<tr><td><b>Repetiția</b></td><td>reluarea unui cuvânt pentru a-l scoate în evidență</td><td>departe, departe; trei zile și trei nopți</td></tr>
+<tr><td><b>Hiperbola</b></td><td>exagerarea (mărire sau micșorare)</td><td>un colet <u>uriaș</u> cât casa; până ajungi, <u>se face iarnă</u></td></tr>
+<tr><td><b>Metafora</b> (cl. VI)</td><td>comparație fără „ca”; un cuvânt primește sens nou</td><td>toamna, <u>zâna bună</u>; o <u>inimă de aur</u></td></tr>
+<tr><td><b>Inversiunea</b></td><td>schimbarea ordinii obișnuite a cuvintelor</td><td><u>albastre</u> flori (în loc de flori albastre)</td></tr>
+<tr><td><b>Antiteza</b></td><td>opunerea a două idei, personaje, imagini</td><td>Eu merg încet, dar știu unde merg. / Tu alergi mult, dar te rătăcești.</td></tr></table>
+<h4>Imaginile artistice</h4>
+<ul><li><b>vizuale</b> – culori, forme: <i>mere roșii, frunze aurate</i></li>
+<li><b>auditive</b> – sunete: <i>cum bate ploaia pe ferestre, clopoțelul a sunat</i></li>
+<li><b>olfactive</b> – mirosuri: <i>miros de gutui</i></li>
+<li><b>tactile</b> – atingere: <i>mantia mătăsoasă, vântul rece</i></li>
+<li><b>gustative</b> – gusturi: <i>mere dulci</i></li>
+<li><b>dinamice / motorii</b> – mișcare: <i>trece toamna, bicicleta a pornit</i></li></ul>
+<div class="tip"><b>Rețetă EN – „Explică semnificația unei figuri de stil”:</b> 1) numește figura; 2) citeaz-o; 3) spune ce efect are (ce idee/sentiment accentuează).</div>
+`},
+{
+id: "l-liric", cls: "V–VI", title: "Textul liric: poezia", topic: "liric",
+body: `
+<p class="lead">Textul liric exprimă direct <b>sentimente, emoții, gânduri</b>. Nu are acțiune și personaje, ci un <b>eu liric</b>.</p>
+<div class="def"><b>Eul liric</b> = vocea care își exprimă sentimentele în poezie (nu e același lucru cu poetul!).<br><b>Mărcile eului liric</b>: verbe și pronume la persoana I (<i>eu ascult, îmi adun</i>), adresare directă (<i>Toamnă, rămâi!</i>), interjecții, semnul exclamării.</div>
+<h4>Versificația</h4>
+<table class="tbl"><tr><th>Termen</th><th>Explicație</th></tr>
+<tr><td><b>Versul</b></td><td>un rând dintr-o poezie</td></tr>
+<tr><td><b>Strofa</b></td><td>grup de versuri: <b>distih</b> (2), <b>terțină</b> (3), <b>catren</b> (4), <b>cvinarie</b> (5), <b>sextină</b> (6)</td></tr>
+<tr><td><b>Rima</b></td><td>potrivirea sunetelor de la sfârșitul versurilor</td></tr>
+<tr><td><b>Măsura</b></td><td>numărul de silabe dintr-un vers</td></tr></table>
+<h4>Tipuri de rimă</h4>
+<table class="tbl"><tr><th>Tip</th><th>Schema</th></tr>
+<tr><td>împerecheată</td><td>a a b b</td></tr>
+<tr><td>încrucișată</td><td>a b a b</td></tr>
+<tr><td>îmbrățișată</td><td>a b b a</td></tr>
+<tr><td>monorimă</td><td>a a a a</td></tr></table>
+<div class="trap"><b>Cum numeri măsura:</b> desparte versul în silabe și numără-le. <i>Prin-li-va-da-som-no-roa-să</i> = 8 silabe. Atenție: <i>oa</i> e diftong, deci o singură silabă!</div>
+<h4>Titlul și tema</h4>
+<p>Titlul anunță de obicei tema (natura, copilăria, familia, patria, anotimpurile). Pentru „<b>sentimentele eului liric</b>” caută: bucurie, admirație, nostalgie, liniște, tristețe, uimire.</p>
+<div class="tip"><b>Poezia descriptivă (pastelul)</b> prezintă un tablou din natură; combină descrierea cu trăirile eului liric.</div>
+`},
+{
+id: "l-specii", cls: "V–VI", title: "Basmul, legenda, fabula", topic: "specii",
+body: `
+<h4>Basmul (specie epică)</h4>
+<p>Narațiune fantastică despre lupta dintre <b>bine și rău</b>, în care binele învinge. Personajele sunt reale și fabuloase.</p>
+<ul><li><b>Formula inițială</b>: <i>A fost odată ca niciodată...</i> – te introduce în lumea poveștii.</li>
+<li><b>Formule mediane</b>: <i>Și merse, și merse... Cu cât mai spui, cu atât mai frumos.</i> – mențin atenția.</li>
+<li><b>Formula finală</b>: <i>Și-am încălecat pe-o șa și v-am spus povestea așa.</i> – te scoate din lumea basmului.</li>
+<li><b>Cifre magice</b>: 3, 7, 9, 12 (trei feciori, nouă mări și nouă țări).</li>
+<li><b>Elemente fabuloase</b>: cal năzdrăvan, zmeu, apă vie, obiecte magice.</li>
+<li><b>Probe</b> pe care eroul le trece; <b>ajutoare</b> (cal, zâne, animale).</li>
+<li>Basm <b>popular</b> (anonim, oral) sau <b>cult</b> (scris de un autor cunoscut).</li></ul>
+<h4>Legenda</h4>
+<p>Narațiune care <b>explică originea</b> unui lucru, fenomen, animal, plante sau a unui nume de loc, amestecând realul cu fantasticul (<i>legenda rândunicii, legenda ghiocelului</i>).</p>
+<h4>Fabula</h4>
+<p>Scurtă narațiune în versuri sau proză, în care <b>animale, plante sau obiecte</b> au trăsături omenești (<b>personificare</b>) și care se încheie cu o <b>morală</b> (învățătură).</p>
+<ul><li>Are două părți: <b>povestirea</b> (o întâmplare) și <b>morala</b> (la început sau la final).</li>
+<li>Personajele ilustrează defecte sau calități omenești (vulpea = viclenia, melcul = răbdarea).</li>
+<li>Criticarea defectelor se face prin umor; <b>alegoria</b> = animalele „înlocuiesc” oamenii.</li></ul>
+<div class="tip"><b>Rețetă EN „Demonstrează că textul este o fabulă”:</b> 1) personaje-animale personificate (exemplu din text); 2) morala (citat). Adaugă un argument extra: textul este scurt și are o singură întâmplare.</div>
+`},
+{
+id: "l-dramatic", cls: "VI", title: "Textul dramatic", topic: "dramatic",
+body: `
+<p class="lead">Textul dramatic este scris pentru a fi <b>jucat pe scenă</b> de actori. Nu are narator: acțiunea se desfășoară prin <b>replici</b>.</p>
+<table class="tbl"><tr><th>Element</th><th>Ce este</th></tr>
+<tr><td><b>Lista personajelor</b></td><td>la început, numele personajelor, uneori cu o scurtă prezentare</td></tr>
+<tr><td><b>Replica</b></td><td>ce spune un personaj; începe cu numele lui scris cu majuscule</td></tr>
+<tr><td><b>Didascaliile</b> (indicațiile scenice)</td><td>textul dintre paranteze, scris de autor: arată decorul, gesturile, tonul, mișcările (<i>intrând în fugă, șoptind</i>)</td></tr>
+<tr><td><b>Actul și scena</b></td><td>diviziunile piesei; o scenă se schimbă când intră/iese un personaj</td></tr></table>
+<div class="grid2">
+<div class="def"><b>Dialogul</b> este principalul mod de expunere; pot apărea și <b>monologul</b>.</div>
+<div class="def"><b>Oamenii teatrului:</b> dramaturg (autorul), regizor, actori, scenograf, public/spectatori.</div>
+</div>
+<div class="trap"><b>Didascaliile nu se rostesc</b> pe scenă! Ele sunt instrucțiuni pentru actori și regizor.</div>
+<div class="tip"><b>Specii dramatice</b>: comedia (te face să râzi, critică defecte), drama, tragedia.</div>
+`},
+{
+id: "l-scriere", cls: "V–VI", title: "Redactarea: compunerea la EN", topic: "compunere",
+body: `
+<p class="lead">La EN ai două tipuri de texte de scris: <b>răspunsuri scurte</b> (30–80 de cuvinte) și <b>compunerea</b> (minim 150 de cuvinte).</p>
+<h4>Structura oricărei compuneri</h4>
+<table class="tbl"><tr><th>Parte</th><th>Ce conține</th></tr>
+<tr><td><b>Introducerea</b></td><td>prezintă timpul, locul, personajele sau ideea principală</td></tr>
+<tr><td><b>Cuprinsul</b></td><td>dezvoltarea: întâmplările sau descrierea detaliată</td></tr>
+<tr><td><b>Încheierea</b></td><td>finalul, concluzia, impresia ta</td></tr></table>
+<h4>Tipuri de compuneri</h4>
+<ul><li><b>Narativă</b>: o întâmplare, cu narator, personaje, momentele subiectului, dialog (opțional).</li>
+<li><b>Descriptivă</b>: tablou (natură) sau portret; minimum 2 figuri de stil, imagini artistice.</li>
+<li><b>Scrisoare / e-mail</b>: localitate și dată, formulă de adresare (<i>Dragă Radu,</i>), cuprins, formulă de încheiere (<i>Cu drag,</i>), semnătura.</li>
+<li><b>Invitație</b>: ce, când, unde, cine invită, de ce să vii.</li>
+<li><b>Argumentativă</b>: opinia ta + 2 argumente + concluzie. Formule: <i>În opinia mea... În primul rând... În al doilea rând... Așadar...</i></li></ul>
+<h4>Rezumatul</h4>
+<p>Prezentare pe scurt a întâmplărilor, la <b>persoana a III-a</b>, <b>fără dialog</b>, fără figuri de stil, în ordinea în care s-au petrecut.</p>
+<div class="tip"><b>Ce punctează corectorul:</b> respectarea cerinței și a numărului de cuvinte • organizarea ideilor în paragrafe • vocabular potrivit • ortografie și punctuație • așezare în pagină, lizibilitate.</div>
+<div class="trap"><b>Greșeli frecvente:</b> lipsa alineatelor, virgula între subiect și predicat, „s-a / sa”, „i-a / ia”, prea puține cuvinte.</div>
+`}
+];
+
+const TESTS = [];
+TESTS.push({
+id: "t1", num: 1, title: "Bicicleta cu clopoțel", day: "Sâmbătă · dimineața",
+covers: ["Text narativ", "Narator și momentele subiectului", "Fonetică", "Vocabular", "Verbul la indicativ", "Ortograme"],
+texts: [{ id: "A", title: "Textul A", html: `
+<p>În vara aceea, bunicul a scos din șopron o bicicletă veche, cu roțile acoperite de praf și cu un clopoțel ruginit.</p>
+<p>— Dacă o repari, e a ta, mi-a spus el, zâmbind pe sub mustață.</p>
+<p>Trei zile la rând am frecat, am uns și am strâns șuruburi. Mâinile mi se înnegriseră ca ale unui fierar, dar inima îmi bătea de bucurie. Vecinul meu, Radu, se oprea în fiecare dimineață la gard și râdea:</p>
+<p>— N-o să meargă niciodată!</p>
+<p>În a patra zi, am urcat pe șa. Bicicleta a scârțâit, s-a clătinat, apoi a pornit ușor pe ulița satului. Clopoțelul a sunat limpede, ca un râs de copil. Radu a rămas cu gura căscată, iar bunicul a strigat din poartă:</p>
+<p>— Bravo, meștere!</p>
+<p>Atunci am înțeles că lucrurile vechi prind viață dacă ai răbdare cu ele.</p>
+<p class="src">(text scris pentru acest test)</p>` }],
+questions: [
+{ id:"t1q1", text:"A", type:"mc", pts:3, topic:"narativ", ref:"l-narativ",
+  prompt:"Cine povestește întâmplarea din textul A?",
+  options:["Un narator-personaj, la persoana I","Un narator obiectiv, la persoana a III-a","Bunicul","Radu, vecinul"], answer:0,
+  expl:"Verbele și pronumele la persoana I („am urcat”, „mi-a spus”) arată un narator care participă la întâmplări: narator-personaj." },
+{ id:"t1q2", text:"A", type:"mc", pts:3, topic:"narativ", ref:"l-narativ",
+  prompt:"Secvența „În a patra zi, am urcat pe șa. Bicicleta a scârțâit, s-a clătinat, apoi a pornit...” corespunde momentului:",
+  options:["expozițiunea","intriga","punctul culminant","deznodământul"], answer:2,
+  expl:"Este momentul de maximă tensiune: va merge sau nu bicicleta? Acesta este punctul culminant. Deznodământul vine după (bunicul îl laudă, naratorul înțelege lecția)." },
+{ id:"t1q3", text:"A", type:"mc", pts:3, topic:"narativ", ref:"l-narativ",
+  prompt:"Ce întâmplare declanșează acțiunea (intriga)?",
+  options:["Radu râde de narator la gard","Bunicul îi promite bicicleta dacă o repară","Clopoțelul sună limpede","Naratorul înțelege că lucrurile vechi prind viață"], answer:1,
+  expl:"Intriga este momentul care pornește acțiunea: promisiunea bunicului („Dacă o repari, e a ta”) îl face pe narator să înceapă reparația." },
+{ id:"t1q4", text:"A", type:"tf", pts:2, topic:"narativ", ref:"l-personaj",
+  prompt:"Adevărat sau fals? Radu crede de la început că bicicleta va merge.",
+  answer:false,
+  expl:"Fals. Radu râde și spune „N-o să meargă niciodată!”, iar la final „rămâne cu gura căscată” – e surprins." },
+{ id:"t1q5", text:"A", type:"mc", pts:3, topic:"figuri", ref:"l-figuri",
+  prompt:"În structura „Mâinile mi se înnegriseră ca ale unui fierar” identifici:",
+  options:["o personificare","o comparație","o enumerație","un epitet"], answer:1,
+  expl:"Apare cuvântul de comparație „ca”, care apropie mâinile naratorului de ale unui fierar: comparație." },
+{ id:"t1q6", text:"A", type:"mc", pts:3, topic:"figuri", ref:"l-figuri",
+  prompt:"Cuvântul „ruginit” din structura „un clopoțel ruginit” este:",
+  options:["epitet","comparație","hiperbolă","metaforă"], answer:0,
+  expl:"Adjectivul „ruginit” arată o însușire a clopoțelului, scoasă în evidență: epitet." },
+{ id:"t1q7", text:"A", type:"mc", pts:3, topic:"figuri", ref:"l-figuri",
+  prompt:"Secvența „am frecat, am uns și am strâns șuruburi” conține:",
+  options:["o repetiție","o enumerație","o inversiune","o antiteză"], answer:1,
+  expl:"Sunt înșirate mai multe acțiuni de același fel (verbe), una după alta: enumerație." },
+{ id:"t1q8", text:"A", type:"mc", pts:3, topic:"narativ", ref:"l-expunere",
+  prompt:"Replica „— Bravo, meștere!” este marcată în text prin:",
+  options:["ghilimele","linia de dialog","paranteze","puncte de suspensie"], answer:1,
+  expl:"Linia de dialog (—) marchează începutul replicii unui personaj. Modul de expunere este dialogul." },
+{ id:"t1q9", text:"A", type:"open", pts:6, topic:"narativ", ref:"l-personaj",
+  prompt:"Prezintă, în 30–50 de cuvinte, o trăsătură a naratorului, ilustrată printr-o secvență din text.",
+  model:"Naratorul este perseverent. Deși vecinul Radu râdea de el în fiecare dimineață, spunând că bicicleta „n-o să meargă niciodată”, băiatul a lucrat „trei zile la rând” la reparație. Răbdarea lui este răsplătită când bicicleta pornește, iar bunicul îl numește „meștere”.",
+  rubric:[{t:"Am numit o trăsătură potrivită (perseverent, răbdător, harnic, hotărât)",p:2},{t:"Am citat sau am prezentat o secvență din text care o arată",p:2},{t:"Am explicat legătura dintre secvență și trăsătură și am respectat 30–50 de cuvinte",p:2}],
+  expl:"Rețeta: trăsătură + secvență (citat) + explicație. Caracterizarea este aici indirectă, prin fapte." },
+{ id:"t1q10", type:"mc", pts:3, topic:"fonetica", ref:"g-fonetica",
+  prompt:"Care cuvânt conține un diftong?",
+  options:["poezie","seară","idee","alee"], answer:1,
+  expl:"sea-ră: „ea” se rostește în aceeași silabă → diftong. „po-e-zi-e”, „i-de-e”, „a-le-e” au hiat (vocale în silabe diferite)." },
+{ id:"t1q11", type:"mc", pts:3, topic:"fonetica", ref:"g-fonetica",
+  prompt:"Care cuvânt conține un hiat?",
+  options:["cuib","ploaie","poezie","iarnă"], answer:2,
+  expl:"po-e-zi-e: „o” și „e” sunt vocale în silabe diferite → hiat. „cuib” (ui), „ploa-ie” (oa, ie), „iar-nă” (ia) au diftongi." },
+{ id:"t1q12", type:"mc", pts:3, topic:"fonetica", ref:"g-fonetica",
+  prompt:"Cuvântul „bicicletă” se desparte corect în silabe astfel:",
+  options:["bi-cic-le-tă","bi-ci-cle-tă","bic-i-cle-tă","bi-ci-clet-ă"], answer:1,
+  expl:"Grupul „c + l” trece întreg la silaba următoare (excepția: b, c, d, f, g, h, p, t, v + l/r): bi-ci-cle-tă." },
+{ id:"t1q13", type:"mc", pts:3, topic:"fonetica", ref:"g-fonetica",
+  prompt:"Care cuvânt conține un triftong?",
+  options:["leoaică","poartă","ceai","ușor"], answer:0,
+  expl:"le-oai-că: „oai” (vocala „a” + două semivocale) în aceeași silabă → triftong. „ceai” are diftongul „ai” (litera e face parte din grupul „ce”)." },
+{ id:"t1q14", type:"mc", pts:3, topic:"fonetica", ref:"g-fonetica",
+  prompt:"Cuvântul „ghete” are:",
+  options:["5 litere și 5 sunete","5 litere și 4 sunete","4 litere și 4 sunete","5 litere și 3 sunete"], answer:1,
+  expl:"„gh” se scrie cu două litere, dar este un singur sunet: g-h-e-t-e = 5 litere; [g]-[e]-[t]-[e] = 4 sunete." },
+{ id:"t1q15", text:"A", type:"fill", pts:3, topic:"vocabular", ref:"g-vocabular",
+  prompt:"Scrie antonimul adjectivului „veche” din structura „o bicicletă veche”.",
+  accept:["nouă","noua","nou"],
+  expl:"Antonimul lui „veche” este „nouă” (sens opus)." },
+{ id:"t1q16", text:"A", type:"mc", pts:3, topic:"vocabular", ref:"g-vocabular",
+  prompt:"Sinonimul potrivit contextului pentru „limpede” din „Clopoțelul a sunat limpede” este:",
+  options:["transparent","clar","curat","senin"], answer:1,
+  expl:"Un sunet limpede este un sunet clar. „Transparent” și „senin” se potrivesc apei sau cerului, nu sunetului." },
+{ id:"t1q17", type:"mc", pts:3, topic:"vocabular", ref:"g-vocabular",
+  prompt:"În care enunț verbul „a prinde” are sens figurat?",
+  options:["Pisica prinde șoarecele.","Am prins mingea din zbor.","Lucrurile vechi prind viață.","Prinde tabloul în cui."], answer:2,
+  expl:"Lucrurile nu pot „prinde” fizic viața; aici „a prinde viață” înseamnă „a funcționa din nou” – sens figurat." },
+{ id:"t1q18", type:"mc", pts:3, topic:"vocabular", ref:"g-vocabular",
+  prompt:"Cuvintele „original” și „originar” sunt:",
+  options:["sinonime","antonime","omonime","paronime"], answer:3,
+  expl:"Au forme aproape identice, dar sensuri diferite (original = unic, nou; originar = care provine de undeva): paronime." },
+{ id:"t1q19", type:"mc", pts:3, topic:"vocabular", ref:"g-vocabular",
+  prompt:"Cuvântul „bicicletist” este format prin:",
+  options:["derivare cu prefix","derivare cu sufix","compunere","conversiune"], answer:1,
+  expl:"bicicletă + sufixul „-ist” → bicicletist: derivare cu sufix. Face parte din familia lexicală a cuvântului „bicicletă”." },
+{ id:"t1q20", type:"mc", pts:3, topic:"vocabular", ref:"g-vocabular",
+  prompt:"Care enunț conține un pleonasm (greșeală)?",
+  options:["Am urcat pe șa.","Bunicul a urcat sus în pod.","Radu a rămas la gard.","Am coborât scările."], answer:1,
+  expl:"„A urca sus” repetă inutil ideea (nu poți urca jos). Corect: „a urcat în pod”." },
+{ id:"t1q21", text:"A", type:"mc", pts:3, topic:"verb", ref:"g-verb-ind",
+  prompt:"Verbul „se înnegriseră” este la modul indicativ, timpul:",
+  options:["imperfect","perfect compus","perfect simplu","mai-mult-ca-perfect"], answer:3,
+  expl:"Terminația „-seră” arată mai-mult-ca-perfectul: o acțiune încheiată înaintea altei acțiuni trecute." },
+{ id:"t1q22", text:"A", type:"mc", pts:3, topic:"verb", ref:"g-verb-ind",
+  prompt:"Verbul „râdea” (Radu ... se oprea la gard și râdea) este la timpul:",
+  options:["prezent","imperfect","perfect simplu","viitor"], answer:1,
+  expl:"Imperfectul arată o acțiune trecută, de durată sau repetată („în fiecare dimineață”): râdea, se oprea." },
+{ id:"t1q23", type:"mc", pts:3, topic:"verb", ref:"g-verb-ind",
+  prompt:"În care enunț verbul „a avea” este auxiliar?",
+  options:["Am o bicicletă veche.","Bunicul are răbdare.","Am frecat bicicleta trei zile.","Radu avea un câine."], answer:2,
+  expl:"În „am frecat”, „am” ajută la formarea perfectului compus → auxiliar. În celelalte, „a avea” înseamnă „a poseda” → predicativ." },
+{ id:"t1q24", type:"multi", pts:4, topic:"fraza", ref:"g-fraza",
+  prompt:"Bifează enunțurile scrise corect.",
+  options:["Bunicul i-a dat bicicleta.","Radu sa oprit la gard.","Bicicleta s-a clătinat.","Ia-o și du-te la plimbare!"], answer:[0,2,3],
+  expl:"„i-a dat” (îi + a), „s-a clătinat” (se + a), „Ia-o” (verbul a lua) sunt corecte. „Radu sa oprit” e greșit: corect „s-a oprit” (se oprește)." },
+{ id:"t1q25", type:"open", pts:12, topic:"compunere", ref:"l-scriere",
+  prompt:"Scrie o narațiune de 80–120 de cuvinte în care un obiect vechi „prinde viață” datorită cuiva. Folosește persoana I și cel puțin o replică de dialog.",
+  model:"Într-o duminică ploioasă, am găsit în pod un radio vechi al bunicii. Era prăfuit, iar butoanele nu se mai învârteau. \n— Crezi că mai merge? am întrebat-o pe bunica.\n— Dacă ai răbdare, poate cânta din nou, mi-a răspuns ea zâmbind.\nAm șters cu grijă fiecare colțișor, am schimbat bateriile și am strâns un fir desprins. Când am apăsat butonul, radioul a hârâit, apoi a început să cânte o melodie veche. Bunica a început să danseze prin cameră, iar eu râdeam fericit. Am înțeles atunci că amintirile pot fi trezite cu puțină grijă.",
+  rubric:[{t:"Am povestit o întâmplare cu început, desfășurare și final",p:2},{t:"Am folosit persoana I (narator-personaj)",p:2},{t:"Am inclus cel puțin o replică marcată cu linia de dialog",p:2},{t:"Am respectat 80–120 de cuvinte",p:2},{t:"Am scris cu alineate și fără greșeli de ortografie (s-a, i-a...)",p:2},{t:"Am folosit cel puțin o figură de stil sau un cuvânt expresiv",p:2}],
+  expl:"O narațiune bună are momentele subiectului, narator clar, dialog corect punctat și paragrafe." }
+]});
+
+TESTS.push({
+id: "t2", num: 2, title: "Toamna în livadă", day: "Sâmbătă · după-amiaza",
+covers: ["Text liric", "Eu liric, rimă, măsură", "Figuri de stil și imagini", "Substantivul și cazurile", "Articolul", "Adjectivul", "Numeralul", "Pronumele personal"],
+texts: [{ id: "A", title: "Textul A · Toamna în livadă", html: `
+<div class="poem">
+<p>Prin livada somnoroasă<br>Trece toamna, zâna bună,<br>Cu o mantie mătăsoasă<br>Țesută din rouă și lună.</p>
+<p>Merele roșii ca focul<br>Râd pe crengile plecate,<br>Vântul își caută locul<br>Printre frunze aurate.</p>
+<p>Eu ascult cum bate ploaia<br>Pe ferestre, lin și rar,<br>Legănând încet odaia<br>Ca pe-un leagăn de cleștar.</p>
+</div>
+<p class="src">(poezie scrisă pentru acest test)</p>` }],
+questions: [
+{ id:"t2q1", text:"A", type:"mc", pts:3, topic:"liric", ref:"l-liric",
+  prompt:"Textul A este un text liric deoarece:",
+  options:["povestește o întâmplare cu personaje","exprimă direct sentimentele eului liric","conține replici și didascalii","se încheie cu o morală"], answer:1,
+  expl:"Textul liric exprimă sentimente și impresii; aici eul liric își exprimă admirația și liniștea în fața toamnei." },
+{ id:"t2q2", text:"A", type:"mc", pts:3, topic:"liric", ref:"l-liric",
+  prompt:"O marcă a eului liric în poezie este:",
+  options:["„Trece toamna”","„Merele roșii”","„Eu ascult”","„Printre frunze”"], answer:2,
+  expl:"Pronumele personal „eu” și verbul la persoana I „ascult” arată prezența eului liric." },
+{ id:"t2q3", text:"A", type:"mc", pts:3, topic:"liric", ref:"l-liric",
+  prompt:"Rima din prima strofă (somnoroasă – bună – mătăsoasă – lună) este:",
+  options:["împerecheată (aabb)","încrucișată (abab)","îmbrățișată (abba)","monorimă (aaaa)"], answer:1,
+  expl:"Versul 1 rimează cu 3 (somnoroasă – mătăsoasă), versul 2 cu 4 (bună – lună): schema abab = rimă încrucișată." },
+{ id:"t2q4", text:"A", type:"fill", pts:3, topic:"liric", ref:"l-liric",
+  prompt:"Care este măsura primului vers, „Prin livada somnoroasă”? (scrie doar numărul de silabe)",
+  accept:["8","opt"],
+  expl:"Prin-li-va-da-som-no-roa-să = 8 silabe. „oa” este diftong, deci o singură silabă." },
+{ id:"t2q5", text:"A", type:"mc", pts:3, topic:"liric", ref:"l-liric",
+  prompt:"Fiecare strofă a poeziei este un:",
+  options:["distih","terțină","catren","sextină"], answer:2,
+  expl:"Strofa de patru versuri se numește catren." },
+{ id:"t2q6", text:"A", type:"mc", pts:3, topic:"figuri", ref:"l-figuri",
+  prompt:"În versul „Merele roșii ca focul” apare:",
+  options:["o comparație","o personificare","o repetiție","o antiteză"], answer:0,
+  expl:"Culoarea merelor este apropiată de cea a focului prin cuvântul „ca”: comparație." },
+{ id:"t2q7", text:"A", type:"mc", pts:3, topic:"figuri", ref:"l-figuri",
+  prompt:"Structura „Merele ... Râd pe crengile plecate” conține o personificare, pentru că:",
+  options:["merele sunt roșii","merele primesc o acțiune omenească (a râde)","se compară două lucruri","se exagerează o însușire"], answer:1,
+  expl:"„A râde” este o acțiune omenească atribuită merelor: personificare." },
+{ id:"t2q8", text:"A", type:"mc", pts:3, topic:"figuri", ref:"l-figuri",
+  prompt:"Structura „toamna, zâna bună” este:",
+  options:["o enumerație","o metaforă","o hiperbolă","o inversiune"], answer:1,
+  expl:"Toamna este numită „zâna bună”, fără cuvântul „ca”: metaforă (comparație subînțeleasă). „bună” este și epitet." },
+{ id:"t2q9", text:"A", type:"mc", pts:3, topic:"figuri", ref:"l-figuri",
+  prompt:"Versurile „Eu ascult cum bate ploaia / Pe ferestre, lin și rar” conțin o imagine artistică:",
+  options:["olfactivă","auditivă","gustativă","tactilă"], answer:1,
+  expl:"Eul liric „ascultă” sunetul ploii: imagine auditivă." },
+{ id:"t2q10", text:"A", type:"multi", pts:4, topic:"figuri", ref:"l-figuri",
+  prompt:"Bifează toate epitetele din poezie.",
+  options:["somnoroasă (livada)","mătăsoasă (mantie)","aurate (frunze)","ascult"], answer:[0,1,2],
+  expl:"Epitetele sunt adjective expresive: livada somnoroasă, mantie mătăsoasă, frunze aurate. „Ascult” este verb." },
+{ id:"t2q11", text:"A", type:"open", pts:6, topic:"liric", ref:"l-liric",
+  prompt:"Prezintă, în 30–50 de cuvinte, sentimentul transmis de eul liric în ultima strofă, valorificând două expresii din text.",
+  model:"În ultima strofă, eul liric transmite o stare de liniște și de siguranță. El ascultă ploaia care bate „lin și rar”, iar odaia este legănată „ca pe-un leagăn de cleștar”. Toamna nu îl întristează, ci îl liniștește, ca un cântec de leagăn.",
+  rubric:[{t:"Am numit un sentiment potrivit (liniște, calm, siguranță, visare)",p:2},{t:"Am citat două expresii din ultima strofă",p:2},{t:"Am explicat legătura și am respectat 30–50 de cuvinte",p:2}],
+  expl:"Sentimentul se deduce din imagini: sunetul blând al ploii și leagănul sugerează calm, nu tristețe." },
+{ id:"t2q12", text:"A", type:"mc", pts:3, topic:"substantiv", ref:"g-substantiv",
+  prompt:"Substantivul „livada” din „Prin livada somnoroasă” este în cazul:",
+  options:["Nominativ","Acuzativ","Genitiv","Dativ"], answer:1,
+  expl:"Este precedat de prepoziția „prin”, care cere cazul Acuzativ." },
+{ id:"t2q13", text:"A", type:"mc", pts:3, topic:"substantiv", ref:"g-substantiv",
+  prompt:"Substantivul „toamna” din „Trece toamna” este în cazul Nominativ, cu funcția de:",
+  options:["subiect","complement direct","atribut","nume predicativ"], answer:0,
+  expl:"Cine trece? → toamna. Răspunde la întrebarea „cine?” adresată predicatului: subiect." },
+{ id:"t2q14", type:"mc", pts:3, topic:"substantiv", ref:"g-substantiv",
+  prompt:"Substantivul „acoperiș” este de genul:",
+  options:["masculin","feminin","neutru","nu are gen"], answer:2,
+  expl:"un acoperiș – două acoperișuri (un ... / două ...) → neutru." },
+{ id:"t2q15", type:"mc", pts:3, topic:"substantiv", ref:"g-substantiv",
+  prompt:"În enunțul „Toamna le dăruiește copiilor mere”, substantivul „copiilor” este în cazul:",
+  options:["Genitiv","Dativ","Acuzativ","Vocativ"], answer:1,
+  expl:"Cui dăruiește? → copiilor. Întrebarea „cui?” arată Dativul (funcție: complement indirect)." },
+{ id:"t2q16", type:"mc", pts:3, topic:"substantiv", ref:"g-substantiv",
+  prompt:"În enunțul „Culoarea frunzelor este aurie”, substantivul „frunzelor” este în cazul:",
+  options:["Genitiv","Dativ","Nominativ","Acuzativ"], answer:0,
+  expl:"Culoarea a cui? → a frunzelor. Întrebarea „al/a cui?” arată Genitivul (funcție: atribut substantival genitival)." },
+{ id:"t2q17", type:"mc", pts:3, topic:"substantiv", ref:"g-substantiv",
+  prompt:"În care enunț există un substantiv în cazul Vocativ?",
+  options:["Toamna a venit.","Toamnă, mai rămâi puțin!","Iubesc toamna.","Frunzele toamnei cad."], answer:1,
+  expl:"„Toamnă” este o adresare directă, despărțită prin virgulă: Vocativ." },
+{ id:"t2q18", type:"fill", pts:3, topic:"substantiv", ref:"g-substantiv",
+  prompt:"Scrie forma de Genitiv singular articulat a substantivului „livadă” (ex.: „crengile ______”).",
+  accept:["livezii","a livezii","ale livezii"],
+  expl:"livadă → livezii (crengile livezii). Atenție la alternanța „a – e” și „d – z”." },
+{ id:"t2q19", text:"A", type:"mc", pts:3, topic:"substantiv", ref:"g-articol",
+  prompt:"În structura „o mantie”, cuvântul „o” este:",
+  options:["articol hotărât","articol nehotărât","numeral","pronume personal"], answer:1,
+  expl:"„o” stă înaintea substantivului și arată un obiect neprecizat: articol nehotărât." },
+{ id:"t2q20", type:"mc", pts:3, topic:"substantiv", ref:"g-articol",
+  prompt:"În structura „mărul cel roșu”, cuvântul „cel” este:",
+  options:["articol posesiv","articol demonstrativ (adjectival)","articol nehotărât","pronume demonstrativ"], answer:1,
+  expl:"„cel” leagă adjectivul „roșu” de substantiv: articol demonstrativ (adjectival)." },
+{ id:"t2q21", type:"mc", pts:3, topic:"substantiv", ref:"g-articol",
+  prompt:"În structura „o frunză a copacului”, cuvântul „a” este:",
+  options:["verb auxiliar","prepoziție","articol posesiv (genitival)","marca infinitivului"], answer:2,
+  expl:"„a” însoțește un substantiv în Genitiv („copacului”): articol posesiv (genitival)." },
+{ id:"t2q22", type:"mc", pts:3, topic:"adjectiv", ref:"g-adjectiv",
+  prompt:"În enunțul „Mărul acesta este cel mai dulce din livadă”, adjectivul „dulce” este la gradul:",
+  options:["comparativ de superioritate","superlativ relativ","superlativ absolut","pozitiv"], answer:1,
+  expl:"„cel mai + adjectiv” compară un obiect cu un grup (din livadă): superlativ relativ. „foarte dulce” ar fi superlativ absolut." },
+{ id:"t2q23", type:"mc", pts:3, topic:"adjectiv", ref:"g-adjectiv",
+  prompt:"Care adjectiv NU are grade de comparație?",
+  options:["roșu","frumos","unic","dulce"], answer:2,
+  expl:"„Unic” înseamnă deja „singurul”, nu poate fi „mai unic”. Tot așa: perfect, veșnic, principal." },
+{ id:"t2q24", type:"multi", pts:4, topic:"numeral", ref:"g-numeral",
+  prompt:"Enunțul: „Am cules trei coșuri de mere; al doilea a fost de două ori mai greu, iar amândoi frații au fost mulțumiți.” Bifează potrivirile corecte.",
+  options:["trei – numeral cardinal","al doilea – numeral ordinal","de două ori – numeral fracționar","amândoi – numeral colectiv"], answer:[0,1,3],
+  expl:"„de două ori” este numeral adverbial (arată de câte ori), nu fracționar. Fracționar ar fi „o doime, jumătate”." },
+{ id:"t2q25", type:"mc", pts:3, topic:"pronume", ref:"g-pronume",
+  prompt:"În enunțul „Dumneavoastră ați plantat mărul?”, cuvântul „Dumneavoastră” este:",
+  options:["pronume personal","pronume de politețe","pronume posesiv","substantiv"], answer:1,
+  expl:"Exprimă respect față de persoana căreia i se vorbește: pronume de politețe." },
+{ id:"t2q26", type:"open", pts:12, topic:"compunere", ref:"l-scriere",
+  prompt:"Scrie o descriere (tablou) de 80–120 de cuvinte a unui peisaj de toamnă, folosind cel puțin două figuri de stil și două tipuri de imagini artistice.",
+  model:"Parcul din spatele blocului s-a îmbrăcat în haine de sărbătoare. Castanii bătrâni își scutură frunzele ruginii, care se rotesc prin aer ca niște fluturi obosiți. Pe alei, covorul foșnitor de frunze scârțâie sub pașii trecătorilor. Soarele blând, ca o lampă uitată aprinsă, mângâie băncile ude. Din chioșcul de la colț se simte miros de castane coapte și de gutui. Vântul șoptește povești printre crengi, iar cerul cenușiu pare că așteaptă prima ploaie. Îmi place să privesc acest tablou liniștit, pentru că toamna transformă parcul într-o pictură vie.",
+  rubric:[{t:"Am descris un peisaj (tablou), nu o întâmplare",p:2},{t:"Am folosit cel puțin două figuri de stil (epitet, comparație, personificare...)",p:2},{t:"Am folosit cel puțin două tipuri de imagini (vizuale, auditive, olfactive...)",p:2},{t:"Am respectat 80–120 de cuvinte",p:2},{t:"Am organizat textul: introducere – cuprins – încheiere",p:2},{t:"Am scris corect (ortografie, punctuație)",p:2}],
+  expl:"Descrierea tablou prezintă un loc; adjectivele expresive, comparațiile și personificările o fac vie." }
+]});
+
+TESTS.push({
+id: "t3", num: 3, title: "Coletul și fabula", day: "Duminică · dimineața",
+covers: ["Text dramatic", "Fabula și morala", "Modurile verbului", "Moduri nepersonale", "Pronumele reflexiv, posesiv, demonstrativ", "Adverb, prepoziție, conjuncție, interjecție"],
+texts: [
+{ id: "A", title: "Textul A · Coletul", html: `
+<p class="drama-list"><b>PERSONAJELE:</b> ANA, elevă în clasa a VI-a; MIHAI, fratele ei mai mic; BUNICA.</p>
+<p class="didas">(O bucătărie mică. Pe masă, un tort pe jumătate decorat.)</p>
+<p><b>MIHAI</b> <span class="didas">(intrând în fugă)</span>: Ana! A venit poștașul cu un colet uriaș!</p>
+<p><b>ANA</b> <span class="didas">(fără să ridice ochii de pe tort)</span>: Lasă-l pe hol. Acum nu pot, sunt ocupată.</p>
+<p><b>MIHAI</b> <span class="didas">(șoptind)</span>: Dar scrie pe el numele tău... și e de la tata!</p>
+<p><b>ANA</b> <span class="didas">(scapă lingurița și se ridică brusc)</span>: De la tata? Adu-l repede!</p>
+<p><b>BUNICA</b> <span class="didas">(din prag, zâmbind)</span>: Încet, copii, că dărâmați casa! Să-l deschidem împreună.</p>
+<p class="didas">(Cortina cade încet.)</p>
+<p class="src">(text scris pentru acest test)</p>` },
+{ id: "B", title: "Textul B · Melcul și iepurele", html: `
+<p>Un iepure grăbit îi zise unui melc:</p>
+<p>— Vai, frate, ce încet mergi! Până ajungi la râu, se face iarnă!</p>
+<p>Melcul, fără să se supere, răspunse:</p>
+<p>— Eu merg încet, dar știu unde merg. Tu alergi mult, dar te rătăcești mereu.</p>
+<p>Iepurele râse și o luă la fugă. Seara, melcul bea apă din râu, iar iepurele căuta încă drumul prin pădure.</p>
+<p><i>Cine se grăbește fără să gândească ajunge mai târziu decât cel răbdător.</i></p>
+<p class="src">(fabulă scrisă pentru acest test)</p>` }],
+questions: [
+{ id:"t3q1", text:"A", type:"mc", pts:3, topic:"dramatic", ref:"l-dramatic",
+  prompt:"Textul A este un text dramatic. Care element îl dovedește?",
+  options:["are un narator la persoana I","acțiunea se desfășoară prin replici, însoțite de didascalii","are rimă și strofe","se încheie cu o morală"], answer:1,
+  expl:"Textul dramatic nu are narator; personajele vorbesc prin replici, iar autorul adaugă indicații scenice (didascalii)." },
+{ id:"t3q2", text:"A", type:"mc", pts:3, topic:"dramatic", ref:"l-dramatic",
+  prompt:"Secvența „(intrând în fugă)” este:",
+  options:["o replică","o didascalie (indicație scenică)","un monolog","titlul scenei"], answer:1,
+  expl:"Textul din paranteze arată mișcarea personajului: didascalie. Nu se rostește pe scenă." },
+{ id:"t3q3", text:"A", type:"multi", pts:4, topic:"dramatic", ref:"l-dramatic",
+  prompt:"Ce informații ne dau didascaliile din textul A? Bifează tot ce se potrivește.",
+  options:["decorul (o bucătărie mică)","gesturile și mișcările personajelor","tonul vocii (șoptind)","gândurile naratorului"], answer:[0,1,2],
+  expl:"Didascaliile arată decorul, gesturile, mișcările și tonul. Textul dramatic nu are narator." },
+{ id:"t3q4", text:"A", type:"tf", pts:2, topic:"dramatic", ref:"l-dramatic",
+  prompt:"Adevărat sau fals? Ana își schimbă atitudinea când află că coletul este de la tatăl ei.",
+  answer:true,
+  expl:"Adevărat. La început e ocupată („Acum nu pot”), apoi „scapă lingurița și se ridică brusc”: bucuria și nerăbdarea se văd din gesturi (caracterizare indirectă)." },
+{ id:"t3q5", text:"A", type:"mc", pts:3, topic:"figuri", ref:"l-figuri",
+  prompt:"Replica bunicii „că dărâmați casa!” conține:",
+  options:["o comparație","o hiperbolă (exagerare)","o enumerație","o personificare"], answer:1,
+  expl:"Copiii nu dărâmă casa cu adevărat; bunica exagerează ca să arate cât de agitați sunt: hiperbolă. Tot hiperbolă e și „un colet uriaș”." },
+{ id:"t3q6", text:"B", type:"mc", pts:3, topic:"specii", ref:"l-specii",
+  prompt:"Morala textului B este exprimată:",
+  options:["la începutul fabulei","în replica iepurelui","în ultimul enunț","nu este exprimată"], answer:2,
+  expl:"Ultimul enunț, scris separat, conține învățătura: „Cine se grăbește fără să gândească ajunge mai târziu decât cel răbdător.”" },
+{ id:"t3q7", text:"B", type:"mc", pts:3, topic:"figuri", ref:"l-figuri",
+  prompt:"Enunțurile „Eu merg încet, dar știu unde merg. Tu alergi mult, dar te rătăcești mereu.” conțin:",
+  options:["o antiteză","o comparație","o metaforă","o inversiune"], answer:0,
+  expl:"Sunt opuse două comportamente (încet, dar sigur / repede, dar rătăcit): antiteză." },
+{ id:"t3q8", text:"B", type:"open", pts:6, topic:"specii", ref:"l-specii",
+  prompt:"Demonstrează, în 40–60 de cuvinte, că textul B este o fabulă, prezentând două trăsături ilustrate cu exemple din text.",
+  model:"Textul B este o fabulă. În primul rând, personajele sunt animale personificate: iepurele și melcul vorbesc ca oamenii („Vai, frate, ce încet mergi!”). În al doilea rând, textul se încheie cu o morală: „Cine se grăbește fără să gândească ajunge mai târziu decât cel răbdător.” De asemenea, textul este scurt și prezintă o singură întâmplare.",
+  rubric:[{t:"Am numit o primă trăsătură (animale personificate) cu exemplu",p:2},{t:"Am numit a doua trăsătură (morala) cu citat",p:2},{t:"Am formulat corect și am respectat 40–60 de cuvinte",p:2}],
+  expl:"Fabula = personaje-animale personificate + morală (+ text scurt, o întâmplare, critică a unui defect)." },
+{ id:"t3q9", text:"B", type:"mc", pts:3, topic:"neflexibile", ref:"g-neflexibile",
+  prompt:"În replica „Vai, frate, ce încet mergi!”, cuvântul „Vai” este:",
+  options:["adverb","interjecție","substantiv","conjuncție"], answer:1,
+  expl:"„Vai” exprimă o stare sufletească (mirare, compătimire) și este despărțit prin virgulă: interjecție." },
+{ id:"t3q10", text:"B", type:"mc", pts:3, topic:"verb", ref:"g-verb-ind",
+  prompt:"Verbul „zise” (Un iepure grăbit îi zise unui melc) este la timpul:",
+  options:["imperfect","perfect compus","perfect simplu","mai-mult-ca-perfect"], answer:2,
+  expl:"„zise, râse, răspunse, luă” sunt forme de perfect simplu, frecvente în povești." },
+{ id:"t3q11", text:"A", type:"mc", pts:3, topic:"verb", ref:"g-verb-moduri",
+  prompt:"Verbul „Adu-l” (Adu-l repede!) este la modul:",
+  options:["indicativ","conjunctiv","imperativ","condițional-optativ"], answer:2,
+  expl:"Exprimă o poruncă adresată persoanei a II-a și este urmat de „!”: modul imperativ." },
+{ id:"t3q12", text:"A", type:"mc", pts:3, topic:"verb", ref:"g-verb-moduri",
+  prompt:"Verbul „Să-l deschidem” este la modul:",
+  options:["indicativ, prezent","conjunctiv, prezent","imperativ","infinitiv"], answer:1,
+  expl:"Marca „să” + verb arată modul conjunctiv, timpul prezent." },
+{ id:"t3q13", text:"A", type:"mc", pts:3, topic:"verb", ref:"g-verb-moduri",
+  prompt:"Verbul „șoptind” este la modul:",
+  options:["participiu","gerunziu","supin","infinitiv"], answer:1,
+  expl:"Terminația „-ind” (sau „-ând”) este marca gerunziului: șoptind, zâmbind, intrând." },
+{ id:"t3q14", text:"A", type:"mc", pts:3, topic:"verb", ref:"g-verb-moduri",
+  prompt:"În structura „un tort pe jumătate decorat”, verbul „decorat” este la modul:",
+  options:["participiu","supin","gerunziu","indicativ, perfect compus"], answer:0,
+  expl:"„decorat” arată o însușire a tortului, ca un adjectiv, fără prepoziție înainte: participiu." },
+{ id:"t3q15", type:"mc", pts:3, topic:"verb", ref:"g-verb-moduri",
+  prompt:"În enunțul „Iepurele mai are mult de alergat”, verbul „de alergat” este la modul:",
+  options:["participiu","supin","infinitiv","gerunziu"], answer:1,
+  expl:"Prepoziția „de” + forma de participiu, care arată acțiunea → supin." },
+{ id:"t3q16", type:"mc", pts:3, topic:"verb", ref:"g-verb-moduri",
+  prompt:"Care verb este la modul condițional-optativ?",
+  options:["să alerg","aș alerga","alergând","a alerga"], answer:1,
+  expl:"„aș” + infinitiv = condițional-optativ, timpul prezent. Exprimă o dorință sau o acțiune condiționată." },
+{ id:"t3q17", text:"B", type:"fill", pts:3, topic:"verb", ref:"g-verb-moduri",
+  prompt:"Rescrie verbul „râse” (Iepurele râse...) la modul conjunctiv, timpul prezent, persoana a III-a singular.",
+  accept:["sa rada","să râdă"],
+  expl:"Conjunctiv prezent = „să” + verb: să râdă." },
+{ id:"t3q18", type:"mc", pts:3, topic:"verb", ref:"g-verb-moduri",
+  prompt:"Care este forma corectă de imperativ negativ, persoana a II-a singular, a verbului „a fugi”?",
+  options:["Nu fugiți!","Nu fugi!","Nu fuge!","Nu fugă!"], answer:1,
+  expl:"Imperativul negativ singular = „nu” + infinitivul fără „a”: nu fugi!" },
+{ id:"t3q19", text:"B", type:"mc", pts:3, topic:"pronume", ref:"g-pronume",
+  prompt:"În structura „fără să se supere”, cuvântul „se” este:",
+  options:["pronume personal","pronume reflexiv","pronume posesiv","conjuncție"], answer:1,
+  expl:"Acțiunea se răsfrânge asupra celui care o face (melcul nu se supără): pronume reflexiv." },
+{ id:"t3q20", type:"mc", pts:3, topic:"pronume", ref:"g-pronume",
+  prompt:"În enunțul „Drumul meu e lung, al tău e scurt”, cuvintele „al tău” sunt:",
+  options:["adjectiv pronominal posesiv","pronume posesiv","pronume personal","pronume demonstrativ"], answer:1,
+  expl:"„al tău” stă singur, în locul substantivului „drumul tău”: pronume posesiv. „meu” din „drumul meu” însoțește un substantiv → adjectiv pronominal posesiv." },
+{ id:"t3q21", type:"mc", pts:3, topic:"pronume", ref:"g-pronume",
+  prompt:"În enunțul „Acesta este melcul cel răbdător”, cuvântul „Acesta” este:",
+  options:["pronume demonstrativ","adjectiv","articol","pronume personal"], answer:0,
+  expl:"Arată apropierea și stă singur în locul unui substantiv: pronume demonstrativ." },
+{ id:"t3q22", text:"A", type:"multi", pts:4, topic:"neflexibile", ref:"g-neflexibile",
+  prompt:"Din replicile Anei, bifează potrivirile corecte.",
+  options:["„Acum” – adverb de timp","„repede” – adverb de mod","„pe” (pe hol) – prepoziție","„De la” (De la tata) – conjuncție"], answer:[0,1,2],
+  expl:"„Acum” (când?) – adverb de timp; „repede” (cum?) – adverb de mod; „pe” – prepoziție simplă; „de la” este prepoziție compusă, nu conjuncție." },
+{ id:"t3q23", text:"B", type:"mc", pts:3, topic:"neflexibile", ref:"g-neflexibile",
+  prompt:"În „melcul bea apă din râu, iar iepurele căuta încă drumul”, cuvântul „iar” este:",
+  options:["adverb","prepoziție","conjuncție coordonatoare","interjecție"], answer:2,
+  expl:"„iar” leagă două propoziții egale ca importanță: conjuncție coordonatoare. Înaintea lui se pune virgulă." },
+{ id:"t3q24", type:"open", pts:12, topic:"compunere", ref:"l-dramatic",
+  prompt:"Scrie un scurt text dramatic (6–8 replici) cu două personaje, care discută despre un test important. Folosește lista personajelor și cel puțin trei didascalii.",
+  model:"PERSONAJELE: LUCA, elev în clasa a VII-a; RADU, colegul lui.\n(Curtea școlii, în pauză. Luca răsfoiește un caiet.)\nRADU (bătându-l pe umăr): Ce faci, Luca? Iar înveți?\nLUCA (fără să ridice privirea): Mâine avem testul de română. Recapitulez figurile de stil.\nRADU (râzând): Epitet, comparație... ce greu poate fi?\nLUCA: Atunci spune-mi ce figură e în „vântul șoptește”!\nRADU (se scarpină în cap): Hmm... o comparație?\nLUCA (zâmbind): Personificare! Hai să învățăm împreună.\n(Sună clopoțelul. Cei doi pleacă spre clasă.)",
+  rubric:[{t:"Am scris lista personajelor",p:2},{t:"Am scris 6–8 replici, fiecare cu numele personajului",p:2},{t:"Am folosit cel puțin trei didascalii în paranteze",p:2},{t:"Discuția are legătură cu tema (un test important)",p:2},{t:"Am folosit cel puțin un imperativ sau o interjecție",p:2},{t:"Am scris corect (ortografie, punctuație)",p:2}],
+  expl:"Textul dramatic nu are narator: totul se spune prin replici, iar didascaliile descriu decorul, gesturile și tonul." }
+]});
+
+TESTS.push({
+id: "t4", num: 4, title: "Ilie și apa vie", day: "Duminică · după-amiaza",
+covers: ["Basmul", "Legenda", "Text nonliterar (afiș)", "Părțile de propoziție", "Predicat verbal și nominal", "Fraza: coordonare și subordonare", "Punctuația"],
+texts: [
+{ id: "A", title: "Textul A · Ilie și apa vie", html: `
+<p>A fost odată ca niciodată, într-o împărăție de peste nouă mări și nouă țări, un împărat bătrân care avea trei feciori. Într-o zi, împăratul s-a îmbolnăvit, și numai apa vie din fântâna zmeului îl putea vindeca.</p>
+<p>Feciorii cei mari au plecat pe rând, dar s-au întors cu mâinile goale. Mezinul, Ilie, a pornit la drum cu un cal năzdrăvan, care vorbea cu grai omenesc. Calul era înțelept și îi dădea sfaturi bune.</p>
+<p>După trei zile și trei nopți, au ajuns la fântână. Ilie l-a învins pe zmeu cu ajutorul calului și s-a întors cu apa cea vie. Împăratul s-a vindecat, iar Ilie a fost răsplătit cu jumătate de împărăție.</p>
+<p>Și-am încălecat pe-o șa și v-am spus povestea așa.</p>
+<p class="src">(basm scris pentru acest test)</p>` },
+{ id: "B", title: "Textul B · Afiș", html: `
+<div class="poster">
+<div class="poster-k">Biblioteca din cartier vă invită la</div>
+<div class="poster-t">MARATONUL POVEȘTILOR</div>
+<div class="poster-d">Sâmbătă, 10 octombrie · ora 11:00<br>Sala de lectură, etajul 1</div>
+<div class="poster-s">Intrare liberă! Aduceți-vă cartea preferată!</div>
+<div class="poster-f">Premii pentru cei mai buni povestitori · Înscrieri la bibliotecar</div>
+</div>
+<p class="src">(afiș creat pentru acest test)</p>` }],
+questions: [
+{ id:"t4q1", text:"A", type:"mc", pts:3, topic:"specii", ref:"l-specii",
+  prompt:"Secvența „A fost odată ca niciodată” este:",
+  options:["formula finală","formula inițială","formula mediană","morala"], answer:1,
+  expl:"Formula inițială deschide basmul și ne introduce în lumea fabuloasă." },
+{ id:"t4q2", text:"A", type:"mc", pts:3, topic:"specii", ref:"l-specii",
+  prompt:"Care element din textul A aparține lumii fabuloase?",
+  options:["împăratul bătrân","calul năzdrăvan, care vorbește cu grai omenesc","cei trei feciori","jumătatea de împărăție"], answer:1,
+  expl:"Un cal care vorbește și dă sfaturi este un personaj fabulos (năzdrăvan). La fel zmeul și apa vie." },
+{ id:"t4q3", text:"A", type:"mc", pts:3, topic:"narativ", ref:"l-narativ",
+  prompt:"Intriga basmului este:",
+  options:["Ilie îl învinge pe zmeu","împăratul se îmbolnăvește și are nevoie de apa vie","Ilie este răsplătit","feciorii cei mari se întorc"], answer:1,
+  expl:"Boala împăratului declanșează acțiunea: feciorii pleacă după apa vie." },
+{ id:"t4q4", text:"A", type:"multi", pts:4, topic:"specii", ref:"l-specii",
+  prompt:"Bifează trăsăturile basmului prezente în textul A.",
+  options:["cifra magică 3 (trei feciori, trei zile)","lupta dintre bine și rău, cu victoria binelui","morala scrisă la final","formula finală"], answer:[0,1,3],
+  expl:"Basmul are formule, cifre magice și lupta bine–rău. Morala scrisă la final este specifică fabulei." },
+{ id:"t4q5", text:"A", type:"mc", pts:3, topic:"narativ", ref:"l-personaj",
+  prompt:"Ilie este caracterizat indirect ca fiind curajos prin:",
+  options:["numele său","faptul că naratorul spune „Ilie era curajos”","faptul că pleacă la drum și îl învinge pe zmeu","vorbele fraților"], answer:2,
+  expl:"Caracterizare indirectă = deducem trăsătura din fapte. Ilie nu este numit „curajos”, dar faptele lui o arată." },
+{ id:"t4q6", type:"mc", pts:3, topic:"specii", ref:"l-specii",
+  prompt:"Care specie literară explică originea unui lucru, a unei plante sau a unui animal?",
+  options:["basmul","fabula","legenda","pastelul"], answer:2,
+  expl:"Legenda explică originea (ex.: legenda ghiocelului, legenda rândunicii), amestecând realul cu fantasticul." },
+{ id:"t4q7", text:"B", type:"mc", pts:3, topic:"nonliterar", ref:"l-texte",
+  prompt:"Textul B este:",
+  options:["un text literar, pentru că vorbește despre povești","un text nonliterar (afiș), pentru că informează despre un eveniment real","o fabulă","un text dramatic"], answer:1,
+  expl:"Afișul are scop informativ (dată, oră, loc) și de convingere (invită publicul). Este text nonliterar și multimodal." },
+{ id:"t4q8", text:"B", type:"multi", pts:4, topic:"nonliterar", ref:"l-texte",
+  prompt:"Bifează informațiile corecte, conform afișului.",
+  options:["Evenimentul are loc sâmbătă, la ora 11:00.","Intrarea costă 10 lei.","Participanții își pot aduce cartea preferată.","Evenimentul are loc la etajul 1."], answer:[0,2,3],
+  expl:"Afișul spune „Intrare liberă!”, deci intrarea nu costă nimic. Citește întotdeauna atent detaliile!" },
+{ id:"t4q9", type:"mc", pts:3, topic:"sintaxa", ref:"g-sintaxa",
+  prompt:"În enunțul „Calul era înțelept”, predicatul este:",
+  options:["verbal: „era”","nominal: „era înțelept”","verbal: „era înțelept”","nu are predicat"], answer:1,
+  expl:"„era” (a fi) este verb copulativ; împreună cu numele predicativ „înțelept” formează un predicat nominal." },
+{ id:"t4q10", type:"mc", pts:3, topic:"sintaxa", ref:"g-sintaxa",
+  prompt:"În enunțul „Mezinul a pornit la drum”, predicatul este:",
+  options:["verbal: „a pornit”","nominal: „a pornit la drum”","„la drum”","„Mezinul”"], answer:0,
+  expl:"„a pornit” este un verb predicativ la mod personal (indicativ, perfect compus): predicat verbal." },
+{ id:"t4q11", type:"mc", pts:3, topic:"sintaxa", ref:"g-sintaxa",
+  prompt:"În enunțurile „Feciorii cei mari au plecat. Au căutat fântâna toată ziua.”, subiectul verbului „au căutat” este:",
+  options:["exprimat","neexprimat, inclus","neexprimat, subînțeles","multiplu"], answer:2,
+  expl:"Subiectul („feciorii”) se deduce din enunțul anterior, verbul fiind la persoana a III-a: subiect subînțeles." },
+{ id:"t4q12", type:"mc", pts:3, topic:"sintaxa", ref:"g-sintaxa",
+  prompt:"În enunțul „Plec mâine la bibliotecă”, subiectul este:",
+  options:["„mâine”","neexprimat, inclus (eu)","neexprimat, subînțeles","„bibliotecă”"], answer:1,
+  expl:"Terminația verbului la persoana I („plec”) arată subiectul „eu”: subiect inclus." },
+{ id:"t4q13", type:"mc", pts:3, topic:"sintaxa", ref:"g-sintaxa",
+  prompt:"În enunțul „Ilie și calul au ajuns la fântână”, subiectul este:",
+  options:["simplu: „Ilie”","multiplu: „Ilie și calul”","„fântână”","neexprimat"], answer:1,
+  expl:"Sunt două substantive legate prin „și” care fac amândouă acțiunea: subiect multiplu." },
+{ id:"t4q14", text:"A", type:"mc", pts:3, topic:"sintaxa", ref:"g-sintaxa",
+  prompt:"În „Ilie l-a învins pe zmeu”, structura „pe zmeu” este:",
+  options:["complement indirect","complement direct","complement circumstanțial de loc","atribut"], answer:1,
+  expl:"L-a învins pe cine? → pe zmeu. Acuzativ cu „pe” = complement direct." },
+{ id:"t4q15", type:"mc", pts:3, topic:"sintaxa", ref:"g-sintaxa",
+  prompt:"În enunțul „Ilie i-a dat calului apă”, cuvântul „calului” este:",
+  options:["atribut substantival genitival","complement indirect","complement direct","subiect"], answer:1,
+  expl:"I-a dat cui? → calului. Dativ = complement indirect. („apă” = complement direct: ce i-a dat?)" },
+{ id:"t4q16", text:"A", type:"mc", pts:3, topic:"sintaxa", ref:"g-sintaxa",
+  prompt:"În structura „apa vie din fântâna zmeului”, cuvântul „zmeului” este:",
+  options:["complement indirect","atribut substantival genitival","complement circumstanțial de loc","nume predicativ"], answer:1,
+  expl:"Fântâna a cui? → a zmeului. Determină un substantiv și este în Genitiv: atribut substantival genitival." },
+{ id:"t4q17", type:"multi", pts:4, topic:"sintaxa", ref:"g-sintaxa",
+  prompt:"Enunțul: „După trei zile, Ilie a ajuns repede la fântână.” Bifează potrivirile corecte.",
+  options:["„După trei zile” – c. circumstanțial de timp","„repede” – c. circumstanțial de mod","„la fântână” – c. circumstanțial de loc","„trei” – complement direct"], answer:[0,1,2],
+  expl:"când? → după trei zile; cum? → repede; unde? → la fântână. „trei” determină substantivul „zile”: atribut adjectival." },
+{ id:"t4q18", type:"fill", pts:3, topic:"fraza", ref:"g-fraza",
+  prompt:"Câte propoziții are fraza: „Ilie a ajuns la fântână, l-a învins pe zmeu și s-a întors acasă.”? (scrie numărul)",
+  accept:["3","trei"],
+  expl:"Trei predicate (a ajuns, a învins, s-a întors) → trei propoziții, legate prin coordonare." },
+{ id:"t4q19", text:"A", type:"mc", pts:3, topic:"fraza", ref:"g-fraza",
+  prompt:"În fraza „Feciorii cei mari au plecat pe rând, dar s-au întors cu mâinile goale”, propozițiile sunt legate prin:",
+  options:["coordonare","subordonare","nu sunt legate","este o propoziție simplă"], answer:0,
+  expl:"„dar” este conjuncție coordonatoare: cele două propoziții sunt egale ca importanță." },
+{ id:"t4q20", type:"mc", pts:3, topic:"fraza", ref:"g-fraza",
+  prompt:"În fraza „Împăratul știa că numai apa vie îl putea vindeca”, propoziția a doua este:",
+  options:["coordonată","subordonată (secundară), introdusă prin „că”","principală","nu este propoziție"], answer:1,
+  expl:"Propoziția „că numai apa vie îl putea vindeca” depinde de „Împăratul știa”: relație de subordonare, prin conjuncția „că”." },
+{ id:"t4q21", type:"mc", pts:3, topic:"fraza", ref:"g-fraza",
+  prompt:"Care enunț este punctuat corect?",
+  options:["Ilie, a plecat la drum.","Ilie ia calul, și pleacă.","Ilie, ia calul și pleacă!","Ilie ia, calul și pleacă."], answer:2,
+  expl:"„Ilie” este aici în Vocativ (adresare), deci se desparte prin virgulă. Nu punem virgulă între subiect și predicat și nici înainte de „și”." },
+{ id:"t4q22", type:"multi", pts:4, topic:"fraza", ref:"g-fraza",
+  prompt:"Bifează enunțurile scrise corect.",
+  options:["Frații s-au întors cu mâinile goale.","Calul la ajutat pe Ilie.","Ne-am înscris la maratonul poveștilor.","Tu sau fratele tău veți veni?"], answer:[0,2,3],
+  expl:"„s-au întors” (se + au), „ne-am înscris” (ne + am), „sau” (conjuncție = ori) sunt corecte. Corect este „Calul l-a ajutat” (îl + a)." },
+{ id:"t4q23", text:"B", type:"open", pts:6, topic:"compunere", ref:"l-scriere",
+  prompt:"Scrie un mesaj (e-mail) de 50–80 de cuvinte prin care îl inviți pe un prieten la Maratonul poveștilor, folosind informațiile din textul B.",
+  model:"Dragă Radu,\nSâmbătă, 10 octombrie, la ora 11:00, biblioteca din cartier organizează Maratonul poveștilor, în sala de lectură de la etajul 1. Intrarea este liberă și putem să ne aducem cărțile preferate. Hai să ne înscriem împreună la bibliotecar! Cei mai buni povestitori primesc premii, iar eu cred că tu povestești minunat.\nTe aștept!\nCu drag,\nLuca",
+  rubric:[{t:"Am folosit formula de adresare și cea de încheiere, plus semnătura",p:2},{t:"Am inclus corect data, ora și locul din afiș",p:2},{t:"Am respectat 50–80 de cuvinte și am scris corect",p:2}],
+  expl:"Invitația/e-mailul: adresare – ce, când, unde – de ce să vină – încheiere – semnătură." },
+{ id:"t4q24", type:"open", pts:12, topic:"compunere", ref:"l-scriere",
+  prompt:"Scrie un basm de minimum 150 de cuvinte în care eroul primește ajutorul unui personaj fabulos. Folosește formulele specifice basmului.",
+  model:"A fost odată ca niciodată, într-un sat de la marginea codrului, un băiat sărac pe nume Toma. Într-o iarnă grea, o vrăjitoare rea a furat soarele și l-a închis într-un turn de gheață. Oamenii tremurau de frig, iar păsările nu mai cântau.\nToma a hotărât să aducă soarele înapoi. Pe drum, a găsit o vulpe prinsă într-o capcană și a eliberat-o. Vulpea i-a spus cu grai omenesc:\n— Pentru că ai inimă bună, te voi ajuta. Ia această pană de aur: când vei avea nevoie, suflă în ea!\nȘi merse Toma trei zile și trei nopți, până ajunse la turnul de gheață. Vrăjitoarea l-a întâmpinat cu un viscol cumplit, dar băiatul a suflat în pană. Deodată, vulpea s-a prefăcut într-o pasăre de foc, care a topit zidurile turnului. Soarele a zburat înapoi pe cer, iar vrăjitoarea s-a risipit ca fumul.\nToma s-a întors acasă ca un erou, iar satul a făcut o petrecere de trei zile.\nȘi-am încălecat pe-o șa și v-am spus povestea așa.",
+  rubric:[{t:"Am folosit formula inițială și formula finală",p:2},{t:"Am inclus un personaj fabulos care îl ajută pe erou",p:2},{t:"Există lupta dintre bine și rău, iar binele învinge",p:2},{t:"Am respectat momentele subiectului",p:2},{t:"Am scris minimum 150 de cuvinte, cu alineate",p:2},{t:"Am scris corect (ortografie, punctuație, dialog)",p:2}],
+  expl:"Basmul: formule, cifre magice, personaje fabuloase, probe, victoria binelui." }
+]});
+
+const EXTRA = [
+{ id:"x1", type:"mc", pts:3, topic:"vocabular", ref:"g-vocabular", prompt:"„broască” (animal) și „broască” (de la ușă) sunt:", options:["sinonime","omonime","paronime","antonime"], answer:1, expl:"Aceeași formă, sensuri fără legătură: omonime." },
+{ id:"x2", type:"mc", pts:3, topic:"vocabular", ref:"g-vocabular", prompt:"Care cuvânt NU face parte din familia lexicală a lui „floare”?", options:["florar","înflori","floricică","frunză"], answer:3, expl:"„frunză” face parte din același câmp lexical (plante), dar nu e format din „floare”." },
+{ id:"x3", type:"mc", pts:3, topic:"vocabular", ref:"g-vocabular", prompt:"Cuvântul „neatent” este format prin:", options:["derivare cu prefix","derivare cu sufix","compunere","conversiune"], answer:0, expl:"ne- + atent → derivare cu prefix." },
+{ id:"x4", type:"mc", pts:3, topic:"vocabular", ref:"g-vocabular", prompt:"Cuvântul „floarea-soarelui” este format prin:", options:["derivare","compunere","conversiune","nu este cuvânt format"], answer:1, expl:"Două cuvinte unite (cu cratimă): compunere." },
+{ id:"x5", type:"mc", pts:3, topic:"vocabular", ref:"g-vocabular", prompt:"Care grup de cuvinte formează un câmp lexical?", options:["carte, cărticică, cărturar","elev, tablă, catalog, bancă","a scrie, rescrie, scriitor","floare, înflori, florar"], answer:1, expl:"Cuvinte din aceeași temă (școala), dar neînrudite ca formă: câmp lexical. Celelalte sunt familii lexicale." },
+{ id:"x6", type:"mc", pts:3, topic:"numeral", ref:"g-numeral", prompt:"„o treime” este numeral:", options:["ordinal","fracționar","multiplicativ","distributiv"], answer:1, expl:"Arată o parte dintr-un întreg: fracționar." },
+{ id:"x7", type:"mc", pts:3, topic:"numeral", ref:"g-numeral", prompt:"În „Copiii au intrat câte doi”, „câte doi” este numeral:", options:["colectiv","distributiv","cardinal","adverbial"], answer:1, expl:"Arată repartizarea: distributiv." },
+{ id:"x8", type:"mc", pts:3, topic:"numeral", ref:"g-numeral", prompt:"Care enunț este scris corect?", options:["A fost o dată un împărat.","A fost odată un împărat.","Am citit cartea odată, nu de două ori.","A fost odată ca nici odată."], answer:1, expl:"„odată” (adverb = cândva) se scrie legat în formula basmului; „o dată” (numeral) înseamnă „o singură dată”." },
+{ id:"x9", type:"mc", pts:3, topic:"neflexibile", ref:"g-neflexibile", prompt:"Prepoziția „împotriva” cere cazul:", options:["Acuzativ","Genitiv","Dativ","Nominativ"], answer:1, expl:"împotriva, asupra, contra, deasupra, în fața → Genitiv (împotriva zmeului)." },
+{ id:"x10", type:"mc", pts:3, topic:"neflexibile", ref:"g-neflexibile", prompt:"Prepoziția „datorită” cere cazul:", options:["Acuzativ","Genitiv","Dativ","Vocativ"], answer:2, expl:"datorită, mulțumită, grație, conform, potrivit → Dativ (datorită calului)." },
+{ id:"x11", type:"mc", pts:3, topic:"neflexibile", ref:"g-neflexibile", prompt:"În „Și poc! a căzut mărul”, „poc” este:", options:["interjecție onomatopeică","adverb","substantiv","verb"], answer:0, expl:"Imită un sunet: interjecție onomatopeică." },
+{ id:"x12", type:"mc", pts:3, topic:"sintaxa", ref:"g-sintaxa", prompt:"În „Ana este elevă”, cuvântul „elevă” este:", options:["subiect","nume predicativ","complement direct","atribut"], answer:1, expl:"După verbul copulativ „este”, cuvântul care arată ce este subiectul = nume predicativ (parte a predicatului nominal)." },
+{ id:"x13", type:"mc", pts:3, topic:"sintaxa", ref:"g-sintaxa", prompt:"În „Am o casă de lemn”, „de lemn” este:", options:["atribut substantival prepozițional","complement indirect","c. circumstanțial de loc","complement direct"], answer:0, expl:"Ce fel de casă? → de lemn. Substantiv cu prepoziție care determină un substantiv: atribut substantival prepozițional." },
+{ id:"x14", type:"mc", pts:3, topic:"fonetica", ref:"g-fonetica", prompt:"Cuvântul „copíi” (cu accent pe i) înseamnă:", options:["reproduceri, xeroxuri","băieți și fete","copaci","cópii de desene"], answer:1, expl:"Accentul schimbă sensul: copíi = băieți și fete; cópii = reproduceri." },
+{ id:"x15", type:"mc", pts:3, topic:"fonetica", ref:"g-fonetica", prompt:"Despărțirea corectă în silabe este:", options:["as-tru","ast-ru","a-stru","astr-u"], answer:0, expl:"Trei consoane între vocale: prima rămâne, celelalte două trec: as-tru." },
+{ id:"x16", type:"mc", pts:3, topic:"narativ", ref:"l-narativ", prompt:"Momentul care prezintă timpul, locul și personajele este:", options:["intriga","expozițiunea","punctul culminant","deznodământul"], answer:1, expl:"Expozițiunea este primul moment al subiectului." },
+{ id:"x17", type:"mc", pts:3, topic:"narativ", ref:"l-narativ", prompt:"Enunțul „Ilie a pornit la drum” arată un narator:", options:["personaj, persoana I","obiectiv, persoana a III-a","liric","dramatic"], answer:1, expl:"Verbul la persoana a III-a: naratorul povestește fără să participe → narator obiectiv." },
+{ id:"x18", type:"mc", pts:3, topic:"narativ", ref:"l-personaj", prompt:"Portretul moral prezintă:", options:["cum arată personajul","trăsăturile de caracter","locul acțiunii","hainele personajului"], answer:1, expl:"Portretul fizic = înfățișarea; portretul moral = caracterul." },
+{ id:"x19", type:"mc", pts:3, topic:"compunere", ref:"l-scriere", prompt:"Rezumatul se scrie:", options:["la persoana I, cu dialog","la persoana a III-a, fără dialog și fără figuri de stil","în versuri","doar cu citate"], answer:1, expl:"Rezumatul redă pe scurt întâmplările, la persoana a III-a, fără dialog." },
+{ id:"x20", type:"mc", pts:3, topic:"nonliterar", ref:"l-texte", prompt:"Un text care combină cuvinte cu imagini sau grafice se numește:", options:["text liric","text multimodal","text dramatic","fabulă"], answer:1, expl:"Textul multimodal folosește mai multe moduri de comunicare: text, imagine, simboluri." },
+{ id:"x21", type:"mc", pts:3, topic:"liric", ref:"l-liric", prompt:"Schema de rimă „a b b a” se numește:", options:["împerecheată","încrucișată","îmbrățișată","monorimă"], answer:2, expl:"Versurile 1–4 și 2–3 rimează: rima îmbrățișată." },
+{ id:"x22", type:"mc", pts:3, topic:"dramatic", ref:"l-dramatic", prompt:"Cine pune în scenă un text dramatic și îi îndrumă pe actori?", options:["dramaturgul","regizorul","spectatorul","naratorul"], answer:1, expl:"Dramaturgul scrie piesa; regizorul o pune în scenă." },
+{ id:"x23", type:"mc", pts:3, topic:"verb", ref:"g-verb-ind", prompt:"„voi citi” este la indicativ, timpul:", options:["prezent","viitor","perfect compus","imperfect"], answer:1, expl:"Auxiliarul „voi” + infinitiv = viitor." },
+{ id:"x24", type:"mc", pts:3, topic:"pronume", ref:"g-pronume", prompt:"În „Mihai îi spune Anei un secret”, cuvântul „îi” este:", options:["pronume personal (formă neaccentuată)","pronume reflexiv","articol","conjuncție"], answer:0, expl:"„îi” ține locul lui „Anei” (cui spune?): pronume personal, formă neaccentuată, în Dativ." },
+{ id:"x25", type:"mc", pts:3, topic:"figuri", ref:"l-figuri", prompt:"„Albastre flori” (în loc de „flori albastre”) este:", options:["inversiune","enumerație","repetiție","comparație"], answer:0, expl:"Schimbarea ordinii obișnuite (adjectivul înaintea substantivului): inversiune." }
+];
+
+(function(){
+"use strict";
+const $ = (s, el=document) => el.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const norm = s => String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[ş]/g,"s").replace(/[ţ]/g,"t").replace(/[.,;:!?„”"'()]/g,"").replace(/\s+/g," ").trim();
+const LS = {
+  get(k, d){ try{ const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; }catch(e){ return d; } },
+  set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} },
+  del(k){ try{ localStorage.removeItem(k); }catch(e){} }
+};
+const fmtNota = n => n.toFixed(2).replace(".", ",");
+const notaCls = n => n == null ? "none" : n >= 8.5 ? "hi" : n >= 6.5 ? "mid" : "lo";
+const fmtTime = s => { s = Math.max(0, Math.round(s)); return String(Math.floor(s/60)).padStart(2,"0") + ":" + String(s%60).padStart(2,"0"); };
+const fmtDate = t => { const d = new Date(t); return d.toLocaleDateString("ro-RO",{day:"2-digit",month:"short"}) + " · " + d.toLocaleTimeString("ro-RO",{hour:"2-digit",minute:"2-digit"}); };
+const shuffle = a => { a = a.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; };
+const wc = s => (String(s).trim().match(/\S+/g) || []).length;
+
+/* ---------- data indexes ---------- */
+const CHAPTERS = {};
+GRAMMAR.forEach(c => CHAPTERS[c.id] = Object.assign({kind:"gram"}, c));
+LITERATURE.forEach(c => CHAPTERS[c.id] = Object.assign({kind:"lit"}, c));
+const QIDX = {};
+TESTS.forEach(t => t.questions.forEach(q => QIDX[q.id] = {q, t}));
+EXTRA.forEach(q => QIDX[q.id] = {q, t:null});
+const TOPIC = {
+  fonetica:["Fonetică","g"], vocabular:["Vocabular","g"], verb:["Verbul","g"], substantiv:["Substantiv și articol","g"],
+  pronume:["Pronumele","g"], adjectiv:["Adjectivul","g"], numeral:["Numeralul","g"], neflexibile:["Adverb, prepoziție, conj., interj.","g"],
+  sintaxa:["Părți de propoziție","g"], fraza:["Fraza și ortografia","g"],
+  narativ:["Text narativ și personaj","l"], figuri:["Figuri de stil","l"], liric:["Text liric","l"], specii:["Basm, legendă, fabulă","l"],
+  dramatic:["Text dramatic","l"], nonliterar:["Text nonliterar","l"], compunere:["Redactare","l"]
+};
+const LEVELS = [[0,"Ucenic al cuvintelor"],[150,"Cititor curios"],[400,"Explorator de texte"],[800,"Meșter al frazei"],[1300,"Cavaler al gramaticii"],[2000,"Maestru al limbii române"],[3000,"Legenda EN"]];
+const BADGES = [
+  {id:"primul", n:"Primul pas", d:"Termină primul test sau antrenament", g:"1", c:"var(--gram)"},
+  {id:"serie5", n:"Serie de foc", d:"5 răspunsuri corecte la rând", g:"×5", c:"var(--bad)"},
+  {id:"serie10", n:"De neoprit", d:"10 răspunsuri corecte la rând", g:"×10", c:"var(--bad)"},
+  {id:"nota10", n:"Nota 10", d:"Nota 9,50 sau mai mare la un test de 45 de minute", g:"10", c:"var(--xp)"},
+  {id:"verb", n:"Stăpânul verbului", d:"Toate întrebările despre verb corecte într-un test (minim 3)", g:"V", c:"var(--gram)"},
+  {id:"poet", n:"Prieten al poeziei", d:"Toate întrebările de liric și figuri corecte (minim 4)", g:"P", c:"var(--lit)"},
+  {id:"detectiv", n:"Detectivul frazei", d:"Minim 80% la sintaxă și frază într-un test", g:"S", c:"var(--gram)"},
+  {id:"scriitor", n:"Condei de aur", d:"Punctaj maxim la o compunere", g:"C", c:"var(--lit)"},
+  {id:"fulger", n:"Fulgerul", d:"10 din 10 la Antrenamentul fulger", g:"⚡", c:"var(--xp)"},
+  {id:"soarece", n:"Șoarece de bibliotecă", d:"Toate capitolele de teorie recapitulate", g:"T", c:"var(--ok)"},
+  {id:"maraton", n:"Maratonistul", d:"Toate cele 4 teste EN terminate", g:"4", c:"var(--ok)"},
+  {id:"campion", n:"Weekend de campion", d:"Nota 7 sau mai mare la toate cele 4 teste", g:"★", c:"var(--xp)"}
+];
+const PRAISE = ["Excelent!","Bravo, Luca!","Perfect!","Ai prins-o!","Foarte bine!","Exact!","Super!"];
+const OOPS = ["Aproape!","Nu-i nimic, reținem:","Hai să vedem de ce:","Data viitoare iese!"];
+const pick = a => a[Math.floor(Math.random()*a.length)];
+
+/* ---------- state & storage ---------- */
+const S = {
+  profile: Object.assign({xp:0, badges:{}, read:{}, bestStreak:0}, LS.get("ro-profile", {})),
+  attempts: LS.get("ro-attempts", []),
+  run: LS.get("ro-run", null),
+  sound: LS.get("ro-sound", true),
+  db: null, synced: false
+};
+function saveLocal(){ LS.set("ro-profile", S.profile); LS.set("ro-attempts", S.attempts); }
+let profTimer = null;
+function saveProfile(){
+  saveLocal();
+  if(!S.db) return;
+  clearTimeout(profTimer);
+  profTimer = setTimeout(() => {
+    S.db.doc("profile/luca").set(Object.assign({}, S.profile, {updatedAt: Date.now()})).catch(()=>{});
+  }, 600);
+}
+function saveAttempt(a){
+  S.attempts = S.attempts.filter(x => x.id !== a.id).concat([a]);
+  saveLocal();
+  if(S.db) S.db.collection("attempts").doc(a.id).set(a).catch(()=>{});
+}
+function mergeProfile(r){
+  const p = S.profile;
+  const m = {
+    xp: Math.max(p.xp||0, r.xp||0),
+    bestStreak: Math.max(p.bestStreak||0, r.bestStreak||0),
+    badges: Object.assign({}, r.badges||{}, p.badges||{}),
+    read: Object.assign({}, r.read||{}, p.read||{})
+  };
+  const changed = JSON.stringify([m.xp,m.bestStreak,Object.keys(m.badges).sort(),Object.keys(m.read).sort()]) !== JSON.stringify([r.xp||0,r.bestStreak||0,Object.keys(r.badges||{}).sort(),Object.keys(r.read||{}).sort()]);
+  S.profile = m;
+  return changed;
+}
+function setSync(on, label){
+  const el = $("#sync"); if(!el) return;
+  el.classList.toggle("on", on); el.lastElementChild.textContent = label;
+}
+async function initDb(){
+  setSync(false, "se conectează…");
+  let db = null;
+  try{ db = window.claude && window.claude.use ? await window.claude.use("db") : null; }catch(e){ db = null; }
+  if(!db){ setSync(false, "salvat pe acest dispozitiv"); return; }
+  S.db = db;
+  setSync(true, "sincronizat");
+  let first = true;
+  db.doc("profile/luca").onSnapshot(snap => {
+    const r = snap.exists ? (snap.data()||{}) : {};
+    const changed = mergeProfile(r);
+    saveLocal();
+    if(changed || !snap.exists) saveProfile();
+    renderChip(); if(!S.run) rerenderPassive();
+  }, () => setSync(false, "offline – salvat local"));
+  db.collection("attempts").onSnapshot(snap => {
+    const remote = snap.docs.map(d => d.data()).filter(Boolean);
+    const ids = new Set(remote.map(a => a.id));
+    const localOnly = S.attempts.filter(a => !ids.has(a.id));
+    if(first){ localOnly.forEach(a => db.collection("attempts").doc(a.id).set(a).catch(()=>{})); first = false; }
+    S.attempts = remote.concat(localOnly);
+    saveLocal();
+    if(!S.run) rerenderPassive();
+  }, () => setSync(false, "offline – salvat local"));
+}
+
+/* ---------- XP / levels ---------- */
+function levelOf(xp){
+  let i = 0; for(let k=0;k<LEVELS.length;k++) if(xp >= LEVELS[k][0]) i = k;
+  const cur = LEVELS[i][0], next = LEVELS[i+1] ? LEVELS[i+1][0] : null;
+  return {n:i+1, name:LEVELS[i][1], cur, next, pct: next ? (xp-cur)/(next-cur)*100 : 100};
+}
+function renderChip(){
+  const L = levelOf(S.profile.xp);
+  $("#lvlchip").innerHTML = `<span class="lv">${L.n}</span><span class="meta"><b>${esc(L.name)}</b><small class="mono">${S.profile.xp} XP${L.next ? " · încă " + (L.next - S.profile.xp) + " până la nivelul " + (L.n+1) : ""}</small><span class="xpbar"><i style="width:${L.pct}%"></i></span></span>`;
+  $("#sound").innerHTML = S.sound
+    ? '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/></svg>'
+    : '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M17 9l5 6M22 9l-5 6"/></svg>';
+}
+function addXp(n){
+  const before = levelOf(S.profile.xp).n;
+  S.profile.xp += n;
+  const after = levelOf(S.profile.xp).n;
+  saveProfile(); renderChip();
+  if(after > before){ toast("Nivel nou: " + levelOf(S.profile.xp).name + "!"); confetti(160); tone("level"); }
+}
+function grant(id){
+  if(S.profile.badges[id]) return false;
+  S.profile.badges[id] = Date.now(); saveProfile();
+  return true;
+}
+function medal(b, size){
+  size = size || 62;
+  return `<svg class="medal" width="${size}" height="${size}" viewBox="0 0 64 64" aria-hidden="true"><polygon points="32,3 57,17.5 57,46.5 32,61 7,46.5 7,17.5" fill="${b.c}"/><polygon points="32,10 51,21 51,43 32,54 13,43 13,21" fill="var(--paper)" opacity=".92"/><text x="32" y="39" text-anchor="middle" font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="${b.g.length>2?15:19}" fill="${b.c}">${esc(b.g)}</text></svg>`;
+}
+
+/* ---------- sound & fx ---------- */
+let AC = null;
+function tone(kind){
+  if(!S.sound) return;
+  try{
+    AC = AC || new (window.AudioContext || window.webkitAudioContext)();
+    const seq = kind === "ok" ? [[660,.0],[880,.09]] : kind === "bad" ? [[240,0],[190,.12]] : kind === "level" ? [[523,0],[659,.1],[784,.2],[1046,.3]] : [[523,0],[784,.12],[1046,.24]];
+    seq.forEach(([f,t]) => {
+      const o = AC.createOscillator(), g = AC.createGain();
+      o.type = kind === "bad" ? "triangle" : "sine"; o.frequency.value = f;
+      g.gain.setValueAtTime(.0001, AC.currentTime + t);
+      g.gain.exponentialRampToValueAtTime(.18, AC.currentTime + t + .02);
+      g.gain.exponentialRampToValueAtTime(.0001, AC.currentTime + t + .22);
+      o.connect(g); g.connect(AC.destination); o.start(AC.currentTime + t); o.stop(AC.currentTime + t + .25);
+    });
+  }catch(e){}
+}
+const reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+function confetti(n, x, y){
+  if(reduce) return;
+  const cv = $("#fx"), ctx = cv.getContext("2d");
+  cv.width = innerWidth * devicePixelRatio; cv.height = innerHeight * devicePixelRatio; ctx.scale(devicePixelRatio, devicePixelRatio);
+  const cols = ["#2B47D1","#B03A74","#F5B400","#16935B","#CF3B2E"];
+  x = x ?? innerWidth/2; y = y ?? innerHeight/3;
+  const P = Array.from({length:n}, () => ({x, y, vx:(Math.random()-.5)*12, vy:Math.random()*-11-3, r:Math.random()*6+4, c:pick(cols), a:Math.random()*6, s:(Math.random()-.5)*.4, life:0}));
+  let f = 0;
+  (function step(){
+    ctx.clearRect(0,0,innerWidth,innerHeight);
+    P.forEach(p => { p.vy += .35; p.vx *= .99; p.x += p.vx; p.y += p.vy; p.a += p.s;
+      ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.a); ctx.fillStyle = p.c; ctx.fillRect(-p.r/2,-p.r/4,p.r,p.r/2); ctx.restore(); });
+    if(++f < 110) requestAnimationFrame(step); else ctx.clearRect(0,0,innerWidth,innerHeight);
+  })();
+}
+function floatXp(text, el){
+  const r = el ? el.getBoundingClientRect() : {left:innerWidth/2,width:0,top:innerHeight/2};
+  const d = document.createElement("div"); d.className = "floatxp"; d.textContent = text;
+  d.style.left = (r.left + r.width/2) + "px"; d.style.top = (r.top - 10) + "px";
+  document.body.appendChild(d); setTimeout(() => d.remove(), 1200);
+}
+function toast(msg){
+  const d = document.createElement("div"); d.className = "floatxp"; d.style.left = "50%"; d.style.top = "90px"; d.style.animationDuration = "2.4s"; d.textContent = msg;
+  document.body.appendChild(d); setTimeout(() => d.remove(), 2500);
+}
+
+/* ---------- router ---------- */
+function route(){
+  const h = (location.hash || "").replace(/^#/, "");
+  if(S.run && S.run.active){ renderRun(); return; }
+  if(CHAPTERS[h]) return renderTheory(CHAPTERS[h].kind, h);
+  if(h === "gramatica") return renderTheory("gram");
+  if(h === "literatura") return renderTheory("lit");
+  if(h === "istoric") return renderHistory();
+  renderTests();
+}
+function setNav(r){ document.querySelectorAll("#nav a").forEach(a => a.classList.toggle("on", a.dataset.r === r)); }
+let passiveView = null;
+function rerenderPassive(){ if(passiveView) passiveView(); }
+
+/* ---------- theory ---------- */
+let lastChapter = {gram: GRAMMAR[0].id, lit: LITERATURE[0].id};
+function lessonHtml(c){
+  let n = 0;
+  const body = c.body.replace(/<table class="tbl">/g,'<div class="tbl-w"><table class="tbl">').replace(/<\/table>/g,'</table></div>').replace(/<h4>/g, () => `<h4 id="${c.id}-s${++n}">`);
+  return `<div class="lesson-h"><span class="cls">cl. ${esc(c.cls)}</span><span class="eyebrow">${c.kind === "gram" ? "Gramatică" : "Literatură"}</span></div><h2>${esc(c.title)}</h2>${body}`;
+}
+function renderTheory(kind, id){
+  const list = kind === "gram" ? GRAMMAR : LITERATURE;
+  id = id && CHAPTERS[id] && CHAPTERS[id].kind === kind ? id : lastChapter[kind];
+  lastChapter[kind] = id;
+  const c = CHAPTERS[id];
+  setNav(kind === "gram" ? "gramatica" : "literatura");
+  const idx = list.findIndex(x => x.id === id);
+  const done = list.filter(x => S.profile.read[x.id]).length;
+  const qcount = Object.values(QIDX).filter(o => o.q.ref === id && o.q.type !== "open").length;
+  passiveView = () => renderTheory(kind, id);
+  $("#view").innerHTML = `
+  <div class="${kind === "gram" ? "gram-page" : "lit-page"}">
+    <div class="page-h"><div><div class="eyebrow">Recapitulare clasele a V-a și a VI-a</div><h1>${kind === "gram" ? "Teorie de gramatică" : "Teorie de literatură"}</h1></div>
+    <div style="min-width:220px"><div class="eyebrow">${done} din ${list.length} capitole recapitulate</div><div class="pbar"><i style="width:${done/list.length*100}%"></i></div></div></div>
+    <div class="toc-mobile">${list.map(x => `<a href="#${x.id}" class="${x.id===id?"on":""} ${S.profile.read[x.id]?"done":""}">${esc(x.title.split(":")[0])}</a>`).join("")}</div>
+    <div class="theory">
+      <nav class="toc" aria-label="Capitole">
+        <div class="toc-prog"><div class="row"><span>Progres</span><span class="mono">${done}/${list.length}</span></div><div class="pbar"><i style="width:${done/list.length*100}%"></i></div></div>
+        ${list.map(x => `<a href="#${x.id}" class="${x.id===id?"on":""}"><span class="ck ${S.profile.read[x.id]?"done":""}"></span><span style="flex:1">${esc(x.title)}</span><span class="cls">${esc(x.cls)}</span></a>`).join("")}
+      </nav>
+      <article class="lesson">
+        ${lessonHtml(c)}
+        <div class="lesson-foot">
+          ${S.profile.read[id]
+            ? `<button class="btn ghost" data-act="unread" data-id="${id}">✓ Recapitulat · marchează ca nerecapitulat</button>`
+            : `<button class="btn ${kind}" data-act="read" data-id="${id}">Am recapitulat capitolul <span class="gain">+20 XP</span></button>`}
+          ${qcount ? `<button class="btn xp" data-act="practice" data-id="${id}">Exersează ${Math.min(qcount,8)} întrebări</button>` : ""}
+          <div class="lesson-nav">
+            ${idx > 0 ? `<a class="btn ghost sm" href="#${list[idx-1].id}">← Înapoi</a>` : ""}
+            ${idx < list.length-1 ? `<a class="btn ghost sm" href="#${list[idx+1].id}">Următorul →</a>` : ""}
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>`;
+}
+
+/* ---------- tests page ---------- */
+function bestOf(tid){
+  const a = S.attempts.filter(x => x.tid === tid && x.mode === "test");
+  return a.length ? Math.max.apply(null, a.map(x => x.nota)) : null;
+}
+function renderTests(){
+  setNav("teste"); passiveView = renderTests;
+  const r = S.run && !S.run.active ? S.run : null;
+  const recs = {t1:["g-fonetica","g-vocabular","g-verb-ind","l-narativ","l-personaj"], t2:["g-substantiv","g-articol","g-adjectiv","g-numeral","l-liric","l-figuri"], t3:["g-verb-moduri","g-pronume","g-neflexibile","l-dramatic","l-specii"], t4:["g-sintaxa","g-fraza","l-specii","l-texte","l-scriere"]};
+  $("#view").innerHTML = `
+  <div class="page-h"><div><div class="eyebrow">Evaluarea Națională · pregătire</div><h1>Planul de weekend, Luca</h1><p>Patru teste de 45 de minute care acoperă împreună toată materia din clasele a V-a și a VI-a. Fiecare răspuns e verificat pe loc, cu explicația din teorie.</p></div></div>
+  ${r ? `<div class="resume"><div><b>Ai un test început:</b> ${esc(r.title)} · întrebarea ${Object.keys(r.answers).length+1} din ${r.order.length}</div><div style="display:flex;gap:8px"><button class="btn sm" data-act="resume">Continuă</button><button class="btn ghost sm" data-act="drop">Renunță</button></div></div>` : ""}
+  <div class="plan">
+  ${TESTS.map(t => { const b = bestOf(t.id); const pts = t.questions.reduce((s,q)=>s+q.pts,0); return `
+    <article class="tcard ${b!=null?"done":""}">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start"><span class="num">${t.num}</span><span class="nota ${notaCls(b)}">${b!=null ? "Nota " + fmtNota(b) : "nefăcut"}</span></div>
+      <div class="day">${esc(t.day)}</div>
+      <h3>${esc(t.title)}</h3>
+      <ul>${t.covers.map(c => `<li>${esc(c)}</li>`).join("")}</ul>
+      <div style="font-size:13.5px;color:var(--muted)">Înainte, recitește: ${recs[t.id].map(id => `<a href="#${id}" style="color:var(--${CHAPTERS[id].kind})">${esc(CHAPTERS[id].title.split(":")[0])}</a>`).join(", ")}</div>
+      <div class="foot"><span class="mono" style="font-size:13px;color:var(--muted)">45 min · ${t.questions.length} itemi · ${pts} p</span><button class="btn gram sm" data-act="start" data-id="${t.id}">${b!=null?"Reia":"Începe"}</button></div>
+    </article>`; }).join("")}
+  </div>
+  <h2 class="section-t">Exersează oricând</h2>
+  <div class="drills">
+    <div class="drill"><div><h3>Antrenament fulger</h3><p>10 întrebări la întâmplare din toată materia · 10 minute</p></div><button class="btn xp" data-act="fulger">Pornește</button></div>
+    <div class="drill alt"><div><h3>Test EN amestecat</h3><p>22 de întrebări noi combinate din toate testele · 45 minute</p></div><button class="btn" data-act="mix">Pornește</button></div>
+  </div>
+  <h2 class="section-t">Cum se punctează</h2>
+  <div class="panel" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;font-size:15.5px">
+    <div><b>+10 XP</b> pentru fiecare răspuns corect, <b>+5 XP</b> bonus când ai o serie de 3 sau mai multe.</div>
+    <div><b>Răspunsurile deschise</b>: scrii, apoi compari cu modelul și bifezi criteriile îndeplinite. Fii corect cu tine!</div>
+    <div><b>Nota</b> se calculează ca la EN: 1 punct din oficiu + 9 puncte pentru răspunsuri.</div>
+    <div><b>Bonus la final</b>: +50 XP pentru nota 9, +25 XP pentru nota 7.</div>
+  </div>`;
+}
+
+/* ---------- runner ---------- */
+function startRun(mode, id){
+  let order, title, sub, minutes, tid = null;
+  if(mode === "test"){
+    const t = TESTS.find(x => x.id === id); tid = t.id;
+    order = t.questions.map(q => q.id); title = "Test " + t.num + " · " + t.title; sub = "Evaluare Națională · simulare"; minutes = 45;
+  } else if(mode === "fulger"){
+    const pool = Object.values(QIDX).filter(o => o.q.type !== "open").map(o => o.q.id);
+    order = shuffle(pool).slice(0, 10); title = "Antrenament fulger"; sub = "10 întrebări din toată materia"; minutes = 10;
+  } else if(mode === "mix"){
+    const auto = shuffle(Object.values(QIDX).filter(o => o.q.type !== "open").map(o => o.q.id));
+    const g = auto.filter(q => TOPIC[QIDX[q].q.topic][1] === "g").slice(0, 13);
+    const l = auto.filter(q => TOPIC[QIDX[q].q.topic][1] === "l").slice(0, 7);
+    const opens = shuffle(Object.values(QIDX).filter(o => o.q.type === "open"));
+    const shortOpen = opens.find(o => o.q.pts <= 6), longOpen = opens.find(o => o.q.pts > 6);
+    order = shuffle(g.concat(l)).concat([shortOpen.q.id, longOpen.q.id]);
+    title = "Test EN amestecat"; sub = "Toată materia · 45 de minute"; minutes = 45;
+  } else if(mode === "practice"){
+    const pool = Object.values(QIDX).filter(o => o.q.ref === id && o.q.type !== "open").map(o => o.q.id);
+    order = shuffle(pool).slice(0, 8); title = "Exersare · " + CHAPTERS[id].title; sub = "Întrebări din acest capitol"; minutes = 0;
+  }
+  S.run = {id: "a" + Date.now().toString(36) + Math.random().toString(36).slice(2,6), mode, tid, ref: mode==="practice"?id:null, title, sub, order, idx:0, answers:{}, startedAt: Date.now(), deadline: minutes ? Date.now() + minutes*60000 : null, xp:0, streak:0, maxStreak:0, active:true, textTab:null, skipped:{}, perm:{}};
+  order.forEach(qid => { const q = QIDX[qid].q; if(q.type === "mc" || q.type === "multi") S.run.perm[qid] = shuffle(q.options.map((_,i) => i)); });
+  LS.set("ro-run", S.run);
+  window.scrollTo(0,0);
+  renderRun();
+}
+function curQ(){ return QIDX[S.run.order[S.run.idx]]; }
+function persistRun(){ LS.set("ro-run", S.run); }
+let tick = null;
+function startTick(){
+  clearInterval(tick);
+  tick = setInterval(() => {
+    if(!S.run || !S.run.active){ clearInterval(tick); return; }
+    const el = $("#timer"); if(!el || !S.run.deadline) return;
+    const left = (S.run.deadline - Date.now())/1000;
+    el.textContent = fmtTime(left);
+    el.parentElement.classList.toggle("low", left < 300 && left >= 60);
+    el.parentElement.classList.toggle("crit", left < 60);
+    if(left <= 0){ clearInterval(tick); toast("Timpul a expirat!"); finishRun(); }
+  }, 500);
+}
+function textsFor(o){
+  if(S.run.mode === "test" || !o.t) return S.run.mode === "test" ? TESTS.find(t => t.id === S.run.tid).texts : [];
+  return o.q.text ? o.t.texts : [];
+}
+function renderRun(){
+  const R = S.run; setNav(""); passiveView = null;
+  const o = curQ(); const q = o.q;
+  const texts = textsFor(o);
+  const tab = texts.find(t => t.id === (q.text || R.textTab)) || texts[0];
+  const a = R.answers[q.id];
+  const topic = TOPIC[q.topic];
+  $("#view").innerHTML = `
+  <div class="run-top" style="margin-inline:-16px;padding-inline:16px"><div class="run-top-in">
+    <div class="run-title">${esc(R.title)}<small>${esc(R.sub)}</small></div>
+    ${R.deadline ? `<span class="pill timer"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2M9 2h6"/></svg><span id="timer">${fmtTime((R.deadline-Date.now())/1000)}</span></span>` : ""}
+    <span class="pill xp mono">${R.xp} XP</span>
+    <span class="pill streak ${R.streak>=2?"":"off"}" title="Răspunsuri corecte la rând"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c1 4 5 6 5 11a5 5 0 0 1-10 0c0-2 1-3.5 2-4.5 0 2 1 3 2 3-1-3 0-6.5 1-9.5z"/></svg>serie ${R.streak}</span>
+    <button class="btn ghost sm" data-act="exit">Ieși</button>
+  </div>
+  <div class="dots">${R.order.map((id,i) => { const x = R.answers[id]; const c = x ? (x.correct ? "ok" : x.earned > 0 ? "part" : "bad") : i === R.idx ? "cur" : ""; return `<i class="${c}"></i>`; }).join("")}</div>
+  <div id="exitbar"></div></div>
+  <div class="run-body ${texts.length ? "has-text" : ""}">
+    ${texts.length ? `<aside class="textpane" id="textpane">
+      <div class="tp-tabs">${texts.map(t => `<button data-act="tab" data-id="${t.id}" class="${t.id===tab.id?"on":""}">${esc(t.title.split("·")[0].trim())}</button>`).join("")}</div>
+      <div class="notebook"><h3>${esc(tab.title)}</h3>${tab.html}</div>
+    </aside>` : ""}
+    <section class="qpane">
+      <div class="qcard">
+        <div class="q-meta"><span class="mono">Întrebarea ${R.idx+1} / ${R.order.length}</span><span>·</span><span class="mono">${q.pts} p</span><span class="tag ${topic[1]}">${esc(topic[0])}</span>
+          ${texts.length ? `<button class="btn ghost sm show-text" data-act="toggletext" style="margin-left:auto">Arată textul</button>` : ""}</div>
+        ${q.text ? `<div class="read-note">Folosește Textul ${esc(q.text)}</div>` : ""}
+        <p class="q-prompt">${esc(q.prompt)}</p>
+        <div id="qbody">${qBody(q, a)}</div>
+        <div id="fb">${a ? feedback(q, a) : ""}</div>
+        <div class="q-actions" id="qact">${actions(q, a)}</div>
+      </div>
+    </section>
+  </div>`;
+  startTick();
+  const inp = $("#fillin"); if(inp && !a) inp.focus({preventScroll:true});
+}
+const KEYS = ["a","b","c","d","e","f"];
+function ordOf(q){ const R = S.run; return (R && R.perm && R.perm[q.id]) || q.options.map((_,i) => i); }
+function qBody(q, a){
+  const R = S.run; const sel = R.sel;
+  if(q.type === "mc"){
+    return `<div class="opts">${ordOf(q).map((i,pos) => { const op = q.options[i];
+      let c = ""; if(a){ if(i === q.answer) c = "right"; else if(i === a.given) c = "wrong"; } else if(sel === i) c = "sel";
+      return `<button class="opt ${c}" data-act="sel" data-i="${i}" ${a?"disabled":""}><span class="k">${KEYS[pos]}</span><span>${esc(op)}</span></button>`; }).join("")}</div>`;
+  }
+  if(q.type === "multi"){
+    const cur = Array.isArray(sel) ? sel : [];
+    return `<div class="eyebrow" style="margin-bottom:8px">Pot fi corecte mai multe variante</div><div class="opts">${ordOf(q).map((i,pos) => { const op = q.options[i];
+      let c = ""; if(a){ const inA = q.answer.includes(i), inG = a.given.includes(i); c = inA && inG ? "right" : inA && !inG ? "right" : !inA && inG ? "wrong" : ""; if(inA && !inG) c += " missed"; } else if(cur.includes(i)) c = "sel";
+      const mark = a ? (q.answer.includes(i) ? (a.given.includes(i) ? "✓" : "!") : (a.given.includes(i) ? "✗" : KEYS[pos])) : (cur.includes(i) ? "✓" : KEYS[pos]);
+      return `<button class="opt ${c}" data-act="msel" data-i="${i}" ${a?"disabled":""} ${a && q.answer.includes(i) && !a.given.includes(i) ? 'style="border-style:dashed"' : ""}><span class="k">${mark}</span><span>${esc(op)}</span></button>`; }).join("")}</div>`;
+  }
+  if(q.type === "tf"){
+    return `<div class="tf">${[true,false].map(v => {
+      let c = ""; if(a){ if(v === q.answer) c = "right"; else if(v === a.given) c = "wrong"; } else if(sel === v) c = "sel";
+      return `<button class="opt ${c}" data-act="sel" data-v="${v}" ${a?"disabled":""}>${v?"Adevărat":"Fals"}</button>`; }).join("")}</div>`;
+  }
+  if(q.type === "fill"){
+    return `<input id="fillin" class="fill ${a ? (a.correct?"right":"wrong") : ""}" autocomplete="off" spellcheck="false" placeholder="Scrie răspunsul aici" value="${esc(a ? a.given : (R.sel||""))}" ${a?"disabled":""}>${a && !a.correct ? `<div class="wc">Răspuns corect: <b>${esc(correctText(q))}</b></div>` : ""}`;
+  }
+  if(q.type === "open"){
+    const txt = a ? a.given : (R.draft && R.draft[q.id]) || "";
+    if(a) return `<div class="model" style="border-left-color:var(--gram);white-space:pre-line">${esc(txt) || "<i>(fără răspuns scris)</i>"}</div>`;
+    if(R.phase === "rubric"){
+      const ck = R.rub || [];
+      return `<div class="eyebrow">Răspunsul tău</div><div class="model" style="border-left-color:var(--gram)">${esc(txt) || "<i>(nu ai scris nimic)</i>"}</div>
+      <div class="eyebrow" style="margin-top:16px">Răspuns model</div><div class="model">${esc(q.model)}</div>
+      <div class="eyebrow" style="margin-top:16px">Bifează ce ai îndeplinit</div>
+      <div class="rubric">${q.rubric.map((r,i) => `<label><input type="checkbox" data-act="rub" data-i="${i}" ${ck.includes(i)?"checked":""}><span>${esc(r.t)}</span><span class="p">${r.p} p</span></label>`).join("")}</div>`;
+    }
+    return `<textarea id="openin" class="fill" placeholder="Scrie răspunsul tău aici…">${esc(txt)}</textarea><div class="wc" id="wc">${wc(txt)} cuvinte</div>`;
+  }
+  return "";
+}
+function actions(q, a){
+  const R = S.run;
+  const last = Object.keys(R.answers).length === R.order.length;
+  if(a) return `<span></span><button class="btn" data-act="next">${last ? "Vezi rezultatul →" : "Următoarea →"}</button>`;
+  const canSkip = !R.skipped[q.id] && R.idx < R.order.length - 1;
+  const skip = canSkip ? `<button class="btn ghost sm" data-act="skip">Sari, revin mai târziu</button>` : "<span></span>";
+  if(q.type === "open"){
+    if(R.phase === "rubric"){
+      const pts = (R.rub||[]).reduce((s,i) => s + q.rubric[i].p, 0);
+      return `<span></span><button class="btn gram" data-act="rubok">Confirmă punctajul: ${pts} / ${q.pts} p</button>`;
+    }
+    return `${skip}<button class="btn gram" data-act="model">Am terminat · vezi modelul</button>`;
+  }
+  const has = q.type === "multi" ? (Array.isArray(R.sel) && R.sel.length) : q.type === "fill" ? true : R.sel !== undefined && R.sel !== null;
+  return `${skip}<button class="btn gram" data-act="check" id="checkbtn" ${has?"":"disabled"}>Verifică</button>`;
+}
+function feedback(q, a){
+  const c = CHAPTERS[q.ref];
+  const cls = a.correct ? "ok" : a.earned > 0 ? "part" : "bad";
+  const head = q.type === "open" ? (a.earned === q.pts ? "Punctaj maxim!" : a.earned > 0 ? "Bun început!" : "Recitește teoria și încearcă din nou data viitoare") : a.correct ? a.praise : a.earned > 0 ? "Parțial corect" : a.praise;
+  return `<div class="fb ${cls}">
+    <div class="fb-h">${esc(head)} ${a.xp ? `<span class="gain">+${a.xp} XP</span>` : ""} ${a.bonus ? `<span class="gain" style="background:var(--bad);color:#fff">serie ×${a.streakAt} +${a.bonus}</span>` : ""} <span class="mono" style="font-size:14px;margin-left:auto">${a.earned} / ${q.pts} p</span></div>
+    <p>${esc(q.expl)}</p>
+    ${c ? `<div class="fb-theory"><span>Din teorie: <b>${esc(c.title)}</b> <span class="cls">cl. ${esc(c.cls)}</span></span><button class="btn ghost sm" data-act="lesson" data-id="${c.id}">Deschide lecția</button></div>` : ""}
+  </div>`;
+}
+function grade(q){
+  const R = S.run; let given = R.sel, correct = false, earned = 0;
+  if(q.type === "mc"){ correct = given === q.answer; earned = correct ? q.pts : 0; }
+  else if(q.type === "tf"){ correct = given === q.answer; earned = correct ? q.pts : 0; }
+  else if(q.type === "fill"){ given = ($("#fillin") || {}).value || ""; correct = q.accept.some(x => norm(x) === norm(given)); earned = correct ? q.pts : 0; }
+  else if(q.type === "multi"){
+    given = (given||[]).slice().sort();
+    const hits = given.filter(i => q.answer.includes(i)).length, falses = given.length - hits;
+    correct = hits === q.answer.length && falses === 0;
+    earned = correct ? q.pts : Math.max(0, Math.round(q.pts * (hits - falses) / q.answer.length));
+  }
+  return {given, correct, earned};
+}
+function commitAnswer(q, res, btn){
+  const R = S.run;
+  let xp = 0, bonus = 0;
+  if(q.type === "open"){
+    xp = res.earned * 3;
+    if(res.earned === q.pts && q.pts >= 12 && grant("scriitor")) R.newBadges = (R.newBadges||[]).concat("scriitor");
+  } else if(res.correct){
+    R.streak++; R.maxStreak = Math.max(R.maxStreak, R.streak);
+    xp = 10; if(R.streak >= 3){ bonus = 5; }
+    if(R.streak >= 5 && grant("serie5")) R.newBadges = (R.newBadges||[]).concat("serie5");
+    if(R.streak >= 10 && grant("serie10")) R.newBadges = (R.newBadges||[]).concat("serie10");
+  } else {
+    R.streak = 0; xp = res.earned > 0 ? 4 : 0;
+  }
+  const total = xp + bonus;
+  R.xp += total;
+  R.answers[q.id] = Object.assign(res, {xp, bonus, streakAt: R.streak, praise: res.correct ? pick(PRAISE) : pick(OOPS)});
+  R.sel = null; R.phase = null; R.rub = null;
+  if(R.maxStreak > (S.profile.bestStreak||0)) S.profile.bestStreak = R.maxStreak;
+  persistRun();
+  if(total) addXp(total);
+  renderRun();
+  const fbEl = $("#fb");
+  if(res.correct || (q.type === "open" && res.earned === q.pts)){ tone("ok"); const b = $("#qact .btn"); if(total) floatXp("+" + total + " XP", b); if(R.streak >= 3 || q.type === "open") { const r = (b||document.body).getBoundingClientRect(); confetti(R.streak >= 5 ? 70 : 36, r.left + r.width/2, r.top); } }
+  else if(!res.correct){ tone(res.earned > 0 ? "ok" : "bad"); }
+  if(fbEl) fbEl.scrollIntoView({block:"nearest", behavior: reduce ? "auto" : "smooth"});
+}
+function nextQ(){
+  const R = S.run;
+  const n = R.order.length;
+  for(let k=1;k<=n;k++){ const j = (R.idx + k) % n; if(!R.answers[R.order[j]]){ R.idx = j; persistRun(); window.scrollTo({top:0}); renderRun(); return; } }
+  finishRun();
+}
+function finishRun(){
+  const R = S.run; clearInterval(tick);
+  const qs = R.order.map(id => QIDX[id].q);
+  const total = qs.reduce((s,q) => s + q.pts, 0);
+  const earned = qs.reduce((s,q) => s + (R.answers[q.id] ? R.answers[q.id].earned : 0), 0);
+  const nota = Math.round((1 + 9 * earned / total) * 100) / 100;
+  const autoQs = qs.filter(q => q.type !== "open");
+  const correctN = autoQs.filter(q => R.answers[q.id] && R.answers[q.id].correct).length;
+  const topics = {};
+  qs.forEach(q => { const t = topics[q.topic] = topics[q.topic] || {e:0,p:0,n:0,c:0}; t.p += q.pts; t.n++; const a = R.answers[q.id]; if(a){ t.e += a.earned; if(a.correct) t.c++; } });
+  let bonus = 0;
+  if(R.mode === "test" || R.mode === "mix"){ bonus = nota >= 9 ? 50 : nota >= 7 ? 25 : 0; }
+  const nb = (R.newBadges || []).slice();
+  const g = id => { if(grant(id)) nb.push(id); };
+  g("primul");
+  if((R.mode === "test" || R.mode === "mix") && nota >= 9.5) g("nota10");
+  if(R.mode === "fulger" && correctN === 10) g("fulger");
+  const allOk = arr => arr.length && arr.every(q => R.answers[q.id] && R.answers[q.id].correct);
+  const verbQs = autoQs.filter(q => q.topic === "verb"); if(verbQs.length >= 3 && allOk(verbQs)) g("verb");
+  const poetQs = autoQs.filter(q => q.topic === "liric" || q.topic === "figuri"); if(poetQs.length >= 4 && allOk(poetQs)) g("poet");
+  const synQs = autoQs.filter(q => q.topic === "sintaxa" || q.topic === "fraza");
+  if(synQs.length >= 5 && synQs.filter(q => R.answers[q.id] && R.answers[q.id].correct).length / synQs.length >= .8) g("detectiv");
+  const att = {id:R.id, mode:R.mode, tid:R.tid, ref:R.ref, title:R.title, date:Date.now(), startedAt:R.startedAt, duration:Math.round((Date.now()-R.startedAt)/1000), total, earned, nota, correctN, autoN:autoQs.length, xp:R.xp + bonus, bonus, maxStreak:R.maxStreak, topics, newBadges:nb,
+    answers: R.order.map(id => { const a = R.answers[id]; return {id, given: a ? a.given : null, correct: a ? a.correct : false, earned: a ? a.earned : 0, skipped: !a}; })};
+  saveAttempt(att);
+  const done4 = TESTS.every(t => S.attempts.some(x => x.mode === "test" && x.tid === t.id));
+  if(done4){ if(grant("maraton")) nb.push("maraton"); if(TESTS.every(t => (bestOf(t.id)||0) >= 7) && grant("campion")) nb.push("campion"); }
+  att.newBadges = nb; saveAttempt(att);
+  if(bonus) addXp(bonus);
+  S.run = null; LS.del("ro-run");
+  renderResult(att, true);
+}
+function renderResult(att, fresh){
+  setNav(""); passiveView = null; window.scrollTo(0,0);
+  const col = att.nota >= 8.5 ? "var(--ok)" : att.nota >= 6.5 ? "var(--xp)" : "var(--bad)";
+  const pct = att.earned / att.total * 100;
+  const msg = att.nota >= 9.5 ? "Extraordinar, Luca!" : att.nota >= 8.5 ? "Foarte bine!" : att.nota >= 7 ? "Bine, mai e puțin!" : att.nota >= 5 ? "Un început bun" : "Hai să recapitulăm împreună";
+  const misses = att.answers.filter(x => !x.correct).map(x => QIDX[x.id]).filter(Boolean);
+  const tlist = Object.entries(att.topics).map(([k,v]) => ({k, v, p: v.p ? v.e/v.p*100 : 0})).sort((a,b) => a.p - b.p);
+  $("#view").innerHTML = `
+  <div class="page-h"><div><div class="eyebrow">${esc(att.title)}</div><h1>${esc(msg)}</h1><p>${fresh ? "Rezultatul a fost salvat în Istoric." : fmtDate(att.date)}</p></div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">${att.mode === "test" ? `<button class="btn gram" data-act="start" data-id="${att.tid}">Refă testul</button>` : ""}<a class="btn ghost" href="#teste">Înapoi la teste</a><a class="btn ghost" href="#istoric">Istoric</a></div></div>
+  <div class="res">
+    <div class="res-card">
+      <div class="grade" style="--c:${col};--p:${pct}"><div><small>Nota</small><b>${fmtNota(att.nota)}</b><small class="mono">${att.earned} / ${att.total} p</small></div></div>
+      <div class="kv">
+        <span>Răspunsuri corecte</span><span>${att.correctN} / ${att.autoN}</span>
+        <span>Timp folosit</span><span>${fmtTime(att.duration)}</span>
+        <span>Cea mai lungă serie</span><span>${att.maxStreak}</span>
+        <span>XP câștigat</span><span>+${att.xp}${att.bonus ? " (bonus " + att.bonus + ")" : ""}</span>
+      </div>
+    </div>
+    <div style="display:grid;gap:22px">
+      ${att.newBadges && att.newBadges.length ? `<div class="panel"><h3>Insigne noi</h3><div class="newb">${att.newBadges.map(id => { const b = BADGES.find(x => x.id === id); return b ? `<div class="badge">${medal(b)}<b>${esc(b.n)}</b><small>${esc(b.d)}</small></div>` : ""; }).join("")}</div></div>` : ""}
+      <div class="panel"><h3>Pe teme</h3><div class="topics">${tlist.map(t => `<div class="trow"><span>${esc(TOPIC[t.k][0])}</span><span class="bar-t"><i style="width:${t.p}%;background:${t.p>=80?"var(--ok)":t.p>=50?"var(--xp)":"var(--bad)"}"></i></span><span class="pct">${Math.round(t.p)}%</span></div>`).join("")}</div></div>
+      <div class="panel"><h3>De recapitulat ${misses.length ? "(" + misses.length + ")" : ""}</h3>
+        ${misses.length ? misses.map(o => `<div class="miss"><div><p>${esc(o.q.prompt)}</p><small>${esc(TOPIC[o.q.topic][0])}${att.answers.find(x=>x.id===o.q.id).skipped ? " · fără răspuns" : ""}</small></div><button class="btn ghost sm" data-act="lesson" data-id="${o.q.ref}">Lecția</button></div>`).join("") : `<p class="empty">Niciun răspuns greșit. Felicitări!</p>`}
+      </div>
+    </div>
+  </div>`;
+  if(fresh){ if(att.nota >= 7){ confetti(220); tone("win"); } }
+}
+
+/* ---------- history ---------- */
+function answerText(q, g){
+  if(g == null) return "—";
+  if(q.type === "mc") return q.options[g] ?? "—";
+  if(q.type === "tf") return g ? "Adevărat" : "Fals";
+  if(q.type === "multi") return (g||[]).map(i => q.options[i]).join("; ") || "—";
+  return String(g) || "—";
+}
+function correctText(q){
+  if(q.type === "mc") return q.options[q.answer];
+  if(q.type === "tf") return q.answer ? "Adevărat" : "Fals";
+  if(q.type === "multi") return q.answer.map(i => q.options[i]).join("; ");
+  if(q.type === "fill") return q.accept.find(x => /[ăâîșț]/.test(x)) || q.accept[0];
+  return "vezi modelul";
+}
+function chartSvg(list){
+  if(list.length < 2) return `<p class="empty">Graficul apare după cel puțin două teste.</p>`;
+  const W = 560, H = 200, pl = 34, pr = 14, pt = 14, pb = 26;
+  const xs = i => pl + i * (W - pl - pr) / (list.length - 1);
+  const ys = v => pt + (10 - v) / 9 * (H - pt - pb);
+  const pts = list.map((a,i) => [xs(i), ys(a.nota)]);
+  const line = pts.map((p,i) => (i ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" ");
+  const area = line + ` L${pts[pts.length-1][0].toFixed(1)} ${ys(1)} L${pts[0][0].toFixed(1)} ${ys(1)} Z`;
+  const grid = [1,4,7,10].map(v => `<line x1="${pl}" x2="${W-pr}" y1="${ys(v)}" y2="${ys(v)}" stroke="var(--line)" stroke-dasharray="3 4"/><text x="${pl-8}" y="${ys(v)+4}" text-anchor="end" font-size="11" fill="var(--muted)" font-family="JetBrains Mono, monospace">${v}</text>`).join("");
+  const last = pts[pts.length-1];
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Evoluția notelor">${grid}<path d="${area}" fill="var(--gram)" opacity=".10"/><path d="${line}" fill="none" stroke="var(--gram)" stroke-width="2.5" stroke-linejoin="round"/>${pts.map(p => `<circle cx="${p[0]}" cy="${p[1]}" r="3.5" fill="var(--paper)" stroke="var(--gram)" stroke-width="2"/>`).join("")}<circle cx="${last[0]}" cy="${last[1]}" r="6" fill="var(--gram)"/><text x="${Math.min(last[0], W-pr-4)}" y="${last[1]-12}" text-anchor="end" font-size="12" font-weight="700" fill="var(--ink)" font-family="JetBrains Mono, monospace">${fmtNota(list[list.length-1].nota)}</text></svg>`;
+}
+function renderHistory(){
+  setNav("istoric"); passiveView = renderHistory;
+  const list = S.attempts.slice().sort((a,b) => b.date - a.date);
+  const graded = list.filter(a => a.mode === "test" || a.mode === "mix").slice().reverse();
+  const avg = graded.length ? graded.reduce((s,a) => s + a.nota, 0) / graded.length : null;
+  const best = graded.length ? Math.max.apply(null, graded.map(a => a.nota)) : null;
+  const agg = {};
+  list.forEach(a => Object.entries(a.topics||{}).forEach(([k,v]) => { const t = agg[k] = agg[k] || {e:0,p:0}; t.e += v.e; t.p += v.p; }));
+  const tl = Object.entries(agg).map(([k,v]) => ({k, p: v.p ? v.e/v.p*100 : 0})).sort((a,b) => a.p - b.p);
+  const refFor = k => { const o = Object.values(QIDX).find(o => o.q.topic === k); return o ? o.q.ref : null; };
+  const L = levelOf(S.profile.xp);
+  const got = BADGES.filter(b => S.profile.badges[b.id]).length;
+  $("#view").innerHTML = `
+  <div class="page-h"><div><div class="eyebrow">Toate testele salvate</div><h1>Istoricul lui Luca</h1><p>${S.db ? "Rezultatele se sincronizează între dispozitive." : "Rezultatele sunt salvate în acest browser."}</p></div></div>
+  <div class="stats">
+    <div class="stat"><b class="mono">${list.length}</b><span>teste și antrenamente</span></div>
+    <div class="stat"><b class="mono">${avg!=null?fmtNota(avg):"—"}</b><span>media la testele de 45 min</span></div>
+    <div class="stat"><b class="mono">${best!=null?fmtNota(best):"—"}</b><span>cea mai bună notă</span></div>
+    <div class="stat"><b class="mono">${S.profile.xp}</b><span>XP · nivel ${L.n}, ${esc(L.name)}</span></div>
+  </div>
+  <div class="hgrid">
+    <div class="panel chart"><h3>Evoluția notelor</h3>${chartSvg(graded)}</div>
+    <div class="panel"><h3>Unde mai lucrăm</h3>${tl.length ? `<div class="topics">${tl.slice(0,6).map(t => { const r = refFor(t.k); return `<div class="trow"><a href="#${r||""}" style="color:var(--ink)">${esc(TOPIC[t.k][0])}</a><span class="bar-t"><i style="width:${t.p}%;background:${t.p>=80?"var(--ok)":t.p>=50?"var(--xp)":"var(--bad)"}"></i></span><span class="pct">${Math.round(t.p)}%</span></div>`; }).join("")}</div>` : `<p class="empty">Temele apar după primul test.</p>`}</div>
+  </div>
+  <div class="panel" id="badges"><h3>Insigne · ${got} din ${BADGES.length}</h3><div class="badges">${BADGES.map(b => `<div class="badge ${S.profile.badges[b.id]?"":"locked"}">${medal(b)}<b>${esc(b.n)}</b><small>${esc(b.d)}</small></div>`).join("")}</div></div>
+  <div class="panel"><h3>Testele date</h3>
+  ${list.length ? list.map(a => `<details class="att"><summary><span class="when">${fmtDate(a.date)}</span><span class="ttl">${esc(a.title)}<small>${a.correctN}/${a.autoN} corecte · ${fmtTime(a.duration)} · +${a.xp} XP</small></span><span class="nota ${notaCls(a.nota)}">${fmtNota(a.nota)}</span><button class="btn ghost sm" data-act="viewres" data-id="${a.id}">Detalii</button></summary>
+    <div class="rev">${(a.answers||[]).map((x,i) => { const o = QIDX[x.id]; if(!o) return ""; const q = o.q; const c = x.correct ? "ok" : x.earned > 0 ? "part" : "bad";
+      return `<div class="rev-q ${c}"><span class="st">${i+1}. ${x.skipped ? "FĂRĂ RĂSPUNS" : x.correct ? "CORECT" : x.earned > 0 ? "PARȚIAL" : "GREȘIT"} · ${x.earned}/${q.pts} p</span><div>${esc(q.prompt)}</div><div class="ans">Răspunsul lui Luca: ${esc(answerText(q, x.given))}${!x.correct && q.type !== "open" ? "\nCorect: " + esc(correctText(q)) : ""}</div></div>`; }).join("")}</div></details>`).join("") : `<p class="empty">Încă nu ai dat niciun test. Începe cu Testul 1 din pagina Teste EN.</p>`}
+  </div>`;
+}
+
+/* ---------- modal ---------- */
+function openLesson(id){
+  const c = CHAPTERS[id]; if(!c) return;
+  const m = $("#modal");
+  m.innerHTML = `<div class="modal-in ${c.kind==="gram"?"gram-page":"lit-page"}" role="dialog" aria-modal="true" aria-label="${esc(c.title)}"><div class="modal-h"><span class="eyebrow">Lecția</span><button class="btn sm" data-act="close">Închide</button></div><article class="lesson">${lessonHtml(c)}</article></div>`;
+  m.hidden = false; $(".modal-h .btn", m).focus();
+}
+function closeModal(){ const m = $("#modal"); m.hidden = true; m.innerHTML = ""; m.classList.remove("top"); }
+
+/* ---------- events ---------- */
+document.addEventListener("click", e => {
+  const el = e.target.closest("[data-act]");
+  if(e.target.id === "modal"){ closeModal(); return; }
+  if(!el) return;
+  const act = el.dataset.act, id = el.dataset.id;
+  const R = S.run;
+  switch(act){
+    case "read":
+      if(!S.profile.read[id]){ S.profile.read[id] = Date.now(); addXp(20); floatXp("+20 XP", el); tone("ok");
+        if(Object.keys(CHAPTERS).every(k => S.profile.read[k]) && grant("soarece")){ toast("Insignă nouă: Șoarece de bibliotecă!"); confetti(120); } }
+      saveProfile(); route(); break;
+    case "unread": delete S.profile.read[id]; saveProfile(); route(); break;
+    case "practice": startRun("practice", id); break;
+    case "start": startRun("test", id); break;
+    case "fulger": startRun("fulger"); break;
+    case "mix": startRun("mix"); break;
+    case "resume": S.run.active = true; S.run.deadline = S.run.pausedLeft != null ? Date.now() + S.run.pausedLeft : S.run.deadline; S.run.pausedLeft = null; persistRun(); renderRun(); break;
+    case "drop": S.run = null; LS.del("ro-run"); renderTests(); break;
+    case "exit":
+      $("#exitbar").innerHTML = `<div class="confirm"><span>Ieși din test? Progresul rămâne salvat și poți continua din pagina Teste EN (timpul se oprește).</span><button class="btn sm" data-act="pause">Da, ies</button><button class="btn ghost sm" data-act="finishnow">Termin acum și văd nota</button><button class="btn ghost sm" data-act="stay">Rămân</button></div>`; break;
+    case "stay": $("#exitbar").innerHTML = ""; break;
+    case "pause": R.active = false; R.pausedLeft = R.deadline ? R.deadline - Date.now() : null; persistRun(); clearInterval(tick); location.hash = "teste"; route(); break;
+    case "finishnow": finishRun(); break;
+    case "tab": R.textTab = id; persistRun(); renderRun(); break;
+    case "toggletext": { const tp = $("#textpane"); tp.classList.toggle("open"); el.textContent = tp.classList.contains("open") ? "Ascunde textul" : "Arată textul"; break; }
+    case "sel": { const q = curQ().q; R.sel = q.type === "tf" ? el.dataset.v === "true" : +el.dataset.i; $("#qbody").innerHTML = qBody(q); $("#qact").innerHTML = actions(q); break; }
+    case "msel": { const q = curQ().q; const i = +el.dataset.i; R.sel = Array.isArray(R.sel) ? R.sel : []; R.sel = R.sel.includes(i) ? R.sel.filter(x => x !== i) : R.sel.concat(i); $("#qbody").innerHTML = qBody(q); $("#qact").innerHTML = actions(q); break; }
+    case "check": { const q = curQ().q; if(q.type === "fill" && !(($("#fillin")||{}).value||"").trim()){ $("#fillin").focus(); return; } commitAnswer(q, grade(q), el); break; }
+    case "model": { const q = curQ().q; R.draft = R.draft || {}; R.draft[q.id] = ($("#openin")||{}).value || ""; R.phase = "rubric"; R.rub = []; persistRun(); $("#qbody").innerHTML = qBody(q); $("#qact").innerHTML = actions(q); break; }
+    case "rubok": { const q = curQ().q; const earned = (R.rub||[]).reduce((s,i) => s + q.rubric[i].p, 0); commitAnswer(q, {given: (R.draft||{})[q.id] || "", correct: earned === q.pts, earned}, el); break; }
+    case "skip": { const q = curQ().q; R.skipped[q.id] = true; R.sel = null; R.order.splice(R.idx, 1); R.order.push(q.id); if(R.idx >= R.order.length) R.idx = 0; while(R.answers[R.order[R.idx]]) R.idx = (R.idx+1) % R.order.length; persistRun(); renderRun(); break; }
+    case "next": nextQ(); break;
+    case "lesson": openLesson(id); break;
+    case "close": closeModal(); break;
+    case "search": openSearch(); break;
+    case "sugg": $("#sq").value = el.dataset.q; renderSearch(); $("#sq").focus(); break;
+    case "sgo": goResult(+el.dataset.i); break;
+    case "viewres": { e.preventDefault(); const a = S.attempts.find(x => x.id === id); if(a) renderResult(a, false); break; }
+  }
+});
+document.addEventListener("change", e => {
+  if(e.target.dataset && e.target.dataset.act === "rub"){
+    const R = S.run, i = +e.target.dataset.i; R.rub = R.rub || [];
+    R.rub = e.target.checked ? R.rub.concat(i) : R.rub.filter(x => x !== i);
+    persistRun(); $("#qact").innerHTML = actions(curQ().q);
+  }
+});
+document.addEventListener("input", e => {
+  if(e.target.id === "openin"){ const R = S.run; R.draft = R.draft || {}; R.draft[curQ().q.id] = e.target.value; $("#wc").textContent = wc(e.target.value) + " cuvinte"; persistRun(); }
+  if(e.target.id === "fillin"){ S.run.sel = e.target.value; }
+});
+document.addEventListener("keydown", e => {
+  if(e.key === "Escape" && !$("#modal").hidden){ closeModal(); return; }
+  if(e.key === "Enter" && e.target.id === "fillin"){ const b = $("#checkbtn"); if(b) b.click(); }
+  if(S.run && S.run.active && $("#modal").hidden && !/INPUT|TEXTAREA|BUTTON|SUMMARY/.test(e.target.tagName)){
+    const q = curQ().q; const a = S.run.answers[q.id];
+    if(!a && (q.type === "mc" || q.type === "multi") && /^[a-d]$/.test(e.key)){ const pos = KEYS.indexOf(e.key); const i = ordOf(q)[pos]; if(i != null){ const b = document.querySelector(`[data-i="${i}"]`); if(b) b.click(); } }
+    if(e.key === "Enter"){ const b = a ? document.querySelector('[data-act="next"]') : $("#checkbtn"); if(b && !b.disabled){ e.preventDefault(); b.click(); } }
+  }
+});
+
+/* ---------- search ---------- */
+const SIDX = [];
+(function buildIndex(){
+  const tmp = document.createElement("div");
+  Object.values(CHAPTERS).forEach(c => {
+    tmp.innerHTML = c.body.replace(/<\/(td|th|li|p|div)>/g, " </$1>").replace(/<br\s*\/?>/g, " ");
+    let sec = {n:0, head:"", text:[]};
+    const push = () => { const t = sec.text.join(" ").replace(/\s+/g," ").trim(); if(t || sec.head) SIDX.push({c, n:sec.n, head:sec.head, text:t, nh:norm(sec.head), nt:norm(t), nc:norm(c.title)}); };
+    let n = 0;
+    Array.from(tmp.children).forEach(el => {
+      if(el.tagName === "H4"){ push(); sec = {n:++n, head:el.textContent.trim(), text:[]}; }
+      else sec.text.push(el.textContent);
+    });
+    push();
+  });
+})();
+const SUGG = ["diftong","hiat","complement direct","supin","epitet","personificare","s-a sau sa","genitiv","rima","fabula","didascalii","predicat nominal","odată","paronime"];
+function hlRe(words){
+  const map = {a:"[aăâ]", i:"[iî]", s:"[sșş]", t:"[tțţ]"};
+  const src = words.filter(Boolean).map(w => w.split("").map(ch => map[ch] || ch.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")).join("")).join("|");
+  return src ? new RegExp("(?<![\\p{L}])(" + src + ")", "giu") : null;
+}
+function highlight(text, re){ return re ? esc(text).replace(re, "<mark>$1</mark>") : esc(text); }
+function snippet(text, words){
+  const nt = norm(text); let pos = -1;
+  for(const w of words){ const p = nt.indexOf(w); if(p >= 0 && (pos < 0 || p < pos)) pos = p; }
+  const start = Math.max(0, pos - 50);
+  let s = text.slice(start, start + 170);
+  return (start > 0 ? "… " : "") + s + (start + 170 < text.length ? " …" : "");
+}
+function doSearch(q){
+  const words = norm(q).split(" ").filter(w => w.length >= 2);
+  if(!words.length) return [];
+  const res = [];
+  SIDX.forEach(e => {
+    const hay = e.nc + " " + e.nh + " " + e.nt;
+    const rx = words.map(w => new RegExp("\\b" + w.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")));
+    if(!rx.every(r => r.test(hay))) return;
+    let score = 0;
+    words.forEach(w => { if(e.nh.includes(w)) score += 6; if(e.nh.includes(words.join(" "))) score += 4; if(e.nc.includes(w)) score += 4; const m = (e.nt.match(new RegExp("\\b" + w, "g")) || []).length; score += Math.min(m, 5); });
+    if(e.nt.includes(words.join(" "))) score += 5;
+    res.push({e, score});
+  });
+  return res.sort((a,b) => b.score - a.score).slice(0, 12).map(r => r.e);
+}
+let sSel = 0, sRes = [];
+function openSearch(q){
+  const m = $("#modal");
+  m.classList.add("top");
+  m.innerHTML = `<div class="s-box" role="dialog" aria-modal="true" aria-label="Caută în teorie">
+    <div class="s-in"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.2-4.2"/></svg>
+    <input id="sq" type="search" autocomplete="off" spellcheck="false" placeholder="Ce vrei să găsești? ex.: hiat, supin, epitet"><button class="btn ghost sm" data-act="close">Închide</button></div>
+    <div class="s-list" id="slist"></div>
+    <div class="s-foot"><span><kbd>↑</kbd> <kbd>↓</kbd> alege</span><span><kbd>Enter</kbd> deschide</span><span><kbd>Esc</kbd> închide</span><span>Poți scrie și fără diacritice</span></div></div>`;
+  m.hidden = false;
+  const inp = $("#sq"); inp.value = q || ""; inp.focus(); renderSearch();
+}
+function renderSearch(){
+  const q = $("#sq").value;
+  const words = norm(q).split(" ").filter(w => w.length >= 2);
+  sRes = doSearch(q); sSel = 0;
+  const L = $("#slist");
+  if(!words.length){
+    L.innerHTML = `<div class="s-hint">Caută orice noțiune din teoria de gramatică și literatură. Încearcă:</div><div class="s-sugg">${SUGG.map(w => `<button data-act="sugg" data-q="${esc(w)}">${esc(w)}</button>`).join("")}</div>`;
+    return;
+  }
+  if(!sRes.length){ L.innerHTML = `<div class="s-hint">Nu am găsit nimic pentru „${esc(q)}”. Încearcă un cuvânt mai scurt sau altă formă (ex.: „fabul” în loc de „fabulele”).</div>`; return; }
+  const re = hlRe(words);
+  L.innerHTML = sRes.map((e,i) => `<button class="s-item ${i===0?"on":""}" data-act="sgo" data-i="${i}">
+    <div class="s-t"><span class="tag ${e.c.kind==="gram"?"g":"l"}">${e.c.kind==="gram"?"Gramatică":"Literatură"}</span>${highlight(e.c.title, re)}${e.head ? `<span class="sec">› ${highlight(e.head, re)}</span>` : ""}</div>
+    <div class="s-x">${highlight(snippet(e.text || e.head, words), re)}</div></button>`).join("");
+}
+function markSel(){ document.querySelectorAll(".s-item").forEach((b,i) => b.classList.toggle("on", i === sSel)); const b = document.querySelectorAll(".s-item")[sSel]; if(b) b.scrollIntoView({block:"nearest"}); }
+function goResult(i){
+  const e = sRes[i]; if(!e) return;
+  const target = e.n ? e.c.id + "-s" + e.n : null;
+  const flash = () => { const el = target ? document.getElementById(target) : document.querySelector(".lesson h2"); if(el){ el.scrollIntoView({block:"center", behavior: reduce ? "auto" : "smooth"}); el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash"); } };
+  if(S.run && S.run.active){ $("#modal").classList.remove("top"); openLesson(e.c.id); setTimeout(flash, 50); return; }
+  closeModal();
+  if(location.hash === "#" + e.c.id){ route(); } else { location.hash = e.c.id; route(); }
+  setTimeout(flash, 60);
+}
+document.addEventListener("input", e => { if(e.target.id === "sq") renderSearch(); });
+document.addEventListener("keydown", e => {
+  if(e.target.id === "sq"){
+    if(e.key === "ArrowDown"){ e.preventDefault(); sSel = Math.min(sSel+1, sRes.length-1); markSel(); }
+    else if(e.key === "ArrowUp"){ e.preventDefault(); sSel = Math.max(sSel-1, 0); markSel(); }
+    else if(e.key === "Enter"){ e.preventDefault(); goResult(sSel); }
+    return;
+  }
+  if((e.key === "/" || (e.key.toLowerCase() === "k" && (e.ctrlKey || e.metaKey))) && !/INPUT|TEXTAREA/.test(e.target.tagName) && $("#modal").hidden){ e.preventDefault(); openSearch(); }
+}, true);
+/* ---------- theme ---------- */
+const HOST_THEME = document.documentElement.getAttribute("data-theme");
+let THEME = LS.get("ro-theme", "light");
+const TH_ICON = {
+  light:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>',
+  dark:'<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>',
+  auto:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor"/></svg>'
+};
+const TH_LABEL = {light:"Fundal luminos", dark:"Fundal întunecat", auto:"Fundal automat (ca sistemul)"};
+function applyTheme(){
+  const root = document.documentElement;
+  if(THEME === "auto"){ if(HOST_THEME) root.setAttribute("data-theme", HOST_THEME); else root.removeAttribute("data-theme"); }
+  else if(root.getAttribute("data-theme") !== THEME) root.setAttribute("data-theme", THEME);
+  const b = $("#theme"); if(b){ b.innerHTML = TH_ICON[THEME]; b.title = TH_LABEL[THEME] + " · apasă pentru a schimba"; }
+}
+try{ new MutationObserver(() => { if(THEME !== "auto" && document.documentElement.getAttribute("data-theme") !== THEME) applyTheme(); }).observe(document.documentElement, {attributes:true, attributeFilter:["data-theme"]}); }catch(e){}
+$("#theme").addEventListener("click", () => { THEME = THEME === "light" ? "dark" : THEME === "dark" ? "auto" : "light"; LS.set("ro-theme", THEME); applyTheme(); toast(TH_LABEL[THEME]); });
+applyTheme();
+$("#sound").addEventListener("click", () => { S.sound = !S.sound; LS.set("ro-sound", S.sound); renderChip(); if(S.sound) tone("ok"); });
+window.addEventListener("hashchange", () => { closeModal(); if(S.run && S.run.active){ const b = document.querySelector('[data-act="exit"]'); if(b) b.click(); return; } route(); window.scrollTo(0,0); });
+
+/* ---------- boot ---------- */
+if(S.run && S.run.active){ S.run.active = false; if(S.run.deadline){ S.run.pausedLeft = Math.max(0, S.run.deadline - Date.now()); } persistRun(); }
+renderChip();
+route();
+initDb();
+})();
+
+</script>
+</body></html>
